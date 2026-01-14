@@ -30,5 +30,5 @@ public class Fuel extends SubsystemBase{
     public void moveDividerMotor(double voltage) {
         dividerMotor.setVoltage(voltage);
     }
-    System.out.println("testing push");
+
 }
