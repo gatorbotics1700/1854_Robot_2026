@@ -48,4 +48,7 @@ public final class Constants {
   }
 
   public static final int KRAKEN_TICKS_PER_REV = 2048;
+  public static final int INTAKE_SHOOTER_MOTOR_VOLTAGE = 1;
+  public static final double SHOOTER_MOTOR_VOLTAGE = 1;
+  public static final double DIVIDER_TO_OUTAKE_VOLTAGE = 2; //TODO assign value to this 
 }

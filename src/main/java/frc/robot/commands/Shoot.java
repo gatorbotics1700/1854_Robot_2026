@@ -6,28 +6,22 @@ import frc.robot.Constants;
 public class Shoot extends Command{
 
     private final Fuel fuelSubsystem;
-    private final double voltage; 
     
-    public Shoot (Fuel fuelSubsystem){
-        this.fuelSubsystem = fuelSubsystem; 
+    public Shoot (){
+        Fuel fuelSubsystem = new Fuel(); 
         addRequirements(fuelSubsystem);
-         this.voltage = voltage;
     }
+
     @Override
     execute(){
-        if (voltage < 0){
-            System.out.println("SHOOTING");
-            if(voltage == Constants.SHOOTER_MOTOR_VOLTAGE){
-                IntakeShooterSubsystem.moveIntakeShooterMotor(Constants.SHOOTER_MOTOR_VOLTAGE)
-                }
-            }
-        }
-
+        System.out.println("SHOOTING");
+        fuelSubsystem.moveDividerMotor(Constants.DIVIDER_TO_OUTAKE_VOLTAGE);
+        fuelSubsystem.moveIntakeShooterMotor(Constants.SHOOTER_MOTOR_VOLTAGE);
     }
 
     @Override
     isFinished(){
         return true;
     }
-
 }
+
