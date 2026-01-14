@@ -53,5 +53,5 @@ public final class Constants {
   public static final int INTAKE_SHOOTER_MOTOR_CAN_ID = 0;
   public static final int CANIVORE_BUS_NAME = 3;
   public static final int DIVIDER_MOTOR_CAN_ID = 4;
-  public static final double INTAKE_MOTOR_VOLTAGE = 4.0;
+  public static final double INTAKE_SHOOTER_MOTOR_VOLTAGE = 4.0;
 }
