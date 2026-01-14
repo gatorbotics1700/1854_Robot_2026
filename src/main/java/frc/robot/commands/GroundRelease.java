@@ -16,7 +16,7 @@ public class GroundRelease extends Command{
    @Override
    public void execute(){
         fuelSubsystem.moveDividerMotor(Constants.DIVIDER_TO_OUTAKE_VOLTAGE);
-        fuelSubsystem.moveIntakeShooterMotor(Constants.OUTTAKE_MOTOR_VOLTAGE);
+        fuelSubsystem.moveIntakeShooterMotor(Constants.OUTAKE_MOTOR_VOLTAGE);
     // set motor make an instance of a motor and then set motor volatge to intake a certain volatge make a constant in the constants doc of that volatge
     // to set mother volt us set motor volateg (volatge)
    }
