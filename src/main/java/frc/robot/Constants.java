@@ -48,7 +48,10 @@ public final class Constants {
   }
 
   public static final int KRAKEN_TICKS_PER_REV = 2048;
-  public static final int INTAKE_SHOOTER_MOTOR_VOLTAGE = 1;
-  public static final double SHOOTER_MOTOR_VOLTAGE = 1;
-  public static final double DIVIDER_TO_OUTAKE_VOLTAGE = 2; //TODO assign value to this 
+  public static final double OUTTAKE_MOTOR_VOLTAGE = 1.0;
+  public static final double DIVIDER_TO_OUTTAKE_VOLTAGE = 2.0;
+  public static final int INTAKE_SHOOTER_MOTOR_CAN_ID = 0;
+  public static final int CANIVORE_BUS_NAME = 3;
+  public static final int DIVIDER_MOTOR_CAN_ID = 4;
+  public static final double INTAKE_MOTOR_VOLTAGE = 4.0;
 }
