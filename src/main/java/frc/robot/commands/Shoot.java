@@ -17,8 +17,8 @@ public class Shoot extends Command{
     @Override
     public void execute(){
         System.out.println("SHOOTING");
-        fuelSubsystem.moveDividerMotor(Constants.DIVIDER_TO_OUTAKE_VOLTAGE);
-        fuelSubsystem.moveIntakeShooterMotor(Constants.INTAKE_SHOOTER_MOTOR_VOLTAGE);
+        fuelSubsystem.moveDividerMotor(Constants.DIVIDER_MOTOR_VOLTAGE);
+        fuelSubsystem.moveShooterMotor(Constants.SHOOTER_MOTOR_VOLTAGE);
     }
 
     @Override

@@ -2,21 +2,20 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
-import frc.robot.subsystems.fuel.Fuel;
+import frc.robot.subsystems.intake.Intake;
 
 public class GroundRelease extends Command{
 
-    private final Fuel fuelSubsystem;
+    private final Intake intakeSubsystem;
     
-    public GroundRelease(Fuel fuelSubsystem){
-        this.fuelSubsystem = fuelSubsystem;
-        addRequirements(fuelSubsystem);
+    public GroundRelease(Intake intakeSubsystem){
+        this.intakeSubsystem = intakeSubsystem;
+        addRequirements(intakeSubsystem);
     }
 
    @Override
    public void execute(){
-        fuelSubsystem.moveDividerMotor(Constants.DIVIDER_TO_OUTAKE_VOLTAGE);
-        fuelSubsystem.moveIntakeShooterMotor(Constants.OUTAKE_MOTOR_VOLTAGE);
+        intakeSubsystem.moveFuelMotor(Constants.OUTAKE_MOTOR_VOLTAGE);
     // set motor make an instance of a motor and then set motor volatge to intake a certain volatge make a constant in the constants doc of that volatge
     // to set mother volt us set motor volateg (volatge)
    }

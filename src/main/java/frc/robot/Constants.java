@@ -49,11 +49,15 @@ public final class Constants {
 
   public static final int KRAKEN_TICKS_PER_REV = 2048;
   public static final double OUTAKE_MOTOR_VOLTAGE = 1.0;
-  public static final double DIVIDER_TO_OUTAKE_VOLTAGE = 2.0;
+
   public static final int FUEL_MOTOR_CAN_ID = 0;
-  public static final String CANIVORE_BUS_NAME = "SelinIsAwesome";
+  public static final double FUEL_MOTOR_VOLTAGE = 4.0;
   public static final int DEPLOY_MOTOR_CAN_ID = 4;
-  public static final double INTAKE_SHOOTER_MOTOR_VOLTAGE = 4.0;
-  public static final double INTAKE_DIVIDER_MOTOR_VOLTAGE = 1;
+  public static final double SHOOTER_MOTOR_VOLTAGE = 4.0;
+  public static final double DIVIDER_MOTOR_VOLTAGE = 1;
+
+  public static final int SHOOTER_MOTOR_CAN_ID = 0;
+  public static final String CANIVORE_BUS_NAME = "SelinIsAwesome";
+  public static final int DIVIDER_MOTOR_CAN_ID = 4;
 
 }
