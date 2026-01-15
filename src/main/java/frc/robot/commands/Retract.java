@@ -8,16 +8,17 @@ import frc.robot.subsystems.intake.Intake;
 
 public class Retract extends Command {
     
-    private final Retract IntakeSubsystem;
+    private final Intake intakeSubsystem;
+
     public Retract (Intake intakeSubsystem){
-        this.IntakeSubsystem = intakeSubsystem();
-        addRequirements(IntakeSubsystem);
+        this.intakeSubsystem = intakeSubsystem;
+        addRequirements(intakeSubsystem);
     }
 
     @Override
-    execute () {
+    public void execute() {
         System.out.println("RETRACTING")
-        IntakeSubsystem.moveRetractMotor(Constants.RETRACT_MOTOR_POSITION);
+        intakeSubsystem.moveRetractMotor(Constants.RETRACT_MOTOR_POSITION);
     }
 
     @Override 

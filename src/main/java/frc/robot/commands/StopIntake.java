@@ -7,8 +7,8 @@ public class StopIntake extends Command{
 
     private final Intake intakeSubsystem;
     
-    public StopIntake(Intake fuelSubsystem){
-        this.intakeSubsystem = fuelSubsystem;
+    public StopIntake(Intake intakeSubsystem){
+        this.intakeSubsystem = intakeSubsystem;
         addRequirements(intakeSubsystem);
     }
 
