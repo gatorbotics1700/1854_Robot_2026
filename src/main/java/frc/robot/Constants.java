@@ -59,5 +59,7 @@ public final class Constants {
   public static final int SHOOTER_MOTOR_CAN_ID = 0;
   public static final String CANIVORE_BUS_NAME = "SelinIsAwesome";
   public static final int DIVIDER_MOTOR_CAN_ID = 4;
+   public static final double DEPLOY_MOTOR_POSITION  = 2;
+  public static final double RETRACT_MOTOR_POSITION = 1;
 
 }

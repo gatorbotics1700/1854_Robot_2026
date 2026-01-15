@@ -1,5 +1,7 @@
 package frc.robot.subsystems.intake;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.ControlModeValue;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -15,13 +17,13 @@ public class Intake extends SubsystemBase{
     @Override
     public void periodic(){
     }
-
+   
     public void moveFuelMotor(double voltage){
         fuelMotor.setVoltage(voltage);
     }
 
-    public void moveDeployMotor(double voltage) {
-        deployMotor.setVoltage(voltage);
+    public void moveDeployMotor(double position) {
+        deployMotor.set(new PositionDutyCycle(position)); // TODO fix
     }
 
     
