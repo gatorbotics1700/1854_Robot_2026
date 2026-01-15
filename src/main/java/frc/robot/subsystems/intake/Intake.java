@@ -24,4 +24,6 @@ public class Intake extends SubsystemBase{
         deployMotor.setVoltage(voltage);
     }
 
+    
+
 }
