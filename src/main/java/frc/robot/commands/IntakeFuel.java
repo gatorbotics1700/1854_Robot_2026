@@ -4,12 +4,12 @@ import frc.robot.Constants;
 import frc.robot.subsystems.intake.Intake;
 
 
-public class Intake extends Command{
+public class IntakeFuel extends Command{
 
     private final Intake intakeSubsystem;
     
     
-    public Intake(Intake intakeSubsystem){
+    public IntakeFuel(Intake intakeSubsystem){
         this.intakeSubsystem = intakeSubsystem;
         addRequirements(intakeSubsystem);
     }

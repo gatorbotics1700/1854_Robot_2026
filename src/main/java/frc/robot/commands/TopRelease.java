@@ -1,24 +1,22 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
+import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.fuel.Fuel;
 
-
-public class Shoot extends Command{
-
+public class TopRelease extends Command {
+    
     private Fuel fuelSubsystem;
     
-    public Shoot(Fuel fuelSubsystem){
+    public TopRelease(Fuel fuelSubsystem){
         this.fuelSubsystem = fuelSubsystem; 
         addRequirements(fuelSubsystem);
     }
 
     @Override
     public void execute(){
-        System.out.println("SHOOTING");
-        fuelSubsystem.moveDividerMotor(Constants.DIVIDER_MOTOR_VOLTAGE);
-        fuelSubsystem.moveShooterMotor(Constants.SHOOTER_MOTOR_VOLTAGE);
+        fuelSubsystem.moveDividerMotor(Constants.RELEASE_DIVIDER_MOTOR_VOLTAGE);
+        fuelSubsystem.moveShooterMotor(Constants.RELEASE_SHOOTER_MOTOR_VOLTAGE);
     }
 
     @Override
@@ -26,4 +24,3 @@ public class Shoot extends Command{
         return true;
     }
 }
-
