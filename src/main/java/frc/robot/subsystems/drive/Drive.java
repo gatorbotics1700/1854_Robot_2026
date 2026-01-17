@@ -57,9 +57,12 @@ import frc.robot.util.LocalADStarAK;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.Consumer;
+/* 
+TODO: restore when mapleSim 2026 releases
 import org.ironmaple.simulation.drivesims.COTS;
 import org.ironmaple.simulation.drivesims.configs.DriveTrainSimulationConfig;
 import org.ironmaple.simulation.drivesims.configs.SwerveModuleSimulationConfig;
+*/
 import org.littletonrobotics.junction.AutoLogOutput;
 import org.littletonrobotics.junction.Logger;
 
@@ -94,6 +97,8 @@ public class Drive extends SubsystemBase implements Vision.VisionConsumer {
               1),
           getModuleTranslations());
 
+  /*
+  TODO: restore when mapleSim 2026 releases
   public static final DriveTrainSimulationConfig mapleSimConfig =
       DriveTrainSimulationConfig.Default()
           .withRobotMass(Kilograms.of(ROBOT_MASS_KG))
@@ -110,10 +115,12 @@ public class Drive extends SubsystemBase implements Vision.VisionConsumer {
                   Meters.of(TunerConstants.FrontLeft.WheelRadius),
                   KilogramSquareMeters.of(TunerConstants.FrontLeft.SteerInertia),
                   WHEEL_COF));
+  */
 
   static final Lock odometryLock = new ReentrantLock();
   private final GyroIO gyroIO;
-  private final GyroIOInputsAutoLogged gyroInputs = new GyroIOInputsAutoLogged();
+  // TODO: restore when mapleSim 2026 releases
+  // private final GyroIOInputsAutoLogged gyroInputs = new GyroIOInputsAutoLogged();
   private final Module[] modules = new Module[4]; // FL, FR, BL, BR
   private final SysIdRoutine sysId;
   private final Alert gyroDisconnectedAlert =
@@ -196,8 +203,11 @@ public class Drive extends SubsystemBase implements Vision.VisionConsumer {
   @Override
   public void periodic() {
     odometryLock.lock(); // Prevents odometry updates while reading data
+    /*
+    TODO: restore when mapleSim 2026 releases
     gyroIO.updateInputs(gyroInputs);
     Logger.processInputs("Drive/Gyro", gyroInputs);
+    */
     for (var module : modules) {
       module.periodic();
     }
@@ -235,21 +245,27 @@ public class Drive extends SubsystemBase implements Vision.VisionConsumer {
       }
 
       // Update gyro angle
-      if (gyroInputs.connected) {
+      // TODO: restore when mapleSim 2026 releases
+      /*if (gyroInputs.connected) {
         // Use the real gyro angle
         rawGyroRotation = gyroInputs.odometryYawPositions[i];
       } else {
         // Use the angle delta from the kinematics and module deltas
         Twist2d twist = kinematics.toTwist2d(moduleDeltas);
         rawGyroRotation = rawGyroRotation.plus(new Rotation2d(twist.dtheta));
-      }
+      }*/
+
+      // Use the angle delta from the kinematics and module deltas
+      Twist2d twist = kinematics.toTwist2d(moduleDeltas);
+      rawGyroRotation = rawGyroRotation.plus(new Rotation2d(twist.dtheta));
 
       // Apply update
       poseEstimator.updateWithTime(sampleTimestamps[i], rawGyroRotation, modulePositions);
     }
 
     // Update gyro alert
-    gyroDisconnectedAlert.set(!gyroInputs.connected && Constants.currentMode != Mode.SIM);
+    // TODO: restore when mapleSim 2026 releases
+    // gyroDisconnectedAlert.set(!gyroInputs.connected && Constants.currentMode != Mode.SIM);
   }
 
   /**

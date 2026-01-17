@@ -8,15 +8,16 @@ import frc.robot.subsystems.intake.Intake;
 
 public class Deploy extends Command {
     
-    private final Deploy IntakeSubsystem;
+    private final Intake IntakeSubsystem;
+
     public Deploy (Intake intakeSubsystem){
-        this.IntakeSubsystem = intakeSubsystem();
+        this.IntakeSubsystem = intakeSubsystem;
         addRequirements(IntakeSubsystem);
     }
 
     @Override
-    execute () {
-        System.out.println("DEPLOYING")
+    public void execute() {
+        System.out.println("DEPLOYING");
         IntakeSubsystem.moveDeployMotor(Constants.DEPLOY_MOTOR_POSITION);
     }
 
