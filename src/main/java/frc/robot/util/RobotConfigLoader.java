@@ -142,6 +142,7 @@ public final class RobotConfigLoader {
     return switch (serial) {
       case SHENANDOAH_SERIAL -> "config_hulk.properties";
       case MISSISSIPPI_SERIAL -> "config_sting.properties";
+      case EXPERIMENTAL_SERIAL -> "config_experimental.properties";
       default -> {
         System.err.println(
             "RobotConfigLoader: Unknown serial '"
