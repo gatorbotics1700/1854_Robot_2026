@@ -3,7 +3,7 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.intake.Intake;
-
+// TODO can we merge this with intake fuel and stop intake
 public class GroundRelease extends Command{
 
     private final Intake intakeSubsystem;
@@ -16,14 +16,15 @@ public class GroundRelease extends Command{
    @Override
    public void execute(){
         intakeSubsystem.moveFuelMotor(Constants.OUTAKE_MOTOR_VOLTAGE);
-    // set motor make an instance of a motor and then set motor volatge to intake a certain volatge make a constant in the constants doc of that volatge
-    // to set mother volt us set motor volateg (volatge)
+    
    }
 
    @Override
    public boolean isFinished(){
        return true;
-      }
+       // TODO: should we check what type of condition needs to be met
+    }
+      
 
 
 

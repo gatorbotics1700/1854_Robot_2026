@@ -51,7 +51,7 @@ public final class Constants {
   public static final double OUTAKE_MOTOR_VOLTAGE = 1.0;
 
   public static final int FUEL_MOTOR_CAN_ID = 0;
-  public static final double FUEL_MOTOR_VOLTAGE = 4.0;
+  public static final double INTAKE_MOTOR_VOLTAGE = 4.0;
   public static final int DEPLOY_MOTOR_CAN_ID = 4;
   public static final double SHOOTER_MOTOR_VOLTAGE = 4.0;
   public static final double DIVIDER_MOTOR_VOLTAGE = 1;

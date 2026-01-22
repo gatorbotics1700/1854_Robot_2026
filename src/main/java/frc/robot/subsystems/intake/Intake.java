@@ -24,6 +24,7 @@ public class Intake extends SubsystemBase{
 
     public void moveDeployMotor(double position) {
        // deployMotor.set(new PositionDutyCycle(position)); // TODO fix
+       // can use a PID
     }
 
     
