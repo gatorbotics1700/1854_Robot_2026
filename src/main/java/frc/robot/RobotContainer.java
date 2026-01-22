@@ -24,6 +24,8 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.DriveCommands;
+import frc.robot.commands.IntakeFuel;
+import frc.robot.commands.Shoot;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
@@ -31,6 +33,8 @@ import frc.robot.subsystems.drive.GyroIOPigeon2;
 import frc.robot.subsystems.drive.ModuleIO;
 import frc.robot.subsystems.drive.ModuleIOSim;
 import frc.robot.subsystems.drive.ModuleIOTalonFX;
+import frc.robot.subsystems.fuel.Fuel;
+import frc.robot.subsystems.intake.Intake;
 import frc.robot.subsystems.vision.Vision;
 import frc.robot.subsystems.vision.VisionConstants;
 import frc.robot.subsystems.vision.VisionIOLimelight;
@@ -49,6 +53,9 @@ public class RobotContainer {
   // Subsystems
   private final Drive drive;
   private final Vision vision;
+  private final Intake intake = new Intake();
+  private final Fuel fuel = new Fuel(); 
+  
 
   // Controllers
   private final CommandXboxController controller = new CommandXboxController(0);
@@ -56,6 +63,7 @@ public class RobotContainer {
 
   private final GenericHID buttonBoard1A = new GenericHID(1);
   private final GenericHID buttonBoard1B = new GenericHID(2);
+
 
   // Dashboard inputs
   private final LoggedDashboardChooser<Command> autoChooser;
@@ -214,8 +222,26 @@ public class RobotContainer {
                   drive.setPose(new Pose2d(4, 2, new Rotation2d(Math.toRadians(0))));
                 },
                 drive));
-  }
 
+    controller_two            
+        .b()
+        .onTrue(
+          Commands.runOnce(
+            () -> {
+              new Shoot(fuel);
+            },
+          fuel));
+
+    controller_two
+        .a()
+        .onTrue(
+          Commands.runOnce(
+            () -> {
+            new IntakeFuel(intake);
+            },
+            intake));
+        
+  }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
