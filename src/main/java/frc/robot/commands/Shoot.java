@@ -3,14 +3,15 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
 import frc.robot.subsystems.fuel.Fuel;
-// TODO can we combine this with top release
 
 public class Shoot extends Command{
 
     private Fuel fuelSubsystem;
+    private double shooterVoltage;
     
-    public Shoot(Fuel fuelSubsystem){
+    public Shoot(Fuel fuelSubsystem, double shooterVoltage){
         this.fuelSubsystem = fuelSubsystem; 
+        this.shooterVoltage = shooterVoltage;
         addRequirements(fuelSubsystem);
     }
 
@@ -18,13 +19,18 @@ public class Shoot extends Command{
     public void execute(){
         System.out.println("SHOOTING");
         fuelSubsystem.moveDividerMotor(Constants.DIVIDER_MOTOR_VOLTAGE);
-        fuelSubsystem.moveShooterMotor(Constants.SHOOTER_MOTOR_VOLTAGE);
+        fuelSubsystem.moveShooterMotor(shooterVoltage);
     }
 
     @Override
     public boolean isFinished(){
-        return true;
+        if (shooterVoltage == fuelSubsystem.getShooterMotorVoltage()) {
+           return true; 
+        }
+        return false;
         // TODO: should we check what type of condition needs to be met
     }
 }
+
+
 

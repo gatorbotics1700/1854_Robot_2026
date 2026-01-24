@@ -24,5 +24,8 @@ public class Fuel extends SubsystemBase{
     public void moveDividerMotor(double voltage) {
         dividerMotor.setVoltage(voltage);
     }
+    public double getShooterMotorVoltage() {
+        return shooterMotor.getMotorVoltage().getValueAsDouble();
+    }
 
 }

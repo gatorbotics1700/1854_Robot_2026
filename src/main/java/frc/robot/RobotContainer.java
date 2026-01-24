@@ -232,7 +232,7 @@ public class RobotContainer {
         .onTrue(
           Commands.runOnce(
             () -> {
-              new Shoot(fuel);
+              new Shoot(fuel,Constants.SHOOTER_MOTOR_VOLTAGE);
             },
           fuel));
 
