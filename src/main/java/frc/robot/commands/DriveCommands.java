@@ -112,7 +112,7 @@ public class DriveCommands {
                       ? drive.getRotation().plus(new Rotation2d(Math.PI))
                       : drive.getRotation()));
         },
-        drive);
+        drive).withName("JoystickDrive");
   }
 
   /**
