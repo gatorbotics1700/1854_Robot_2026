@@ -17,6 +17,7 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -40,6 +41,9 @@ import frc.robot.subsystems.vision.VisionConstants;
 import frc.robot.subsystems.vision.VisionIOLimelight;
 import frc.robot.subsystems.vision.VisionIOPhotonVisionSim;
 import frc.robot.util.RobotConfigLoader;
+
+import java.util.Optional;
+
 import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
@@ -161,7 +165,7 @@ public class RobotContainer {
                 Math.abs(controller.getLeftY()) > 0.1
                     || Math.abs(controller.getLeftX()) > 0.1
                     || Math.abs(controller.getRightX()) > 0.1);
-    var alliance = DriverStation.getAlliance();
+    var alliance = getAlliance();
     if (alliance.isPresent() && alliance.get() == DriverStation.Alliance.Red) {
       driverControl
           .whileTrue(
@@ -325,5 +329,16 @@ public class RobotContainer {
 
     // Log if commands are running
     Logger.recordOutput("Commands/DriveCommandActive", driveCmd != null);
+  }
+
+  private Optional<Alliance> getAlliance() {
+    switch (Constants.currentMode) {
+      case REAL:
+        return DriverStation.getAlliance();
+      case SIM: // default to blue in sim
+        Optional.of(DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue));
+      default:
+        return DriverStation.getAlliance();
+     }
   }
 }

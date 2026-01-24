@@ -69,22 +69,9 @@ public class DriveCommands {
   }
 
     // Stop the drivetrain from moving, and keep the drivetrain at its current angle.
-    // TODO: make the wheels face inward so we're harder to push
     public static Command stopDriveCommand(Drive drive) {
         return Commands.run(
-            () -> {
-                ChassisSpeeds speeds =
-                    new ChassisSpeeds( 0,0,0);
-                              boolean isFlipped =
-            DriverStation.getAlliance().isPresent()
-                && DriverStation.getAlliance().get() == Alliance.Red;
-          drive.runVelocity(
-              ChassisSpeeds.fromFieldRelativeSpeeds(
-                  speeds,
-                  isFlipped
-                    ? drive.getRotation().plus(new Rotation2d(Math.PI))
-                    : drive.getRotation()));
-            },
+            () -> { drive.stopWithX();},
             drive);
     }
 
