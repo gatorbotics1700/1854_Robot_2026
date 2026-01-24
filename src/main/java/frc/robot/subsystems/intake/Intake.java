@@ -27,6 +27,10 @@ public class Intake extends SubsystemBase{
        // can use a PID
     }
 
+    public double getDeployMotorPosition() {
+        return deployMotor.getPosition().getValueAsDouble();
+    }
+
     
 
 }

@@ -63,5 +63,6 @@ public final class Constants {
   public static final int DIVIDER_MOTOR_CAN_ID = 22;
    public static final double DEPLOY_MOTOR_POSITION  = 2;
   public static final double RETRACT_MOTOR_POSITION = 1;
+  public static final double PIVOT_DEADBAND = 2;
 
 }
