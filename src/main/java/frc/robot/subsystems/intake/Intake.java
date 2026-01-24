@@ -22,6 +22,11 @@ public class Intake extends SubsystemBase{
         fuelMotor.setVoltage(voltage);
     }
 
+    public double getFuelMotorVoltage(){
+        return fuelMotor.getMotorVoltage().getValueAsDouble();
+    }
+
+
     public void moveDeployMotor(double position) {
        // deployMotor.set(new PositionDutyCycle(position)); // TODO fix
        // can use a PID
