@@ -24,7 +24,7 @@ public class Shoot extends Command{
 
     @Override
     public boolean isFinished(){
-        if (shooterVoltage == fuelSubsystem.getShooterMotorVoltage()) {
+        if (shooterVoltage == fuelSubsystem.getShooterMotorVoltage(Constants.currentMode)) {
            return true; 
         }
         return false;

@@ -2,15 +2,18 @@ package frc.robot.subsystems.fuel;
 import com.ctre.phoenix6.hardware.TalonFX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.Mode;
 
 public class Fuel extends SubsystemBase{
-    public  TalonFX shooterMotor; 
-    public  TalonFX dividerMotor;
+    private TalonFX shooterMotor; 
+    private  TalonFX dividerMotor;
+    private double shooterVoltage; //needs to be variable to read in SIM, if possible make this unneeded
     
     public Fuel(){
-        shooterMotor = new TalonFX(Constants.SHOOTER_MOTOR_CAN_ID, Constants.CANIVORE_BUS_NAME);
-        dividerMotor = new TalonFX(Constants.DIVIDER_MOTOR_CAN_ID, Constants.CANIVORE_BUS_NAME);
+            shooterMotor = new TalonFX(Constants.SHOOTER_MOTOR_CAN_ID, Constants.CANIVORE_BUS_NAME);
+            dividerMotor = new TalonFX(Constants.DIVIDER_MOTOR_CAN_ID, Constants.CANIVORE_BUS_NAME);
     }
+
 
     @Override
     public void periodic(){
@@ -19,13 +22,18 @@ public class Fuel extends SubsystemBase{
 
     public void moveShooterMotor(double voltage){
         shooterMotor.setVoltage(voltage);
+        shooterVoltage = voltage; 
     }
 
     public void moveDividerMotor(double voltage) {
         dividerMotor.setVoltage(voltage);
     }
-    public double getShooterMotorVoltage() {
-        return shooterMotor.getMotorVoltage().getValueAsDouble();
-    }
 
+    public double getShooterMotorVoltage(Mode currentMode) {
+        if(currentMode == Mode.REAL){
+            return shooterMotor.getMotorVoltage().getValueAsDouble();
+        } else {
+            return shooterVoltage;
+        }  
+    }
 }

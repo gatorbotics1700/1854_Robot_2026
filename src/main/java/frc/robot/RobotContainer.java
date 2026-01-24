@@ -59,180 +59,183 @@ public class RobotContainer {
   private final Vision vision;
   private final Intake intake = new Intake();
   private final Fuel fuel = new Fuel(); 
+  private int shooterCounter = 0;
+    
   
-
-  // Controllers
-  private final CommandXboxController controller = new CommandXboxController(0);
-  private final CommandXboxController controller_two = new CommandXboxController(3);
-
-  private final GenericHID buttonBoard1A = new GenericHID(1);
-  private final GenericHID buttonBoard1B = new GenericHID(2);
-
-
-  // Dashboard inputs
-  private final LoggedDashboardChooser<Command> autoChooser;
-
-  /** The container for the robot. Contains subsystems, OI devices, and commands. */
-  public RobotContainer() {
-    // Set up robot depending on mode
-    switch (Constants.currentMode) {
-      case REAL:
-        // Real robot, instantiate hardware IO implementations
-        drive =
-            new Drive(
-                new GyroIOPigeon2(),
-                new ModuleIOTalonFX(TunerConstants.FrontLeft),
-                new ModuleIOTalonFX(TunerConstants.FrontRight),
-                new ModuleIOTalonFX(TunerConstants.BackLeft),
-                new ModuleIOTalonFX(TunerConstants.BackRight),
-                (pose) -> {});
-        vision =
-            new Vision(
-                drive,
-                new VisionIOLimelight(
-                    VisionConstants.LIMELIGHT_0_NAME,
-                    drive::getRotation,
-                    VisionConstants.ROBOT_TO_LIMELIGHT_0));
-        break;
-
-      case SIM:
-        // Sim robot, instantiate physics sim IO implementations
-        drive =
-            new Drive(
-                new GyroIO() {},
-                new ModuleIOSim(TunerConstants.FrontLeft),
-                new ModuleIOSim(TunerConstants.FrontRight),
-                new ModuleIOSim(TunerConstants.BackLeft),
-                new ModuleIOSim(TunerConstants.BackRight),
-                (pose) -> {});
-        vision =
-            new Vision(
-                drive,
-                new VisionIOPhotonVisionSim(
-                    VisionConstants.LIMELIGHT_0_NAME,
-                    VisionConstants.ROBOT_TO_LIMELIGHT_0,
-                    drive::getPose));
-        break;
-
-      default: // TODO: should the default be real as a safety for matches? to be discussed
-        // Replayed robot, disable IO implementations
-        drive =
-            new Drive(
-                new GyroIO() {},
-                new ModuleIO() {},
-                new ModuleIO() {},
-                new ModuleIO() {},
-                new ModuleIO() {},
-                (pose) -> {});
-        vision = new Vision(drive);
-        break;
-    }
-
-    // Set up auto routines
-    autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
-
-    // Set up SysId routines
-    // autoChooser.addOption(
-    //     "Drive Wheel Radius Characterization", DriveCommands.wheelRadiusCharacterization(drive));
-    // autoChooser.addOption(
-    //     "Drive Simple FF Characterization", DriveCommands.feedforwardCharacterization(drive));
-    // autoChooser.addOption(
-    //     "Drive SysId (Quasistatic Forward)",
-    //     drive.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
-    // autoChooser.addOption(
-    //     "Drive SysId (Quasistatic Reverse)",
-    //     drive.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
-    // autoChooser.addOption(
-    //     "Drive SysId (Dynamic Forward)", drive.sysIdDynamic(SysIdRoutine.Direction.kForward));
-    // autoChooser.addOption(
-    //     "Drive SysId (Dynamic Reverse)", drive.sysIdDynamic(SysIdRoutine.Direction.kReverse));
-
-    // Configure the button bindings
-    configureButtonBindings();
-  }
-
-  /**
-   * Use this method to define your button->command mappings. Buttons can be created by
-   * instantiating a {@link GenericHID} or one of its subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
-   * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
-   */
-  public void configureButtonBindings() {
-    // Default command, normal field-relative drive
-    Trigger driverControl =
-        new Trigger(
-            () ->
-                Math.abs(controller.getLeftY()) > 0.1
-                    || Math.abs(controller.getLeftX()) > 0.1
-                    || Math.abs(controller.getRightX()) > 0.1);
-    var alliance = getAlliance();
-    if (alliance.isPresent() && alliance.get() == DriverStation.Alliance.Red) {
-      driverControl
-          .whileTrue(
-              DriveCommands.joystickDrive(
+    // Controllers
+    private final CommandXboxController controller = new CommandXboxController(0);
+    private final CommandXboxController controller_two = new CommandXboxController(3);
+  
+    private final GenericHID buttonBoard1A = new GenericHID(1);
+    private final GenericHID buttonBoard1B = new GenericHID(2);
+  
+  
+    // Dashboard inputs
+    private final LoggedDashboardChooser<Command> autoChooser;
+  
+    /** The container for the robot. Contains subsystems, OI devices, and commands. */
+    public RobotContainer() {
+      // Set up robot depending on mode
+      switch (Constants.currentMode) {
+        case REAL:
+          // Real robot, instantiate hardware IO implementations
+          drive =
+              new Drive(
+                  new GyroIOPigeon2(),
+                  new ModuleIOTalonFX(TunerConstants.FrontLeft),
+                  new ModuleIOTalonFX(TunerConstants.FrontRight),
+                  new ModuleIOTalonFX(TunerConstants.BackLeft),
+                  new ModuleIOTalonFX(TunerConstants.BackRight),
+                  (pose) -> {});
+          vision =
+              new Vision(
                   drive,
-                  () -> modifyJoystickAxis(controller.getLeftY()), // Changed to raw values
-                  () -> modifyJoystickAxis(controller.getLeftX()), // Changed to raw values
-                  () -> modifyJoystickAxis(-controller.getRightX()))) // Changed to raw values
-          .onFalse(DriveCommands.stopDriveCommand(drive));
-    } else if (alliance.isPresent() && alliance.get() == DriverStation.Alliance.Blue) {
-      driverControl
-          .whileTrue(
-              DriveCommands.joystickDrive(
+                  new VisionIOLimelight(
+                      VisionConstants.LIMELIGHT_0_NAME,
+                      drive::getRotation,
+                      VisionConstants.ROBOT_TO_LIMELIGHT_0));
+  
+          break;
+  
+        case SIM:
+          // Sim robot, instantiate physics sim IO implementations
+          drive =
+              new Drive(
+                  new GyroIO() {},
+                  new ModuleIOSim(TunerConstants.FrontLeft),
+                  new ModuleIOSim(TunerConstants.FrontRight),
+                  new ModuleIOSim(TunerConstants.BackLeft),
+                  new ModuleIOSim(TunerConstants.BackRight),
+                  (pose) -> {});
+          vision =
+              new Vision(
                   drive,
-                  () -> modifyJoystickAxis(-controller.getLeftY()), // Changed to raw values
-                  () -> modifyJoystickAxis(-controller.getLeftX()), // Changed to raw values
-                  () -> modifyJoystickAxis(-controller.getRightX()))) // Changed to raw values
-          .onFalse(DriveCommands.stopDriveCommand(drive));
+                  new VisionIOPhotonVisionSim(
+                      VisionConstants.LIMELIGHT_0_NAME,
+                      VisionConstants.ROBOT_TO_LIMELIGHT_0,
+                      drive::getPose));
+          break;
+  
+        default: // TODO: should the default be real as a safety for matches? to be discussed
+          // Replayed robot, disable IO implementations
+          drive =
+              new Drive(
+                  new GyroIO() {},
+                  new ModuleIO() {},
+                  new ModuleIO() {},
+                  new ModuleIO() {},
+                  new ModuleIO() {},
+                  (pose) -> {});
+          vision = new Vision(drive);
+          break;
+      }
+  
+      // Set up auto routines
+      autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
+  
+      // Set up SysId routines
+      // autoChooser.addOption(
+      //     "Drive Wheel Radius Characterization", DriveCommands.wheelRadiusCharacterization(drive));
+      // autoChooser.addOption(
+      //     "Drive Simple FF Characterization", DriveCommands.feedforwardCharacterization(drive));
+      // autoChooser.addOption(
+      //     "Drive SysId (Quasistatic Forward)",
+      //     drive.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
+      // autoChooser.addOption(
+      //     "Drive SysId (Quasistatic Reverse)",
+      //     drive.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
+      // autoChooser.addOption(
+      //     "Drive SysId (Dynamic Forward)", drive.sysIdDynamic(SysIdRoutine.Direction.kForward));
+      // autoChooser.addOption(
+      //     "Drive SysId (Dynamic Reverse)", drive.sysIdDynamic(SysIdRoutine.Direction.kReverse));
+  
+      // Configure the button bindings
+      configureButtonBindings();
     }
-
-    // Lock to 0° when A button is held
-    controller
-        .a()
-        .whileTrue(
-            DriveCommands.joystickDriveAtAngle(
-                drive,
-                () -> -controller.getLeftY(),
-                () -> -controller.getLeftX(),
-                () -> new Rotation2d()));
-
-    // Reset gyro to 0° when B button is pressed
-    controller
-        .b()
-        .onTrue(
+  
+    /**
+     * Use this method to define your button->command mappings. Buttons can be created by
+     * instantiating a {@link GenericHID} or one of its subclasses ({@link
+     * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
+     * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
+     */
+    public void configureButtonBindings() {
+      // Default command, normal field-relative drive
+      Trigger driverControl =
+          new Trigger(
+              () ->
+                  Math.abs(controller.getLeftY()) > 0.1
+                      || Math.abs(controller.getLeftX()) > 0.1
+                      || Math.abs(controller.getRightX()) > 0.1);
+      var alliance = getAlliance();
+      if (alliance.isPresent() && alliance.get() == DriverStation.Alliance.Red) {
+        driverControl
+            .whileTrue(
+                DriveCommands.joystickDrive(
+                    drive,
+                    () -> modifyJoystickAxis(controller.getLeftY()), // Changed to raw values
+                    () -> modifyJoystickAxis(controller.getLeftX()), // Changed to raw values
+                    () -> modifyJoystickAxis(-controller.getRightX()))) // Changed to raw values
+            .onFalse(DriveCommands.stopDriveCommand(drive));
+      } else if (alliance.isPresent() && alliance.get() == DriverStation.Alliance.Blue) {
+        driverControl
+            .whileTrue(
+                DriveCommands.joystickDrive(
+                    drive,
+                    () -> modifyJoystickAxis(-controller.getLeftY()), // Changed to raw values
+                    () -> modifyJoystickAxis(-controller.getLeftX()), // Changed to raw values
+                    () -> modifyJoystickAxis(-controller.getRightX()))) // Changed to raw values
+            .onFalse(DriveCommands.stopDriveCommand(drive));
+      }
+  
+      // Lock to 0° when A button is held
+      controller
+          .a()
+          .whileTrue(
+              DriveCommands.joystickDriveAtAngle(
+                  drive,
+                  () -> -controller.getLeftY(),
+                  () -> -controller.getLeftX(),
+                  () -> new Rotation2d()));
+  
+      // Reset gyro to 0° when B button is pressed
+      controller
+          .b()
+          .onTrue(
+              Commands.runOnce(
+                      () -> {
+                        if (DriverStation.getAlliance().isPresent()
+                            && DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
+                          drive.setPose(
+                              new Pose2d(
+                                  drive.getPose().getTranslation(),
+                                  new Rotation2d(Math.toRadians(0))));
+                        } else {
+                          drive.setPose(
+                              new Pose2d(
+                                  drive.getPose().getTranslation(),
+                                  new Rotation2d(Math.toRadians(0))));
+                        }
+                      },
+                      drive)
+                  .ignoringDisable(true));
+  
+      controller_two
+          .back()
+          .onTrue(
+              Commands.runOnce(
+                  () -> {
+                    drive.setPose(new Pose2d(4, 2, new Rotation2d(Math.toRadians(0))));
+                  },
+                  drive));
+  
+      controller_two            
+          .b()
+          .onTrue(
             Commands.runOnce(
-                    () -> {
-                      if (DriverStation.getAlliance().isPresent()
-                          && DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
-                        drive.setPose(
-                            new Pose2d(
-                                drive.getPose().getTranslation(),
-                                new Rotation2d(Math.toRadians(0))));
-                      } else {
-                        drive.setPose(
-                            new Pose2d(
-                                drive.getPose().getTranslation(),
-                                new Rotation2d(Math.toRadians(0))));
-                      }
-                    },
-                    drive)
-                .ignoringDisable(true));
-
-    controller_two
-        .back()
-        .onTrue(
-            Commands.runOnce(
-                () -> {
-                  drive.setPose(new Pose2d(4, 2, new Rotation2d(Math.toRadians(0))));
-                },
-                drive));
-
-    controller_two            
-        .b()
-        .onTrue(
-          Commands.runOnce(
-            () -> {
-              new Shoot(fuel,Constants.SHOOTER_MOTOR_VOLTAGE);
+              () -> {
+                new Shoot(fuel,Constants.SHOOTER_MOTOR_VOLTAGE);
+                shooterCounter++;
             },
           fuel));
 
@@ -324,8 +327,11 @@ public class RobotContainer {
 
     // Log command information with names
     Command driveCmd = drive.getCurrentCommand();
+    //double shooterMotorVoltage = fuel.getShooterMotorVoltage(Constants.currentMode); see if this could be fixed
 
     Logger.recordOutput("Commands/DriveCommand", driveCmd != null ? driveCmd.getName() : "None");
+    Logger.recordOutput("Commands/shooterCounter", shooterCounter);
+    //Logger.recordOutput("Commands/shooterVoltage", shooterMotorVoltage); see if thsi can be fixed
 
     // Log if commands are running
     Logger.recordOutput("Commands/DriveCommandActive", driveCmd != null);
