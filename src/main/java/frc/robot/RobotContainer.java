@@ -336,7 +336,7 @@ public class RobotContainer {
       case REAL:
         return DriverStation.getAlliance();
       case SIM: // default to blue in sim
-        Optional.of(DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue));
+        return Optional.of(DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue));
       default:
         return DriverStation.getAlliance();
      }
