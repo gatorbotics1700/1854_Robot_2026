@@ -10,8 +10,8 @@ public class Intake extends SubsystemBase{
     public  TalonFX deployMotor;
     
     public Intake(){
-        fuelMotor= new TalonFX(Constants.FUEL_MOTOR_CAN_ID, Constants.CANIVORE_BUS_NAME);
-        deployMotor = new TalonFX(Constants.DEPLOY_MOTOR_CAN_ID, Constants.CANIVORE_BUS_NAME);
+        fuelMotor= new TalonFX(Constants.FUEL_MOTOR_CAN_ID, Constants.MECH_CANBUS_NAME);
+        deployMotor = new TalonFX(Constants.DEPLOY_MOTOR_CAN_ID, Constants.MECH_CANBUS_NAME);
     }
 
     @Override

@@ -234,10 +234,11 @@ public class RobotContainer {
           .onTrue(
             Commands.runOnce(
               () -> {
-                new Shoot(fuel,Constants.SHOOTER_MOTOR_VOLTAGE);
-                shooterCounter++;
-            },
-          fuel));
+                System.out.println("AIRBALL LEBRON ACTIVATED") fuel); 
+              }
+              .andThen(new Shoot(fuel, Constants.SHOOTER_MOTOR_VOLTAGE));
+                //shooterCounter++;
+        //  fuel)); //TODO: GET TO THE BOTTOM OF THIS
 
     controller_two
         .a()

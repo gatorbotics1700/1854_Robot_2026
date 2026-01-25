@@ -12,6 +12,7 @@ public class Shoot extends Command{
     public Shoot(Fuel fuelSubsystem, double shooterVoltage){
         this.fuelSubsystem = fuelSubsystem; 
         this.shooterVoltage = shooterVoltage;
+        System.out.println("shoot has been shot");
         addRequirements(fuelSubsystem);
     }
 
@@ -25,8 +26,9 @@ public class Shoot extends Command{
     @Override
     public boolean isFinished(){
         if (shooterVoltage == fuelSubsystem.getShooterMotorVoltage(Constants.currentMode)) {
-           return true; 
+          return true; 
         }
+        System.out.println("LEBRON IS FINISHED");
         return false;
         // TODO: should we check what type of condition needs to be met
     }

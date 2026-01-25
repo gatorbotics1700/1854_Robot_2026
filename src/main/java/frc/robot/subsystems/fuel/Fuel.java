@@ -10,8 +10,8 @@ public class Fuel extends SubsystemBase{
     private double shooterVoltage; //needs to be variable to read in SIM, if possible make this unneeded
     
     public Fuel(){
-            shooterMotor = new TalonFX(Constants.SHOOTER_MOTOR_CAN_ID, Constants.CANIVORE_BUS_NAME);
-            dividerMotor = new TalonFX(Constants.DIVIDER_MOTOR_CAN_ID, Constants.CANIVORE_BUS_NAME);
+            shooterMotor = new TalonFX(Constants.SHOOTER_MOTOR_CAN_ID, Constants.MECH_CANBUS_NAME);
+            dividerMotor = new TalonFX(Constants.DIVIDER_MOTOR_CAN_ID, Constants.MECH_CANBUS_NAME);
     }
 
 
