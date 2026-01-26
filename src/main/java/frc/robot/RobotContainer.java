@@ -233,21 +233,15 @@ public class RobotContainer {
       controller_two            
           .b()
           .onTrue(
-            Commands.runOnce(
-              () -> {
-                new Shoot(fuel, Constants.SHOOTER_MOTOR_VOLTAGE);
-              }, 
-              fuel)); //TODO: GET TO THE BOTTOM OF THIS
+            new Shoot(fuel, Constants.SHOOTER_MOTOR_VOLTAGE);
+            ); //TODO: GET TO THE BOTTOM OF THIS
                 //shooterCounter++;
 
-    controller_two
-        .a()
-        .onTrue(
-          Commands.runOnce(
-            () -> {
-            new IntakeFuel(intake, Constants.INTAKE_MOTOR_VOLTAGE);
-            },
-            intake));
+      controller_two
+          .a()
+          .onTrue(
+            new IntakeFuel(intake, Constants.INTAKE_MOTOR_VOLTAGE)
+          );
         
   }
   /**
