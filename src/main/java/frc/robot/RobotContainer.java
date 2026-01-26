@@ -114,6 +114,7 @@ public class RobotContainer {
                       VisionConstants.LIMELIGHT_0_NAME,
                       VisionConstants.ROBOT_TO_LIMELIGHT_0,
                       drive::getPose));
+          DriverStation.silenceJoystickConnectionWarning(true);
           break;
   
         default: // TODO: should the default be real as a safety for matches? to be discussed
