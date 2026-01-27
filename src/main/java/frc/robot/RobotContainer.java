@@ -328,10 +328,12 @@ public class RobotContainer {
 
     // Log command information with names
     Command driveCmd = drive.getCurrentCommand();
+    Command shootCmd = fuel.getCurrentCommand();
+
     //double shooterMotorVoltage = fuel.getShooterMotorVoltage(Constants.currentMode); see if this could be fixed
 
     Logger.recordOutput("Commands/DriveCommand", driveCmd != null ? driveCmd.getName() : "None");
-    Logger.recordOutput("Commands/shooterCounter", shooterCounter);
+    Logger.recordOutput("Commands/ShooterCommand", shootCmd != null ? shootCmd.getName() : "None");
     //Logger.recordOutput("Commands/shooterVoltage", shooterMotorVoltage); see if thsi can be fixed
 
     // Log if commands are running
