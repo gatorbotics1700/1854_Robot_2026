@@ -27,6 +27,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.Shoot;
 import frc.robot.commands.IntakeFuel;
+import frc.robot.commands.IntakePivotCommand;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
@@ -248,6 +249,16 @@ public class RobotContainer {
           .onTrue(
             new Shoot(fuel,0, 0)
           );
+      controller_two
+          .back()
+          .onTrue(
+            new IntakePivotCommand(intake,Constants.RETRACT_MOTOR_POSITION)
+          );
+      controller_two
+          .y()
+          .onTrue(
+            new IntakePivotCommand(intake,Constants.DEPLOY_MOTOR_POSITION)
+          );
         
   }
   /**
@@ -329,12 +340,14 @@ public class RobotContainer {
     // Log command information with names
     Command driveCmd = drive.getCurrentCommand();
     Command shootCmd = fuel.getCurrentCommand();
+    Command intakeCmd = intake.getCurrentCommand();
 
     //double shooterMotorVoltage = fuel.getShooterMotorVoltage(Constants.currentMode); see if this could be fixed
 
     Logger.recordOutput("Commands/DriveCommand", driveCmd != null ? driveCmd.getName() : "None");
     Logger.recordOutput("Commands/ShooterVoltage", fuel.getShooterMotorVoltage(Constants.currentMode));
     Logger.recordOutput("Commands/IntakeVoltage", intake.getIntakeMotorVoltage(Constants.currentMode));
+    Logger.recordOutput("Commands/IntakeState", intake.isDeployed());
     //Logger.recordOutput("Commands/shooterVoltage", shooterMotorVoltage); see if thsi can be fixed
 
     // Log if commands are running

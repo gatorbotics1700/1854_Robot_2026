@@ -22,9 +22,11 @@ public class IntakePivotCommand extends Command {
     public void execute() {
         if (position == Constants.DEPLOY_MOTOR_POSITION) {
             System.out.println("DEPLOYING");
+            intakeSubsystem.setIsDeployed(true);
         }
         else if (position == Constants.RETRACT_MOTOR_POSITION) {
             System.out.println("RETRACTING");
+            intakeSubsystem.setIsDeployed(false);
         }
         intakeSubsystem.moveDeployMotor(position);
     }

@@ -10,10 +10,12 @@ public class Intake extends SubsystemBase{
     private  TalonFX fuelMotor;
     private  TalonFX deployMotor;
     private double intakeMotorVoltage;
+    private boolean isDeployed;
     
     public Intake(){
         fuelMotor= new TalonFX(Constants.FUEL_MOTOR_CAN_ID, Constants.MECH_CANBUS_NAME);
         deployMotor = new TalonFX(Constants.DEPLOY_MOTOR_CAN_ID, Constants.MECH_CANBUS_NAME);
+        isDeployed = false;
     }
 
     @Override
@@ -27,6 +29,10 @@ public class Intake extends SubsystemBase{
 
     public double getFuelMotorVoltage(){
         return fuelMotor.getMotorVoltage().getValueAsDouble();
+    }
+
+    public void setIsDeployed(boolean deployStat){
+        isDeployed = deployStat;
     }
 
 
@@ -47,4 +53,7 @@ public class Intake extends SubsystemBase{
         }  
     }
 
+    public boolean isDeployed() {
+        return isDeployed;
+    }
 }
