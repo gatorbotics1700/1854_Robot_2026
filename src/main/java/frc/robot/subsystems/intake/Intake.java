@@ -4,10 +4,12 @@ import com.ctre.phoenix6.signals.ControlModeValue;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.Mode;
 
 public class Intake extends SubsystemBase{
-    public  TalonFX fuelMotor;
-    public  TalonFX deployMotor;
+    private  TalonFX fuelMotor;
+    private  TalonFX deployMotor;
+    private double intakeMotorVoltage;
     
     public Intake(){
         fuelMotor= new TalonFX(Constants.FUEL_MOTOR_CAN_ID, Constants.MECH_CANBUS_NAME);
@@ -20,6 +22,7 @@ public class Intake extends SubsystemBase{
    
     public void moveFuelMotor(double voltage){
         fuelMotor.setVoltage(voltage);
+        intakeMotorVoltage = voltage;
     }
 
     public double getFuelMotorVoltage(){
@@ -36,6 +39,12 @@ public class Intake extends SubsystemBase{
         return deployMotor.getPosition().getValueAsDouble();
     }
 
-    
+    public double getIntakeMotorVoltage(Mode currentMode) {
+        if(currentMode == Mode.REAL){
+            return fuelMotor.getMotorVoltage().getValueAsDouble();
+        } else {
+            return intakeMotorVoltage;
+        }  
+    }
 
 }
