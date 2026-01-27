@@ -233,7 +233,7 @@ public class RobotContainer {
       controller_two            
           .b()
           .onTrue(
-            new Shoot(fuel, Constants.SHOOTER_MOTOR_VOLTAGE)
+            new Shoot(fuel, Constants.SHOOTER_MOTOR_VOLTAGE, Constants.DIVIDER_MOTOR_VOLTAGE)
             ); //TODO: GET TO THE BOTTOM OF THIS
                 //shooterCounter++;
 
@@ -241,6 +241,12 @@ public class RobotContainer {
           .a()
           .onTrue(
             new IntakeFuel(intake, Constants.INTAKE_MOTOR_VOLTAGE)
+          );
+      
+      controller_two
+          .x()
+          .onTrue(
+            new Shoot(fuel,0, 0)
           );
         
   }

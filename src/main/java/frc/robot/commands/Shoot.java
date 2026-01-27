@@ -8,10 +8,12 @@ public class Shoot extends Command{
 
     private Fuel fuelSubsystem;
     private double shooterVoltage;
+    private double dividerVoltage;
     
-    public Shoot(Fuel fuelSubsystem, double shooterVoltage){
+    public Shoot(Fuel fuelSubsystem, double shooterVoltage, double dividerVoltage){
         this.fuelSubsystem = fuelSubsystem; 
         this.shooterVoltage = shooterVoltage;
+        this.dividerVoltage = dividerVoltage;
         System.out.println("shoot has been shot");
         addRequirements(fuelSubsystem);
     }
@@ -19,7 +21,7 @@ public class Shoot extends Command{
     @Override
     public void execute(){
         System.out.println("SHOOTING");
-        fuelSubsystem.moveDividerMotor(Constants.DIVIDER_MOTOR_VOLTAGE);
+        fuelSubsystem.moveDividerMotor(dividerVoltage);
         fuelSubsystem.moveShooterMotor(shooterVoltage);
     }
 

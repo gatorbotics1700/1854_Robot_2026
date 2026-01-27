@@ -53,7 +53,7 @@ public final class Constants {
   public static final int FUEL_MOTOR_CAN_ID = 0;
   public static final double INTAKE_MOTOR_VOLTAGE = 4.0;
   public static final int DEPLOY_MOTOR_CAN_ID = 4;
-  public static final double SHOOTER_MOTOR_VOLTAGE = 4.0;
+  public static final double SHOOTER_MOTOR_VOLTAGE = 1.0;
   public static final double DIVIDER_MOTOR_VOLTAGE = 1;
     public static final double RELEASE_SHOOTER_MOTOR_VOLTAGE = 4.0;
   public static final double RELEASE_DIVIDER_MOTOR_VOLTAGE = 1;
