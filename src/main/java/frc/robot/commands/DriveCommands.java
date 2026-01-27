@@ -301,6 +301,26 @@ public class DriveCommands {
                     })));
   }
 
+  public static Command GoToPose(Drive drive, Pose2d pose2d) { //go to pose in straight line (make curve?)
+    Pose2d currentPose = drive.getPose();
+    double xError = pose2d.getX() - currentPose.getX();
+    double yError = pose2d.getY() - currentPose.getY();
+    double rotationError = pose2d.getRotation().getDegrees() - pose2d.getRotation().getDegrees();
+    rotationError = MathUtil.inputModulus(rotationError, -180, 180);
+    //start on deadbands?
+    //get how far in X, Y, and rotation (point in right direction)
+    //check if close enouhg not to be moving at all
+    //based on X, Y what angle we should be moving at
+    //based on rotation, how much we should be rotating
+    //run drive command that uses that info
+    //
+    return Commands.runOnce( //only command
+      () -> {
+        drive.setTargetPose(pose2d);
+      }
+    );
+  }
+
   private static class WheelRadiusCharacterizationState {
     double[] positions = new double[4];
     Rotation2d lastAngle = new Rotation2d();

@@ -59,7 +59,7 @@ public final class Constants {
   public static final double RELEASE_DIVIDER_MOTOR_VOLTAGE = 1;
 
   public static final int SHOOTER_MOTOR_CAN_ID = 30;
-  public static final String MECH_CANBUS_NAME = "";
+  public static final String MECH_CANBUS_NAME = "test";
   public static final int DIVIDER_MOTOR_CAN_ID = 31;
    public static final double DEPLOY_MOTOR_POSITION  = 2;
   public static final double RETRACT_MOTOR_POSITION = 1;

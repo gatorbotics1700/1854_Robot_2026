@@ -224,6 +224,12 @@ public class RobotContainer {
                       },
                       drive)
                   .ignoringDisable(true));
+      
+      controller
+        .y()
+        .onTrue( 
+          DriveCommands.GoToPose(drive, new Pose2d(7.644, 3.961, new Rotation2d(Math.toRadians(0))))
+        );
   
       controller_two
           .back()
@@ -238,8 +244,7 @@ public class RobotContainer {
           .b()
           .onTrue(
             new Shoot(fuel, Constants.SHOOTER_MOTOR_VOLTAGE, Constants.DIVIDER_MOTOR_VOLTAGE)
-            ); //TODO: GET TO THE BOTTOM OF THIS
-                //shooterCounter++;
+            ); 
 
       controller_two
           .a()

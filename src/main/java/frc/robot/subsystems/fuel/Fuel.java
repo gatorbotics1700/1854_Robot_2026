@@ -7,7 +7,6 @@ import frc.robot.Constants.Mode;
 public class Fuel extends SubsystemBase{
     private TalonFX shooterMotor; 
     private  TalonFX dividerMotor;
-    private double shooterVoltage; //needs to be variable to read in SIM, if possible make this unneeded
     
     public Fuel(){
             shooterMotor = new TalonFX(Constants.SHOOTER_MOTOR_CAN_ID, Constants.MECH_CANBUS_NAME);
@@ -22,7 +21,6 @@ public class Fuel extends SubsystemBase{
 
     public void moveShooterMotor(double voltage){
         shooterMotor.setVoltage(voltage);
-        shooterVoltage = voltage; 
     }
 
     public void moveDividerMotor(double voltage) {
@@ -30,10 +28,6 @@ public class Fuel extends SubsystemBase{
     }
 
     public double getShooterMotorVoltage(Mode currentMode) {
-        if(currentMode == Mode.REAL){
-            return shooterMotor.getMotorVoltage().getValueAsDouble();
-        } else {
-            return shooterVoltage;
-        }  
+        return shooterMotor.getMotorVoltage().getValueAsDouble();
     }
 }
