@@ -247,11 +247,11 @@ public class RobotContainer {
             new IntakeFuel(intake, Constants.INTAKE_MOTOR_VOLTAGE)
           );
       
-      controller_two
-          .x()
+      /*controller_two
+           .x()
           .onTrue(
             new Shoot(fuel,0, 0)
-          );
+          ); TODO: uncomment and differentiate button from pathfind*/
       controller_two
           .back()
           .onTrue(
