@@ -241,7 +241,6 @@ public class RobotContainer {
             ); //TODO: GET TO THE BOTTOM OF THIS
                 //shooterCounter++;
 
-<<<<<<< HEAD
       controller_two
           .a()
           .onTrue(
@@ -264,7 +263,6 @@ public class RobotContainer {
             new IntakePivotCommand(intake,Constants.DEPLOY_MOTOR_POSITION)
           );
         
-=======
     // Lock to 0° when A button is held
     controller
         .a()
@@ -316,7 +314,6 @@ public class RobotContainer {
         Command pathfindingCommand = AutoBuilder.pathfindToPose(targetPose, constraints, 0.0);
       },
       drive));
->>>>>>> 20a8f10 (button binding for pathfindToPose)
   }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
