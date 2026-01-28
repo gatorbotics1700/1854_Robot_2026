@@ -14,8 +14,11 @@
 package frc.robot;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.path.PathConstraints;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.GenericHID;
@@ -238,6 +241,7 @@ public class RobotContainer {
             ); //TODO: GET TO THE BOTTOM OF THIS
                 //shooterCounter++;
 
+<<<<<<< HEAD
       controller_two
           .a()
           .onTrue(
@@ -260,6 +264,59 @@ public class RobotContainer {
             new IntakePivotCommand(intake,Constants.DEPLOY_MOTOR_POSITION)
           );
         
+=======
+    // Lock to 0° when A button is held
+    controller
+        .a()
+        .whileTrue(
+            DriveCommands.joystickDriveAtAngle(
+                drive,
+                () -> -controller.getLeftY(),
+                () -> -controller.getLeftX(),
+                () -> new Rotation2d()));
+  
+
+    // Reset gyro to 0° when B button is pressed
+    controller
+        .b()
+        .onTrue(
+            Commands.runOnce(
+                    () -> {
+                      if (DriverStation.getAlliance().isPresent()
+                          && DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
+                        drive.setPose(
+                            new Pose2d(
+                                drive.getPose().getTranslation(),
+                                new Rotation2d(Math.toRadians(0))));
+                      } else {
+                        drive.setPose(
+                            new Pose2d(
+                                drive.getPose().getTranslation(),
+                                new Rotation2d(Math.toRadians(0))));
+                      }
+                    },
+                    drive)
+                .ignoringDisable(true));
+
+    controller_two
+        .back()
+        .onTrue(
+            Commands.runOnce(
+                () -> {
+                  drive.setPose(new Pose2d(4, 2, new Rotation2d(Math.toRadians(0))));
+                },
+                drive));
+
+    controller_two
+      .x()
+      .onTrue(
+      Commands.runOnce(()-> {
+        Pose2d targetPose = new Pose2d(0,5,Rotation2d.fromDegrees(180));
+        PathConstraints constraints = new PathConstraints(3.0,5.0, Units.degreesToRadians(540), Units.degreesToRadians(720));
+        Command pathfindingCommand = AutoBuilder.pathfindToPose(targetPose, constraints, 0.0);
+      },
+      drive));
+>>>>>>> 20a8f10 (button binding for pathfindToPose)
   }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
