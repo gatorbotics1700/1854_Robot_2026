@@ -301,12 +301,15 @@ public class DriveCommands {
                     })));
   }
 
-  public static Command GoToPose(Drive drive, Pose2d pose2d) { //go to pose in straight line (make curve?)
+  public static Command GoToPose(Drive drive, Pose2d targetPose2d) { //go to pose in straight line (make curve?)
+    System.out.println("command run");
     Pose2d currentPose = drive.getPose();
-    double xError = pose2d.getX() - currentPose.getX();
-    double yError = pose2d.getY() - currentPose.getY();
-    double rotationError = pose2d.getRotation().getDegrees() - pose2d.getRotation().getDegrees();
-    rotationError = MathUtil.inputModulus(rotationError, -180, 180);
+    // double xError = targetPose2d.getX() - currentPose.getX();
+    // double yError = targetPose2d.getY() - currentPose.getY();
+    // double rotationError = targetPose2d.getRotation().getDegrees() - currentPose.getRotation().getDegrees();
+    // rotationError = MathUtil.inputModulus(rotationError, -180, 180);
+    PathConstraints constraints = new PathConstraints(3.0,5.0, Units.degreesToRadians(540), Units.degreesToRadians(720));
+    Command pathfindingCommand = AutoBuilder.pathfindToPose(targetPose2d, constraints, 0.0);
     //start on deadbands?
     //get how far in X, Y, and rotation (point in right direction)
     //check if close enouhg not to be moving at all
@@ -316,7 +319,7 @@ public class DriveCommands {
     //
     return Commands.runOnce( //only command
       () -> {
-        drive.setTargetPose(pose2d);
+        drive.setTargetPose(targetPose2d);
       }
     );
   }

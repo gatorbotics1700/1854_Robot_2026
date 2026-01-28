@@ -64,6 +64,8 @@ public class RobotContainer {
   private final Intake intake = new Intake();
   private final Fuel fuel = new Fuel(); 
   private int shooterCounter = 0;
+  
+
     
   
     // Controllers
@@ -313,12 +315,9 @@ public class RobotContainer {
     controller_two
       .x()
       .onTrue(
-      Commands.runOnce(()-> {
-        Pose2d targetPose = new Pose2d(0,5,Rotation2d.fromDegrees(180));
-        PathConstraints constraints = new PathConstraints(3.0,5.0, Units.degreesToRadians(540), Units.degreesToRadians(720));
-        Command pathfindingCommand = AutoBuilder.pathfindToPose(targetPose, constraints, 0.0);
-      },
-      drive));
+        DriveCommands.GoToPose(drive, new Pose2d(4, 2, new Rotation2d(Math.toRadians(0))))
+
+      );
   }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
