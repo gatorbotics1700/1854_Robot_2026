@@ -313,15 +313,11 @@ public class DriveCommands {
     //start on deadbands?
     //get how far in X, Y, and rotation (point in right direction)
     //check if close enouhg not to be moving at all
-    //based on X, Y what angle we should be moving at
+    //based on X, Y what angle we should be moving at\
+    return pathfindingCommand;
     //based on rotation, how much we should be rotating
     //run drive command that uses that info
-    //
-    return Commands.runOnce( //only command
-      () -> {
-        drive.setTargetPose(targetPose2d);
-      }
-    );
+    // return pose command, do not 
   }
 
   private static class WheelRadiusCharacterizationState {

@@ -311,13 +311,15 @@ public class RobotContainer {
                   drive.setPose(new Pose2d(4, 2, new Rotation2d(Math.toRadians(0))));
                 },
                 drive));
+                PathConstraints constraints = new PathConstraints(3.0,5.0, Units.degreesToRadians(540), Units.degreesToRadians(720));
 
     controller_two
       .x()
       .onTrue(
-        DriveCommands.GoToPose(drive, new Pose2d(4, 2, new Rotation2d(Math.toRadians(0))))
+        AutoBuilder.pathfindToPose(new Pose2d(4, 2, new Rotation2d(Math.toRadians(0))), constraints, 0.0)); 
+        // DriveCommands.GoToPose(drive, new Pose2d(4, 2, new Rotation2d(Math.toRadians(0))))
 
-      );
+      
   }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
