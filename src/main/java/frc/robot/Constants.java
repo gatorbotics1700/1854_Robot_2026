@@ -65,4 +65,19 @@ public final class Constants {
   public static final double RETRACT_MOTOR_POSITION = 1;
   public static final double PIVOT_DEADBAND = 2;
 
+  public static final double TRENCH_LEFT_X = 10.811;
+  public static final double TRENCH_LEFT_Y = 0.814;
+  public static final double TRENCH_RIGHT_X = 11.055;
+  public static final double TRENCH_RIGHT_Y = 7.371;
+  public static final double BUMP_LEFT_X = 10.811;
+  public static final double BUMP_LEFT_Y = 2.18;
+  public static final double BUMP_RIGHT_X = 10.758;
+  public static final double BUMP_RIGHT_Y = 7.371;
+  public static final double SHOOT_CENTER_X = 14.025;
+  public static final double SHOOT_CENTER_Y = 4.029;
+  public static final double SHOOT_LEFT_X = 14.021;
+  public static final double SHOOT_LEFT_Y = 2.560;
+  public static final double SHOOT_RIGHT_X = 14.023;
+  public static final double SHOOT_RIGHT_Y = 5.604;
+
 }

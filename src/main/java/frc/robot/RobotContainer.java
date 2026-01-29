@@ -13,6 +13,11 @@
 
 package frc.robot;
 
+import java.util.Optional;
+
+import org.littletonrobotics.junction.Logger;
+import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
+
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.path.PathConstraints;
 
@@ -28,9 +33,9 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.DriveCommands;
-import frc.robot.commands.Shoot;
 import frc.robot.commands.IntakeFuel;
 import frc.robot.commands.IntakePivotCommand;
+import frc.robot.commands.Shoot;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
@@ -46,11 +51,6 @@ import frc.robot.subsystems.vision.VisionIOLimelight;
 import frc.robot.subsystems.vision.VisionIOPhotonVisionSim;
 import frc.robot.util.RobotConfigLoader;
 
-import java.util.Optional;
-
-import org.littletonrobotics.junction.Logger;
-import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
-
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
  * "declarative" paradigm, very little robot logic should actually be handled in the {@link Robot}
@@ -64,6 +64,8 @@ public class RobotContainer {
   private final Intake intake = new Intake();
   private final Fuel fuel = new Fuel(); 
   private int shooterCounter = 0;
+  private PathConstraints constraints = new PathConstraints(3.0,5.0, Units.degreesToRadians(540), Units.degreesToRadians(720));
+
   
 
     
@@ -226,12 +228,6 @@ public class RobotContainer {
                       },
                       drive)
                   .ignoringDisable(true));
-      
-      controller
-        .y()
-        .onTrue( 
-          DriveCommands.GoToPose(drive, new Pose2d(7.644, 3.961, new Rotation2d(Math.toRadians(0))))
-        );
   
       controller_two
           .back()
@@ -302,6 +298,42 @@ public class RobotContainer {
                     },
                     drive)
                 .ignoringDisable(true));
+
+      controller
+        .rightBumper()
+        .onTrue(
+            AutoBuilder.pathfindToPose(new Pose2d(Constants.BUMP_RIGHT_X, Constants.BUMP_RIGHT_Y, new Rotation2d(Math.toRadians(0))), constraints, 0.0)); 
+      
+      controller
+        .leftBumper()
+        .onTrue(
+            AutoBuilder.pathfindToPose(new Pose2d(Constants.BUMP_LEFT_X, Constants.BUMP_LEFT_Y, new Rotation2d(Math.toRadians(0))), constraints, 0.0)); 
+
+      controller
+        .rightTrigger()
+        .onTrue(
+            AutoBuilder.pathfindToPose(new Pose2d(Constants.TRENCH_RIGHT_X, Constants.TRENCH_RIGHT_Y, new Rotation2d(Math.toRadians(0))), constraints, 0.0)); 
+      
+      controller
+        .leftTrigger()
+        .onTrue(
+            AutoBuilder.pathfindToPose(new Pose2d(Constants.TRENCH_LEFT_X, Constants.TRENCH_LEFT_Y, new Rotation2d(Math.toRadians(0))), constraints, 0.0)); 
+
+      controller
+        .povLeft()
+        .onTrue(
+            AutoBuilder.pathfindToPose(new Pose2d(Constants.SHOOT_LEFT_X, Constants.SHOOT_LEFT_Y, new Rotation2d(Math.toRadians(0))), constraints, 0.0)); 
+      
+      controller
+        .povUp()
+        .onTrue(
+            AutoBuilder.pathfindToPose(new Pose2d(Constants.SHOOT_CENTER_X, Constants.SHOOT_CENTER_Y, new Rotation2d(Math.toRadians(0))), constraints, 0.0)); 
+      
+      controller
+        .povRight()
+        .onTrue(
+            AutoBuilder.pathfindToPose(new Pose2d(Constants.SHOOT_RIGHT_X, Constants.SHOOT_RIGHT_Y, new Rotation2d(Math.toRadians(0))), constraints, 0.0)); 
+               
 
     controller_two
         .back()

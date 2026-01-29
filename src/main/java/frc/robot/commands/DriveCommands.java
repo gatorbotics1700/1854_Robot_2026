@@ -301,24 +301,6 @@ public class DriveCommands {
                     })));
   }
 
-  public static Command GoToPose(Drive drive, Pose2d targetPose2d) { //go to pose in straight line (make curve?)
-    System.out.println("command run");
-    Pose2d currentPose = drive.getPose();
-    // double xError = targetPose2d.getX() - currentPose.getX();
-    // double yError = targetPose2d.getY() - currentPose.getY();
-    // double rotationError = targetPose2d.getRotation().getDegrees() - currentPose.getRotation().getDegrees();
-    // rotationError = MathUtil.inputModulus(rotationError, -180, 180);
-    PathConstraints constraints = new PathConstraints(3.0,5.0, Units.degreesToRadians(540), Units.degreesToRadians(720));
-    Command pathfindingCommand = AutoBuilder.pathfindToPose(targetPose2d, constraints, 0.0);
-    //start on deadbands?
-    //get how far in X, Y, and rotation (point in right direction)
-    //check if close enouhg not to be moving at all
-    //based on X, Y what angle we should be moving at\
-    return pathfindingCommand;
-    //based on rotation, how much we should be rotating
-    //run drive command that uses that info
-    // return pose command, do not 
-  }
 
   private static class WheelRadiusCharacterizationState {
     double[] positions = new double[4];
