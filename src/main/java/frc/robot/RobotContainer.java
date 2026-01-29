@@ -49,6 +49,7 @@ import frc.robot.subsystems.vision.Vision;
 import frc.robot.subsystems.vision.VisionConstants;
 import frc.robot.subsystems.vision.VisionIOLimelight;
 import frc.robot.subsystems.vision.VisionIOPhotonVisionSim;
+import frc.robot.util.CommandSimMacXboxController;
 import frc.robot.util.RobotConfigLoader;
 
 /**
@@ -63,20 +64,11 @@ public class RobotContainer {
   private final Vision vision;
   private final Intake intake = new Intake();
   private final Fuel fuel = new Fuel(); 
-  private int shooterCounter = 0;
   private PathConstraints constraints = new PathConstraints(3.0,5.0, Units.degreesToRadians(540), Units.degreesToRadians(720));
-
-  
-
-    
   
     // Controllers
-    private final CommandXboxController controller = new CommandXboxController(0);
-    private final CommandXboxController controller_two = new CommandXboxController(3);
-  
-    private final GenericHID buttonBoard1A = new GenericHID(1);
-    private final GenericHID buttonBoard1B = new GenericHID(2);
-  
+    private final CommandXboxController controller;
+    private final CommandXboxController controller_two;
   
     // Dashboard inputs
     private final LoggedDashboardChooser<Command> autoChooser;
@@ -87,6 +79,8 @@ public class RobotContainer {
       switch (Constants.currentMode) {
         case REAL:
           // Real robot, instantiate hardware IO implementations
+          controller = new CommandXboxController(Constants.CONTROLLER_PORT_DRIVER);
+          controller_two = new CommandXboxController(Constants.CONTROLLER_PORT_CODRIVER);
           drive =
               new Drive(
                   new GyroIOPigeon2(),
@@ -106,6 +100,14 @@ public class RobotContainer {
           break;
   
         case SIM:
+          String osName = System.getProperty("os.name");
+          if (osName.contains("Mac")) {
+            controller = new CommandSimMacXboxController(Constants.CONTROLLER_PORT_DRIVER);
+            controller_two = new CommandSimMacXboxController(Constants.CONTROLLER_PORT_CODRIVER);
+          } else {
+            controller = new CommandXboxController(Constants.CONTROLLER_PORT_DRIVER);
+            controller_two = new CommandXboxController(Constants.CONTROLLER_PORT_CODRIVER);
+          }
           // Sim robot, instantiate physics sim IO implementations
           drive =
               new Drive(
@@ -127,6 +129,8 @@ public class RobotContainer {
   
         default: // TODO: should the default be real as a safety for matches? to be discussed
           // Replayed robot, disable IO implementations
+          controller = new CommandXboxController(Constants.CONTROLLER_PORT_DRIVER);
+          controller_two = new CommandXboxController(Constants.CONTROLLER_PORT_CODRIVER);
           drive =
               new Drive(
                   new GyroIO() {},
@@ -229,15 +233,6 @@ public class RobotContainer {
                       drive)
                   .ignoringDisable(true));
   
-      controller_two
-          .back()
-          .onTrue(
-              Commands.runOnce(
-                  () -> {
-                    drive.setPose(new Pose2d(4, 2, new Rotation2d(Math.toRadians(0))));
-                  },
-                  drive));
-  
       controller_two            
           .b()
           .onTrue(
@@ -249,17 +244,19 @@ public class RobotContainer {
           .onTrue(
             new IntakeFuel(intake, Constants.INTAKE_MOTOR_VOLTAGE)
           );
-      
-      /*controller_two
-           .x()
+
+      controller_two
+          .x()
           .onTrue(
             new Shoot(fuel,0, 0)
-          ); TODO: uncomment and differentiate button from pathfind*/
+          );
+
       controller_two
           .back()
           .onTrue(
             new IntakePivotCommand(intake,Constants.RETRACT_MOTOR_POSITION)
           );
+
       controller_two
           .y()
           .onTrue(
@@ -333,25 +330,6 @@ public class RobotContainer {
         .povRight()
         .onTrue(
             AutoBuilder.pathfindToPose(new Pose2d(Constants.SHOOT_RIGHT_X, Constants.SHOOT_RIGHT_Y, new Rotation2d(Math.toRadians(0))), constraints, 0.0)); 
-               
-
-    controller_two
-        .back()
-        .onTrue(
-            Commands.runOnce(
-                () -> {
-                  drive.setPose(new Pose2d(4, 2, new Rotation2d(Math.toRadians(0))));
-                },
-                drive));
-                PathConstraints constraints = new PathConstraints(3.0,5.0, Units.degreesToRadians(540), Units.degreesToRadians(720));
-
-    controller_two
-      .x()
-      .onTrue(
-        AutoBuilder.pathfindToPose(new Pose2d(4, 2, new Rotation2d(Math.toRadians(0))), constraints, 0.0)); 
-        // DriveCommands.GoToPose(drive, new Pose2d(4, 2, new Rotation2d(Math.toRadians(0))))
-
-      
   }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
@@ -419,20 +397,12 @@ public class RobotContainer {
     Logger.recordOutput("Buttons/Controller2/X", controller_two.x().getAsBoolean());
     Logger.recordOutput("Buttons/Controller2/Y", controller_two.y().getAsBoolean());
 
-    // Log button board states
-    for (int i = 1; i <= 6; i++) {
-      Logger.recordOutput("Buttons/ButtonBoard1A/Button" + i, buttonBoard1A.getRawButton(i));
-      Logger.recordOutput("Buttons/ButtonBoard1B/Button" + i, buttonBoard1B.getRawButton(i));
-    }
-
     // Log command scheduler status
     Logger.recordOutput("Commands/SchedulerActive", true);
     Logger.recordOutput("Commands/LogTime", System.currentTimeMillis());
 
     // Log command information with names
     Command driveCmd = drive.getCurrentCommand();
-    Command shootCmd = fuel.getCurrentCommand();
-    Command intakeCmd = intake.getCurrentCommand();
 
     //double shooterMotorVoltage = fuel.getShooterMotorVoltage(Constants.currentMode); see if this could be fixed
 

@@ -47,6 +47,9 @@ public final class Constants {
     REPLAY
   }
 
+  public static final int CONTROLLER_PORT_DRIVER = 0;
+  public static final int CONTROLLER_PORT_CODRIVER = 1;
+
   public static final int KRAKEN_TICKS_PER_REV = 2048;
   public static final double OUTAKE_MOTOR_VOLTAGE = 1.0;
 
@@ -72,7 +75,7 @@ public final class Constants {
   public static final double BUMP_LEFT_X = 10.811;
   public static final double BUMP_LEFT_Y = 2.18;
   public static final double BUMP_RIGHT_X = 10.758;
-  public static final double BUMP_RIGHT_Y = 7.371;
+  public static final double BUMP_RIGHT_Y = 5.5;
   public static final double SHOOT_CENTER_X = 14.025;
   public static final double SHOOT_CENTER_Y = 4.029;
   public static final double SHOOT_LEFT_X = 14.021;
