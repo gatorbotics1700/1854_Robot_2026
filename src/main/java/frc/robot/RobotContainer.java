@@ -395,17 +395,41 @@ public class RobotContainer {
       controller
         .povLeft()
         .onTrue(
-            AutoBuilder.pathfindToPose(Constants.RED_SHOOT_LEFT, constraints, 0.0)); 
+          Commands.runOnce(
+            () -> {
+              if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
+                AutoBuilder.pathfindToPose(Constants.RED_SHOOT_LEFT, constraints,0.0).schedule();
+              } else {
+                AutoBuilder.pathfindToPose(Constants.BLUE_SHOOT_LEFT, constraints, 0.0).schedule();
+              
+              }}   
+          ));
       
       controller
         .povUp()                                                                                                                                                                                                                                 
         .onTrue(
-            AutoBuilder.pathfindToPose(Constants.RED_SHOOT_CENTER, constraints, 0.0)); 
+          Commands.runOnce(
+            () -> {
+              if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
+                AutoBuilder.pathfindToPose(Constants.RED_SHOOT_CENTER, constraints,0.0).schedule();
+              } else {
+                AutoBuilder.pathfindToPose(Constants.BLUE_SHOOT_CENTER, constraints, 0.0).schedule();
+              
+              }}   
+          )); 
       
       controller
         .povRight()
         .onTrue(
-            AutoBuilder.pathfindToPose(Constants.RED_SHOOT_RIGHT, constraints, 0.0)); 
+          Commands.runOnce(
+            () -> {
+              if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
+                AutoBuilder.pathfindToPose(Constants.RED_SHOOT_RIGHT, constraints,0.0).schedule();
+              } else {
+                AutoBuilder.pathfindToPose(Constants.BLUE_SHOOT_RIGHT, constraints, 0.0).schedule();
+              
+              }}   
+          ));
   }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
