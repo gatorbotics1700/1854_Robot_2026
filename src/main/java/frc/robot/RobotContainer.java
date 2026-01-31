@@ -297,37 +297,63 @@ public class RobotContainer {
       controller
         .rightBumper()
         .onTrue(
-            AutoBuilder.pathfindToPose(new Pose2d(Constants.BUMP_RIGHT_X, Constants.BUMP_RIGHT_Y, new Rotation2d(Math.toRadians(0))), constraints, 0.0)); 
-      
+          Commands.runOnce(
+            () -> {
+              if (isInAllianceZone() == true) {
+              AutoBuilder.pathfindToPose(Constants.BUMP_RIGHT_INSIDE, constraints, constraints.maxVelocity()).andThen(AutoBuilder.pathfindToPose(Constants.BUMP_RIGHT, constraints, 0.0)).schedule(); 
+            } else {
+              AutoBuilder.pathfindToPose(Constants.BUMP_RIGHT, constraints, constraints.maxVelocity()).andThen(AutoBuilder.pathfindToPose(Constants.BUMP_RIGHT_INSIDE, constraints, 0.0)).schedule();
+            }}
+          ));
       controller
         .leftBumper()
         .onTrue(
-            AutoBuilder.pathfindToPose(new Pose2d(Constants.BUMP_LEFT_X, Constants.BUMP_LEFT_Y, new Rotation2d(Math.toRadians(0))), constraints, 0.0)); 
+          Commands.runOnce(
+            () -> {
+              if (isInAllianceZone() == true) {
+              AutoBuilder.pathfindToPose(Constants.BUMP_LEFT_INSIDE, constraints, constraints.maxVelocity()).andThen(AutoBuilder.pathfindToPose(Constants.BUMP_LEFT, constraints, 0.0)).schedule(); 
+            } else {
+              AutoBuilder.pathfindToPose(Constants.BUMP_LEFT, constraints, constraints.maxVelocity()).andThen(AutoBuilder.pathfindToPose(Constants.BUMP_LEFT_INSIDE, constraints, 0.0)).schedule();
+            }}
+          ));
 
       controller
         .rightTrigger()
         .onTrue(
-            AutoBuilder.pathfindToPose(new Pose2d(Constants.TRENCH_RIGHT_X, Constants.TRENCH_RIGHT_Y, new Rotation2d(Math.toRadians(0))), constraints, 0.0)); 
-      
+          Commands.runOnce(
+            () -> {
+              if (isInAllianceZone() == true) {
+              AutoBuilder.pathfindToPose(Constants.TRENCH_RIGHT_INSIDE, constraints, constraints.maxVelocity()).andThen(AutoBuilder.pathfindToPose(Constants.TRENCH_RIGHT, constraints, 0.0)).schedule(); 
+            } else {
+              AutoBuilder.pathfindToPose(Constants.TRENCH_RIGHT, constraints, constraints.maxVelocity()).andThen(AutoBuilder.pathfindToPose(Constants.TRENCH_RIGHT_INSIDE, constraints, 0.0)).schedule();
+            }}
+        ));
       controller
-        .leftTrigger()
-        .onTrue(
-            AutoBuilder.pathfindToPose(new Pose2d(Constants.TRENCH_LEFT_X, Constants.TRENCH_LEFT_Y, new Rotation2d(Math.toRadians(0))), constraints, 0.0)); 
+          .leftTrigger()
+          .onTrue(
+            Commands.runOnce(
+            () -> {
+              if (isInAllianceZone() == true) {
+              AutoBuilder.pathfindToPose(Constants.TRENCH_LEFT_INSIDE, constraints, constraints.maxVelocity()).andThen(AutoBuilder.pathfindToPose(Constants.TRENCH_LEFT, constraints, 0.0)).schedule(); 
+            } else {
+              AutoBuilder.pathfindToPose(Constants.TRENCH_LEFT, constraints, constraints.maxVelocity()).andThen(AutoBuilder.pathfindToPose(Constants.TRENCH_LEFT_INSIDE, constraints, 0.0)).schedule();
+            }}
+        ));
 
       controller
         .povLeft()
         .onTrue(
-            AutoBuilder.pathfindToPose(new Pose2d(Constants.SHOOT_LEFT_X, Constants.SHOOT_LEFT_Y, new Rotation2d(Math.toRadians(0))), constraints, 0.0)); 
+            AutoBuilder.pathfindToPose(Constants.SHOOT_LEFT, constraints, 0.0)); 
       
       controller
         .povUp()
         .onTrue(
-            AutoBuilder.pathfindToPose(new Pose2d(Constants.SHOOT_CENTER_X, Constants.SHOOT_CENTER_Y, new Rotation2d(Math.toRadians(0))), constraints, 0.0)); 
+            AutoBuilder.pathfindToPose(Constants.SHOOT_CENTER, constraints, 0.0)); 
       
       controller
         .povRight()
         .onTrue(
-            AutoBuilder.pathfindToPose(new Pose2d(Constants.SHOOT_RIGHT_X, Constants.SHOOT_RIGHT_Y, new Rotation2d(Math.toRadians(0))), constraints, 0.0)); 
+            AutoBuilder.pathfindToPose(Constants.SHOOT_RIGHT, constraints, 0.0)); 
   }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
@@ -368,6 +394,23 @@ public class RobotContainer {
     } else {
       return 0.0; // Return 0 if absolute value is within desired margin of error
     }
+  }
+
+  private boolean isInAllianceZone() {
+    if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
+      if (drive.getPose().getX() > 12.208) {
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      if (drive.getPose().getX() < 4.386) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
   }
 
   private double modifyJoystickAxis(double value) {

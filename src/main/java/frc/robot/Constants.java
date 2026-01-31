@@ -13,6 +13,8 @@
 
 package frc.robot;
 
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.RobotBase;
 import frc.robot.util.RobotConfigLoader;
 
@@ -68,19 +70,16 @@ public final class Constants {
   public static final double RETRACT_MOTOR_POSITION = 1;
   public static final double PIVOT_DEADBAND = 2;
 
-  public static final double TRENCH_LEFT_X = 10.811;
-  public static final double TRENCH_LEFT_Y = 0.814;
-  public static final double TRENCH_RIGHT_X = 11.055;
-  public static final double TRENCH_RIGHT_Y = 7.371;
-  public static final double BUMP_LEFT_X = 10.811;
-  public static final double BUMP_LEFT_Y = 2.18;
-  public static final double BUMP_RIGHT_X = 10.758;
-  public static final double BUMP_RIGHT_Y = 5.5;
-  public static final double SHOOT_CENTER_X = 14.025;
-  public static final double SHOOT_CENTER_Y = 4.029;
-  public static final double SHOOT_LEFT_X = 14.021;
-  public static final double SHOOT_LEFT_Y = 2.560;
-  public static final double SHOOT_RIGHT_X = 14.023;
-  public static final double SHOOT_RIGHT_Y = 5.604;
 
+  public static final Pose2d SHOOT_CENTER = new Pose2d(14.025, 4.029, new Rotation2d(Math.toRadians(0)));
+  public static final Pose2d SHOOT_LEFT = new Pose2d(14.021, 2.560, new Rotation2d(Math.toRadians(0)));
+  public static final Pose2d SHOOT_RIGHT = new Pose2d(14.023, 5.604, new Rotation2d(Math.toRadians(0)));
+  public static final Pose2d TRENCH_LEFT = new Pose2d(10.811, 0.814, new Rotation2d(Math.toRadians(0)));
+  public static final Pose2d TRENCH_RIGHT = new Pose2d(11.055, 7.371, new Rotation2d(Math.toRadians(0)));
+  public static final Pose2d BUMP_LEFT = new Pose2d(10.811, 2.18, new Rotation2d(Math.toRadians(45)));
+  public static final Pose2d BUMP_RIGHT = new Pose2d(10.758, 5.5, new Rotation2d(Math.toRadians(45)));
+  public static final Pose2d TRENCH_LEFT_INSIDE = new Pose2d(12.208, 0.536, new Rotation2d(Math.toRadians(0)));
+  public static final Pose2d TRENCH_RIGHT_INSIDE = new Pose2d(12.208, 7.369, new Rotation2d(Math.toRadians(0)));
+  public static final Pose2d BUMP_RIGHT_INSIDE = new Pose2d(12.8, 5.5, new Rotation2d(Math.toRadians(45)));
+  public static final Pose2d BUMP_LEFT_INSIDE = new Pose2d(12.8, 2.18, new Rotation2d(Math.toRadians(45)));
 }
