@@ -8,14 +8,14 @@ import frc.robot.Constants;
 import frc.robot.Constants.Mode;
 import frc.robot.commands.IntakePivotCommand;
 
-public class Intake extends SubsystemBase{
+public class IntakeSubsystem extends SubsystemBase{
     private  TalonFX fuelMotor;
     private  TalonFX deployMotor;
     private double intakeMotorVoltage;
     private boolean isDeployed;
     private double deployMotorPosition;
     
-    public Intake(){
+    public IntakeSubsystem(){
         fuelMotor= new TalonFX(Constants.FUEL_MOTOR_CAN_ID, Constants.MECH_CANBUS_NAME);
         deployMotor = new TalonFX(Constants.DEPLOY_MOTOR_CAN_ID, Constants.MECH_CANBUS_NAME);
         isDeployed = false;
@@ -36,7 +36,7 @@ public class Intake extends SubsystemBase{
 
     public void setIsDeployed(boolean deployStat){
         isDeployed = deployStat;
-        
+
     }
 
 

@@ -2,15 +2,15 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
-import frc.robot.subsystems.fuel.Fuel;
+import frc.robot.subsystems.fuel.FuelSubsystem;
 
-public class Shoot extends Command{
+public class ShootCommand extends Command{
 
-    private Fuel fuelSubsystem;
+    private FuelSubsystem fuelSubsystem;
     private double shooterVoltage;
     private double dividerVoltage;
     
-    public Shoot(Fuel fuelSubsystem, double shooterVoltage, double dividerVoltage){
+    public ShootCommand(FuelSubsystem fuelSubsystem, double shooterVoltage, double dividerVoltage){
         this.fuelSubsystem = fuelSubsystem; 
         this.shooterVoltage = shooterVoltage;
         this.dividerVoltage = dividerVoltage;

@@ -36,14 +36,14 @@ import java.util.LinkedList;
 import java.util.List;
 import org.littletonrobotics.junction.Logger;
 
-public class Vision extends SubsystemBase {
+public class VisionSubsystem extends SubsystemBase {
   private final VisionConsumer consumer;
   private final VisionIO[] io;
   private final VisionIOInputsAutoLogged[] inputs;
   private final Alert[] disconnectedAlerts;
   private final List<Pose3d> tagPoses = new LinkedList<>();
 
-  public Vision(VisionConsumer consumer, VisionIO... io) {
+  public VisionSubsystem(VisionConsumer consumer, VisionIO... io) {
     this.consumer = consumer;
     this.io = io;
 

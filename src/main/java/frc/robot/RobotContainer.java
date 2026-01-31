@@ -33,19 +33,19 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.DriveCommands;
-import frc.robot.commands.IntakeFuel;
+import frc.robot.commands.IntakeFuelCommand;
 import frc.robot.commands.IntakePivotCommand;
-import frc.robot.commands.Shoot;
+import frc.robot.commands.ShootCommand;
 import frc.robot.generated.TunerConstants;
-import frc.robot.subsystems.drive.Drive;
+import frc.robot.subsystems.drive.DriveSubsystem;
 import frc.robot.subsystems.drive.GyroIO;
 import frc.robot.subsystems.drive.GyroIOPigeon2;
 import frc.robot.subsystems.drive.ModuleIO;
 import frc.robot.subsystems.drive.ModuleIOSim;
 import frc.robot.subsystems.drive.ModuleIOTalonFX;
-import frc.robot.subsystems.fuel.Fuel;
-import frc.robot.subsystems.intake.Intake;
-import frc.robot.subsystems.vision.Vision;
+import frc.robot.subsystems.fuel.FuelSubsystem;
+import frc.robot.subsystems.intake.IntakeSubsystem;
+import frc.robot.subsystems.vision.VisionSubsystem;
 import frc.robot.subsystems.vision.VisionConstants;
 import frc.robot.subsystems.vision.VisionIOLimelight;
 import frc.robot.subsystems.vision.VisionIOPhotonVisionSim;
@@ -60,10 +60,10 @@ import frc.robot.util.RobotConfigLoader;
  */
 public class RobotContainer {
   // Subsystems
-  private final Drive drive;
-  private final Vision vision;
-  private final Intake intake = new Intake();
-  private final Fuel fuel = new Fuel(); 
+  private final DriveSubsystem drive;
+  private final VisionSubsystem vision;
+  private final IntakeSubsystem intake = new IntakeSubsystem();
+  private final FuelSubsystem fuel = new FuelSubsystem(); 
   private PathConstraints constraints = new PathConstraints(3.0,5.0, Units.degreesToRadians(540), Units.degreesToRadians(720));
   
     // Controllers
@@ -82,7 +82,7 @@ public class RobotContainer {
           controller = new CommandXboxController(Constants.CONTROLLER_PORT_DRIVER);
           controller_two = new CommandXboxController(Constants.CONTROLLER_PORT_CODRIVER);
           drive =
-              new Drive(
+              new DriveSubsystem(
                   new GyroIOPigeon2(),
                   new ModuleIOTalonFX(TunerConstants.FrontLeft),
                   new ModuleIOTalonFX(TunerConstants.FrontRight),
@@ -90,7 +90,7 @@ public class RobotContainer {
                   new ModuleIOTalonFX(TunerConstants.BackRight),
                   (pose) -> {});
           vision =
-              new Vision(
+              new VisionSubsystem(
                   drive,
                   new VisionIOLimelight(
                       VisionConstants.LIMELIGHT_0_NAME,
@@ -110,7 +110,7 @@ public class RobotContainer {
           }
           // Sim robot, instantiate physics sim IO implementations
           drive =
-              new Drive(
+              new DriveSubsystem(
                   new GyroIO() {},
                   new ModuleIOSim(TunerConstants.FrontLeft),
                   new ModuleIOSim(TunerConstants.FrontRight),
@@ -118,7 +118,7 @@ public class RobotContainer {
                   new ModuleIOSim(TunerConstants.BackRight),
                   (pose) -> {});
           vision =
-              new Vision(
+              new VisionSubsystem(
                   drive,
                   new VisionIOPhotonVisionSim(
                       VisionConstants.LIMELIGHT_0_NAME,
@@ -132,14 +132,14 @@ public class RobotContainer {
           controller = new CommandXboxController(Constants.CONTROLLER_PORT_DRIVER);
           controller_two = new CommandXboxController(Constants.CONTROLLER_PORT_CODRIVER);
           drive =
-              new Drive(
+              new DriveSubsystem(
                   new GyroIO() {},
                   new ModuleIO() {},
                   new ModuleIO() {},
                   new ModuleIO() {},
                   new ModuleIO() {},
                   (pose) -> {});
-          vision = new Vision(drive);
+          vision = new VisionSubsystem(drive);
           break;
       }
   
@@ -236,19 +236,19 @@ public class RobotContainer {
       controller_two            
           .b()
           .onTrue(
-            new Shoot(fuel, Constants.SHOOTER_MOTOR_VOLTAGE, Constants.DIVIDER_MOTOR_VOLTAGE)
+            new ShootCommand(fuel, Constants.SHOOTER_MOTOR_VOLTAGE, Constants.DIVIDER_MOTOR_VOLTAGE)
             ); 
 
       controller_two
           .a()
           .onTrue(
-            new IntakeFuel(intake, Constants.INTAKE_MOTOR_VOLTAGE)
+            new IntakeFuelCommand(intake, Constants.INTAKE_MOTOR_VOLTAGE)
           );
 
       controller_two
           .x()
           .onTrue(
-            new Shoot(fuel,0, 0)
+            new ShootCommand(fuel,0, 0)
           );
 
 
@@ -343,7 +343,7 @@ public class RobotContainer {
     }
   }
 
-  public Command getIntakeCommand(Intake intake) {
+  public Command getIntakeCommand(IntakeSubsystem intake) {
     if (intake.isDeployed() == true){
               return new IntakePivotCommand(intake, Constants.RETRACT_MOTOR_POSITION);
             } else {
@@ -351,7 +351,7 @@ public class RobotContainer {
             }
   }
 
-  public Drive getDriveSubsystem() {
+  public DriveSubsystem getDriveSubsystem() {
     return drive;
   }
 

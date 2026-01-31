@@ -4,12 +4,12 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.Mode;
 
-public class Fuel extends SubsystemBase{
+public class FuelSubsystem extends SubsystemBase{
     private TalonFX shooterMotor; 
     private  TalonFX dividerMotor;
     private double shooterMotorVoltage;
     
-    public Fuel(){
+    public FuelSubsystem(){
             shooterMotor = new TalonFX(Constants.SHOOTER_MOTOR_CAN_ID, Constants.MECH_CANBUS_NAME);
             dividerMotor = new TalonFX(Constants.DIVIDER_MOTOR_CAN_ID, Constants.MECH_CANBUS_NAME);
     }

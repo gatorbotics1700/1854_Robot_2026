@@ -2,16 +2,16 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.Constants;
-import frc.robot.subsystems.intake.Intake;
+import frc.robot.subsystems.intake.IntakeSubsystem;
  
 
 public class IntakePivotCommand extends Command {
     
-    private final Intake intakeSubsystem;
+    private final IntakeSubsystem intakeSubsystem;
     private double position;
     private long startTime;
 
-    public IntakePivotCommand (Intake intakeSubsystem, double position){
+    public IntakePivotCommand (IntakeSubsystem intakeSubsystem, double position){
         this.intakeSubsystem = intakeSubsystem;
         this.position = position;
         startTime = System.currentTimeMillis();

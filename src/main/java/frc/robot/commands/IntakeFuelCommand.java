@@ -1,16 +1,16 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.intake.Intake;
+import frc.robot.subsystems.intake.IntakeSubsystem;
 
 
-public class IntakeFuel extends Command {
+public class IntakeFuelCommand extends Command {
     
     private final double voltage;
 
-    private final Intake intakeSubsystem;
+    private final IntakeSubsystem intakeSubsystem;
 
-     public IntakeFuel(Intake intakeSubsystem, double voltage) {
+     public IntakeFuelCommand(IntakeSubsystem intakeSubsystem, double voltage) {
         this.intakeSubsystem = intakeSubsystem;
         this.voltage = voltage;
         addRequirements(intakeSubsystem);
