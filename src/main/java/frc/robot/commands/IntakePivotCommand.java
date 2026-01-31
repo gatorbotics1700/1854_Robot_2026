@@ -33,7 +33,7 @@ public class IntakePivotCommand extends Command {
 
     @Override 
     public boolean isFinished () {
-        if (Math.abs(intakeSubsystem.getDeployMotorPosition() - position) < Constants.PIVOT_DEADBAND) { 
+        if (Math.abs(intakeSubsystem.getDeployMotorPosition(Constants.currentMode) - position) < Constants.PIVOT_DEADBAND) { 
             return true;
         }
         else if (( System.currentTimeMillis() - startTime) > 3000) {

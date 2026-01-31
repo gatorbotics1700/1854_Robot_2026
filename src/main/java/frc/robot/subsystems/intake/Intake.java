@@ -2,15 +2,18 @@ package frc.robot.subsystems.intake;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.ControlModeValue;
 
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.Mode;
+import frc.robot.commands.IntakePivotCommand;
 
 public class Intake extends SubsystemBase{
     private  TalonFX fuelMotor;
     private  TalonFX deployMotor;
     private double intakeMotorVoltage;
     private boolean isDeployed;
+    private double deployMotorPosition;
     
     public Intake(){
         fuelMotor= new TalonFX(Constants.FUEL_MOTOR_CAN_ID, Constants.MECH_CANBUS_NAME);
@@ -33,17 +36,26 @@ public class Intake extends SubsystemBase{
 
     public void setIsDeployed(boolean deployStat){
         isDeployed = deployStat;
+        
     }
 
 
     public void moveDeployMotor(double position) {
        // deployMotor.set(new PositionDutyCycle(position)); // TODO fix
        // can use a PID
+       deployMotorPosition = position;
     }
 
-    public double getDeployMotorPosition() {
-        return deployMotor.getPosition().getValueAsDouble();
+    public double getDeployMotorPosition(Mode currentMode) {
+        if(currentMode == Mode.REAL) {
+            return deployMotor.getPosition().getValueAsDouble();
+        } else {
+            return deployMotorPosition;
+        }
+        
     }
+
+    
 
     public double getIntakeMotorVoltage(Mode currentMode) {
         if(currentMode == Mode.REAL){
@@ -56,4 +68,5 @@ public class Intake extends SubsystemBase{
     public boolean isDeployed() {
         return isDeployed;
     }
+
 }

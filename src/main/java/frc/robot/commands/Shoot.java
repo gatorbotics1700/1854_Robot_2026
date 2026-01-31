@@ -20,7 +20,12 @@ public class Shoot extends Command{
 
     @Override
     public void execute(){
-        System.out.println("SHOOTING");
+        if (shooterVoltage != 0) {
+            System.out.println("SHOOTING");
+
+        }
+        
+
         fuelSubsystem.moveDividerMotor(dividerVoltage);
         fuelSubsystem.moveShooterMotor(shooterVoltage);
     }
@@ -28,9 +33,10 @@ public class Shoot extends Command{
     @Override
     public boolean isFinished(){
         if (shooterVoltage == fuelSubsystem.getShooterMotorVoltage(Constants.currentMode)) {
-          return true; 
+            System.out.println("LEBRON IS FINISHED");
+            return true; 
         }
-        System.out.println("LEBRON IS FINISHED");
+        
         return false;
         // TODO: should we check what type of condition needs to be met
     }

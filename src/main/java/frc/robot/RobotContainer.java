@@ -251,16 +251,14 @@ public class RobotContainer {
             new Shoot(fuel,0, 0)
           );
 
-      controller_two
-          .back()
-          .onTrue(
-            new IntakePivotCommand(intake,Constants.RETRACT_MOTOR_POSITION)
-          );
+
 
       controller_two
           .y()
           .onTrue(
-            new IntakePivotCommand(intake,Constants.DEPLOY_MOTOR_POSITION)
+            Commands.runOnce(
+              () -> {getIntakeCommand(intake).execute();}
+            )
           );
         
     // Lock to 0° when A button is held
@@ -343,6 +341,14 @@ public class RobotContainer {
       System.out.println("bad io error");
       return Commands.none();
     }
+  }
+
+  public Command getIntakeCommand(Intake intake) {
+    if (intake.isDeployed() == true){
+              return new IntakePivotCommand(intake, Constants.RETRACT_MOTOR_POSITION);
+            } else {
+              return new IntakePivotCommand(intake,Constants.DEPLOY_MOTOR_POSITION);
+            }
   }
 
   public Drive getDriveSubsystem() {
