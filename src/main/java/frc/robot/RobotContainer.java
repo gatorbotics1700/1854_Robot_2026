@@ -59,7 +59,7 @@ import frc.robot.util.RobotConfigLoader;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  // Subsystems
+  // Subsystems 
   private final DriveSubsystem drive;
   private final VisionSubsystem vision;
   private final IntakeSubsystem intake = new IntakeSubsystem();
@@ -397,11 +397,11 @@ public class RobotContainer {
         .onTrue(
           Commands.runOnce(
             () -> {
+              System.out.println("ALLIANCE " + DriverStation.getAlliance().get());
               if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
                 AutoBuilder.pathfindToPose(Constants.RED_SHOOT_LEFT, constraints,0.0).schedule();
               } else {
                 AutoBuilder.pathfindToPose(Constants.BLUE_SHOOT_LEFT, constraints, 0.0).schedule();
-              
               }}   
           ));
       
