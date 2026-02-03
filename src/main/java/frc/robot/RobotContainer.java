@@ -278,8 +278,8 @@ public class RobotContainer {
         .onTrue(
             Commands.runOnce(
                     () -> {
-                      if (DriverStation.getAlliance().isPresent()
-                          && DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
+                      if (getAlliance().isPresent()
+                          && getAlliance().get() == DriverStation.Alliance.Red) {
                         drive.setPose(
                             new Pose2d(
                                 drive.getPose().getTranslation(),
@@ -299,7 +299,7 @@ public class RobotContainer {
         .onTrue(
           Commands.runOnce(
             () -> {
-              if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
+              if (getAlliance().get() == DriverStation.Alliance.Red) {
                 if (isInAllianceZone() == true) {
                   AutoBuilder.pathfindToPose(Constants.RED_BUMP_RIGHT_INSIDE, constraints, constraints.maxVelocity())
                   .andThen(AutoBuilder.pathfindToPose(Constants.RED_BUMP_RIGHT, constraints, 0.0)).schedule(); 
@@ -323,7 +323,7 @@ public class RobotContainer {
         .onTrue(
           Commands.runOnce(
             () -> {
-              if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
+              if (getAlliance().get() == DriverStation.Alliance.Red) {
                 if (isInAllianceZone() == true) {
                   AutoBuilder.pathfindToPose(Constants.RED_BUMP_LEFT_INSIDE, constraints, constraints.maxVelocity())
                   .andThen(AutoBuilder.pathfindToPose(Constants.RED_BUMP_LEFT, constraints, 0.0)).schedule(); 
@@ -348,7 +348,7 @@ public class RobotContainer {
         .onTrue(
           Commands.runOnce(
             () -> {
-              if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
+              if (getAlliance().get() == DriverStation.Alliance.Red) {
                 if (isInAllianceZone() == true) {
                 AutoBuilder.pathfindToPose(Constants.RED_TRENCH_RIGHT_INSIDE, constraints, constraints.maxVelocity())
                 .andThen(AutoBuilder.pathfindToPose(Constants.RED_TRENCH_RIGHT, constraints, 0.0)).schedule(); 
@@ -372,7 +372,7 @@ public class RobotContainer {
         .onTrue(
           Commands.runOnce(
             () -> {
-              if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
+              if (getAlliance().get() == DriverStation.Alliance.Red) {
                 if (isInAllianceZone() == true) {
                 AutoBuilder.pathfindToPose(Constants.RED_TRENCH_LEFT_INSIDE, constraints, constraints.maxVelocity())
                 .andThen(AutoBuilder.pathfindToPose(Constants.RED_TRENCH_LEFT, constraints, 0.0)).schedule(); 
