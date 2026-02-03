@@ -200,7 +200,16 @@ public class RobotContainer {
                     () -> modifyJoystickAxis(-controller.getRightX()))) // Changed to raw values
             .onFalse(DriveCommands.stopDriveCommand(drive));
       }
-  
+      
+      controller
+        .x()
+        .onTrue(
+          Commands.runOnce(
+                () -> {
+                  drive.setSlowDrive();
+                },
+                drive));
+
       // Lock to 0° when A button is held
       controller
           .a()
