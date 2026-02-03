@@ -13,6 +13,7 @@ public class IntakeFuelCommand extends Command {
      public IntakeFuelCommand(IntakeSubsystem intakeSubsystem, double voltage) {
         this.intakeSubsystem = intakeSubsystem;
         this.voltage = voltage;
+        System.out.println("lebron intake command initialized");
         addRequirements(intakeSubsystem);
     }
 

@@ -19,6 +19,7 @@ public class IntakeSubsystem extends SubsystemBase{
         fuelMotor= new TalonFX(Constants.FUEL_MOTOR_CAN_ID, Constants.MECH_CANBUS_NAME);
         deployMotor = new TalonFX(Constants.DEPLOY_MOTOR_CAN_ID, Constants.MECH_CANBUS_NAME);
         isDeployed = false;
+        System.out.println("lebron initializing");
     }
 
     @Override
@@ -26,7 +27,7 @@ public class IntakeSubsystem extends SubsystemBase{
     }
    
     public void moveFuelMotor(double voltage){
-        fuelMotor.setVoltage(voltage);
+        fuelMotor.setVoltage(Math.max(voltage, 2));
         intakeMotorVoltage = voltage;
     }
 
@@ -36,9 +37,7 @@ public class IntakeSubsystem extends SubsystemBase{
 
     public void setIsDeployed(boolean deployStat){
         isDeployed = deployStat;
-
     }
-
 
     public void moveDeployMotor(double position) {
        // deployMotor.set(new PositionDutyCycle(position)); // TODO fix
