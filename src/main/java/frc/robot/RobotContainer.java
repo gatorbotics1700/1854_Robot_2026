@@ -221,6 +221,7 @@ public class RobotContainer {
                   () -> new Rotation2d()));
   
       // Reset gyro to 0° when B button is pressed
+
       controller
           .b()
           .onTrue(
@@ -265,9 +266,7 @@ public class RobotContainer {
       controller_two
           .y()
           .onTrue(
-            Commands.runOnce(
-              () -> {getIntakeCommand(intake).execute();}
-            )
+            new IntakeFuelCommand(intake, 0)
           );
         
     // Lock to 0° when A button is held
