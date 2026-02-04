@@ -184,20 +184,20 @@ public class RobotContainer {
       if (alliance.isPresent() && alliance.get() == DriverStation.Alliance.Red) {
         driverControl
             .whileTrue(
-                DriveCommands.joystickDrive(
+                DriveCommands.joystickDriveAtAngle(
                     drive,
                     () -> modifyJoystickAxis(controller.getLeftY()), // Changed to raw values
                     () -> modifyJoystickAxis(controller.getLeftX()), // Changed to raw values
-                    () -> modifyJoystickAxis(-controller.getRightX()))) // Changed to raw values
+                    () -> getJoystickAngle(-controller.getRightX(),-controller.getRightY()))) // Changed to raw values
             .onFalse(DriveCommands.stopDriveCommand(drive));
       } else if (alliance.isPresent() && alliance.get() == DriverStation.Alliance.Blue) {
         driverControl
             .whileTrue(
-                DriveCommands.joystickDrive(
+                DriveCommands.joystickDriveAtAngle(
                     drive,
                     () -> modifyJoystickAxis(-controller.getLeftY()), // Changed to raw values
                     () -> modifyJoystickAxis(-controller.getLeftX()), // Changed to raw values
-                    () -> modifyJoystickAxis(-controller.getRightX()))) // Changed to raw values
+                    () -> getJoystickAngle(-controller.getRightX(),-controller.getRightY()))) // Changed to raw values
             .onFalse(DriveCommands.stopDriveCommand(drive));
       }
       
@@ -558,5 +558,11 @@ public class RobotContainer {
       default:
         return DriverStation.getAlliance();
      }
+  }
+
+  private Rotation2d getJoystickAngle(double x, double y){
+    double xMod = modifyJoystickAxis(x);
+    double yMod = modifyJoystickAxis(y);
+    return new Rotation2d(Math.atan2(x,y));
   }
 }
