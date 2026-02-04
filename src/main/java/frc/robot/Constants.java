@@ -55,10 +55,10 @@ public final class Constants {
   public static final int KRAKEN_TICKS_PER_REV = 2048;
   public static final double OUTAKE_MOTOR_VOLTAGE = 1.0;
 
-  public static final int FUEL_MOTOR_CAN_ID = 40;
-  public static final double INTAKE_MOTOR_VOLTAGE = 8.0;
+  public static final int INTAKE_MOTOR_CAN_ID = 40;
+  public static final double INTAKE_MOTOR_VOLTAGE = 10.0;
   public static final int DEPLOY_MOTOR_CAN_ID = 41;
-  public static final double SHOOTER_MOTOR_VOLTAGE = 1.0;
+  public static final double SHOOTER_MOTOR_VOLTAGE = 8.0;
   public static final double DIVIDER_MOTOR_VOLTAGE = 1;
     public static final double RELEASE_SHOOTER_MOTOR_VOLTAGE = 4.0;
   public static final double RELEASE_DIVIDER_MOTOR_VOLTAGE = 1;

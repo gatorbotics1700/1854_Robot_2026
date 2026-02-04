@@ -16,7 +16,7 @@ public class IntakeSubsystem extends SubsystemBase{
     private double deployMotorPosition;
     
     public IntakeSubsystem(){
-        fuelMotor= new TalonFX(Constants.FUEL_MOTOR_CAN_ID, Constants.MECH_CANBUS_NAME);
+        fuelMotor= new TalonFX(Constants.INTAKE_MOTOR_CAN_ID, Constants.MECH_CANBUS_NAME);
         deployMotor = new TalonFX(Constants.DEPLOY_MOTOR_CAN_ID, Constants.MECH_CANBUS_NAME);
         isDeployed = false;
         System.out.println("lebron initializing");
