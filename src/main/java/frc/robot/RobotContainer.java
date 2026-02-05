@@ -203,7 +203,7 @@ public class RobotContainer {
       
       controller
         .x()
-        .onTrue(
+        .whileTrue(
           Commands.runOnce(
                 () -> {
                   drive.setSlowDrive();
