@@ -203,7 +203,7 @@ public class RobotContainer {
       
       controller
         .x()
-        .whileTrue(
+        .onChange( // Set slow when pressed, undo when released
           Commands.runOnce(
                 () -> {
                   drive.setSlowDrive();
@@ -563,6 +563,6 @@ public class RobotContainer {
   private Rotation2d getJoystickAngle(double x, double y){
     double xMod = modifyJoystickAxis(x);
     double yMod = modifyJoystickAxis(y);
-    return new Rotation2d(Math.atan2(x,y));
+    return new Rotation2d(Math.atan2(xMod,yMod));
   }
 }
