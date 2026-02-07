@@ -318,9 +318,9 @@ public class RobotContainer {
               } else {
                 if (isInAllianceZone() == true) {
                   AutoBuilder.pathfindToPose(Constants.BLUE_BUMP_RIGHT_INSIDE, constraints, constraints.maxVelocity())
-                  .andThen(AutoBuilder.pathfindToPose(Constants.BLUE_BUMP_RIGHT, constraints, 0.0)).schedule(); 
+                  .andThen(AutoBuilder.pathfindToPose(Constants.BLUE_BUMP_RIGHT_OUTSIDE, constraints, 0.0)).schedule(); 
                 } else {
-                  AutoBuilder.pathfindToPose(Constants.BLUE_BUMP_RIGHT, constraints, constraints.maxVelocity())
+                  AutoBuilder.pathfindToPose(Constants.BLUE_BUMP_RIGHT_OUTSIDE, constraints, constraints.maxVelocity())
                   .andThen(AutoBuilder.pathfindToPose(Constants.BLUE_BUMP_RIGHT_INSIDE, constraints, 0.0)).schedule();
                 }
               }
@@ -342,9 +342,9 @@ public class RobotContainer {
               } else {
                 if (isInAllianceZone() == true) {
                   AutoBuilder.pathfindToPose(Constants.BLUE_BUMP_LEFT_INSIDE, constraints, constraints.maxVelocity())
-                  .andThen(AutoBuilder.pathfindToPose(Constants.BLUE_BUMP_LEFT, constraints, 0.0)).schedule(); 
+                  .andThen(AutoBuilder.pathfindToPose(Constants.BLUE_BUMP_LEFT_OUTSIDE, constraints, 0.0)).schedule(); 
                 } else {
-                  AutoBuilder.pathfindToPose(Constants.BLUE_BUMP_LEFT, constraints, constraints.maxVelocity())
+                  AutoBuilder.pathfindToPose(Constants.BLUE_BUMP_LEFT_OUTSIDE, constraints, constraints.maxVelocity())
                   .andThen(AutoBuilder.pathfindToPose(Constants.BLUE_BUMP_LEFT_INSIDE, constraints, 0.0)).schedule();
                 }
               }
@@ -367,9 +367,9 @@ public class RobotContainer {
               } else {
                 if (isInAllianceZone() == true) {
                   AutoBuilder.pathfindToPose(Constants.BLUE_TRENCH_RIGHT_INSIDE, constraints, constraints.maxVelocity())
-                  .andThen(AutoBuilder.pathfindToPose(Constants.BLUE_TRENCH_RIGHT, constraints, 0.0)).schedule(); 
+                  .andThen(AutoBuilder.pathfindToPose(Constants.BLUE_TRENCH_RIGHT_OUTSIDE, constraints, 0.0)).schedule(); 
                 } else {
-                  AutoBuilder.pathfindToPose(Constants.BLUE_TRENCH_RIGHT, constraints, constraints.maxVelocity())
+                  AutoBuilder.pathfindToPose(Constants.BLUE_TRENCH_RIGHT_OUTSIDE, constraints, constraints.maxVelocity())
                   .andThen(AutoBuilder.pathfindToPose(Constants.BLUE_TRENCH_RIGHT_INSIDE, constraints, 0.0)).schedule();
                 }
               }
@@ -391,9 +391,9 @@ public class RobotContainer {
               } else {
                 if (isInAllianceZone() == true) {
                   AutoBuilder.pathfindToPose(Constants.BLUE_TRENCH_LEFT_INSIDE, constraints, constraints.maxVelocity())
-                  .andThen(AutoBuilder.pathfindToPose(Constants.BLUE_TRENCH_LEFT, constraints, 0.0)).schedule(); 
+                  .andThen(AutoBuilder.pathfindToPose(Constants.BLUE_TRENCH_LEFT_OUTSIDE, constraints, 0.0)).schedule(); 
                 } else {
-                  AutoBuilder.pathfindToPose(Constants.BLUE_TRENCH_LEFT, constraints, constraints.maxVelocity())
+                  AutoBuilder.pathfindToPose(Constants.BLUE_TRENCH_LEFT_OUTSIDE, constraints, constraints.maxVelocity())
                   .andThen(AutoBuilder.pathfindToPose(Constants.BLUE_TRENCH_LEFT_INSIDE, constraints, 0.0)).schedule();
                 }
               }
