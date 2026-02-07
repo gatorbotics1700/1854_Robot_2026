@@ -186,8 +186,8 @@ public class RobotContainer {
             .whileTrue(
                 DriveCommands.joystickDriveAtAngle(
                     drive,
-                    () -> modifyJoystickAxis(controller.getLeftY()), // Changed to raw values
-                    () -> modifyJoystickAxis(controller.getLeftX()), // Changed to raw values
+                    () -> modifyJoystickAxis(controller.getLeftY(), false), // Changed to raw values
+                    () -> modifyJoystickAxis(controller.getLeftX(),false), // Changed to raw values
                     () -> getJoystickAngle(-controller.getRightX(),-controller.getRightY()))) // Changed to raw values
             .onFalse(DriveCommands.stopDriveCommand(drive));
       } else if (alliance.isPresent() && alliance.get() == DriverStation.Alliance.Blue) {
@@ -195,8 +195,8 @@ public class RobotContainer {
             .whileTrue(
                 DriveCommands.joystickDriveAtAngle(
                     drive,
-                    () -> modifyJoystickAxis(-controller.getLeftY()), // Changed to raw values
-                    () -> modifyJoystickAxis(-controller.getLeftX()), // Changed to raw values
+                    () -> modifyJoystickAxis(-controller.getLeftY(),false), // Changed to raw values
+                    () -> modifyJoystickAxis(-controller.getLeftX(),false), // Changed to raw values
                     () -> getJoystickAngle(-controller.getRightX(),-controller.getRightY()))) // Changed to raw values
             .onFalse(DriveCommands.stopDriveCommand(drive));
       }
@@ -310,9 +310,9 @@ public class RobotContainer {
               if (getAlliance().get() == DriverStation.Alliance.Red) {
                 if (isInAllianceZone() == true) {
                   AutoBuilder.pathfindToPose(Constants.RED_BUMP_RIGHT_INSIDE, constraints, constraints.maxVelocity())
-                  .andThen(AutoBuilder.pathfindToPose(Constants.RED_BUMP_RIGHT, constraints, 0.0)).schedule(); 
+                  .andThen(AutoBuilder.pathfindToPose(Constants.RED_BUMP_RIGHT_OUTSIDE, constraints, 0.0)).schedule(); 
                 } else {
-                  AutoBuilder.pathfindToPose(Constants.RED_BUMP_RIGHT, constraints, constraints.maxVelocity())
+                  AutoBuilder.pathfindToPose(Constants.RED_BUMP_RIGHT_OUTSIDE, constraints, constraints.maxVelocity())
                   .andThen(AutoBuilder.pathfindToPose(Constants.RED_BUMP_RIGHT_INSIDE, constraints, 0.0)).schedule();
                 }
               } else {
@@ -334,9 +334,9 @@ public class RobotContainer {
               if (getAlliance().get() == DriverStation.Alliance.Red) {
                 if (isInAllianceZone() == true) {
                   AutoBuilder.pathfindToPose(Constants.RED_BUMP_LEFT_INSIDE, constraints, constraints.maxVelocity())
-                  .andThen(AutoBuilder.pathfindToPose(Constants.RED_BUMP_LEFT, constraints, 0.0)).schedule(); 
+                  .andThen(AutoBuilder.pathfindToPose(Constants.RED_BUMP_LEFT_OUTSIDE, constraints, 0.0)).schedule(); 
                 } else {
-                  AutoBuilder.pathfindToPose(Constants.RED_BUMP_LEFT, constraints, constraints.maxVelocity())
+                  AutoBuilder.pathfindToPose(Constants.RED_BUMP_LEFT_OUTSIDE, constraints, constraints.maxVelocity())
                   .andThen(AutoBuilder.pathfindToPose(Constants.RED_BUMP_LEFT_INSIDE, constraints, 0.0)).schedule();
                 }
               } else {
@@ -359,9 +359,9 @@ public class RobotContainer {
               if (getAlliance().get() == DriverStation.Alliance.Red) {
                 if (isInAllianceZone() == true) {
                 AutoBuilder.pathfindToPose(Constants.RED_TRENCH_RIGHT_INSIDE, constraints, constraints.maxVelocity())
-                .andThen(AutoBuilder.pathfindToPose(Constants.RED_TRENCH_RIGHT, constraints, 0.0)).schedule(); 
+                .andThen(AutoBuilder.pathfindToPose(Constants.RED_TRENCH_RIGHT_OUTSIDE, constraints, 0.0)).schedule(); 
                 } else {
-                AutoBuilder.pathfindToPose(Constants.RED_TRENCH_RIGHT, constraints, constraints.maxVelocity())
+                AutoBuilder.pathfindToPose(Constants.RED_TRENCH_RIGHT_OUTSIDE, constraints, constraints.maxVelocity())
                 .andThen(AutoBuilder.pathfindToPose(Constants.RED_TRENCH_RIGHT_INSIDE, constraints, 0.0)).schedule();
               }
               } else {
@@ -383,9 +383,9 @@ public class RobotContainer {
               if (getAlliance().get() == DriverStation.Alliance.Red) {
                 if (isInAllianceZone() == true) {
                 AutoBuilder.pathfindToPose(Constants.RED_TRENCH_LEFT_INSIDE, constraints, constraints.maxVelocity())
-                .andThen(AutoBuilder.pathfindToPose(Constants.RED_TRENCH_LEFT, constraints, 0.0)).schedule(); 
+                .andThen(AutoBuilder.pathfindToPose(Constants.RED_TRENCH_LEFT_OUTSIDE, constraints, 0.0)).schedule(); 
                 } else {
-                AutoBuilder.pathfindToPose(Constants.RED_TRENCH_LEFT, constraints, constraints.maxVelocity())
+                AutoBuilder.pathfindToPose(Constants.RED_TRENCH_LEFT_OUTSIDE, constraints, constraints.maxVelocity())
                 .andThen(AutoBuilder.pathfindToPose(Constants.RED_TRENCH_LEFT_INSIDE, constraints, 0.0)).schedule();
               }
               } else {
@@ -497,15 +497,17 @@ public class RobotContainer {
 
   }
 
-  private double modifyJoystickAxis(double value) {
+  private double modifyJoystickAxis(double value, boolean isAngle) {
     // Deadband
-    value = deadband(value, 0.025);
+    value = deadband(value, 0.026);
 
     // Square the axis
-    value =
-        Math.copySign(
-            RobotConfigLoader.getDouble("container.joystick_scale_factor") * Math.pow(value, 2),
-            value);
+    if (isAngle == false) {
+      value =
+          Math.copySign(
+              RobotConfigLoader.getDouble("container.joystick_scale_factor") * Math.pow(value, 2),
+              value);
+    }
 
     if (drive.getSlowDrive()) {
       return 0.5 * value;
@@ -561,6 +563,9 @@ public class RobotContainer {
   }
 
   private Rotation2d getJoystickAngle(double x, double y){
-    return new Rotation2d(Math.atan2(x,y));
+
+    double a = modifyJoystickAxis(x, true);
+    double b = modifyJoystickAxis(y, true);
+    return new Rotation2d(Math.atan2(a,b));
   }
 }

@@ -74,10 +74,10 @@ public final class Constants {
   public static final Pose2d RED_SHOOT_CENTER = new Pose2d(14.025, 4.029, new Rotation2d(Math.toRadians(0)));
   public static final Pose2d RED_SHOOT_LEFT = new Pose2d(14.021, 2.560, new Rotation2d(Math.toRadians(315)));
   public static final Pose2d RED_SHOOT_RIGHT = new Pose2d(14.023, 5.604, new Rotation2d(Math.toRadians(45)));
-  public static final Pose2d RED_TRENCH_LEFT = new Pose2d(10.811, 0.814, new Rotation2d(Math.toRadians(0)));
-  public static final Pose2d RED_TRENCH_RIGHT = new Pose2d(11.055, 7.371, new Rotation2d(Math.toRadians(0)));
-  public static final Pose2d RED_BUMP_LEFT = new Pose2d(10.811, 2.18, new Rotation2d(Math.toRadians(45)));
-  public static final Pose2d RED_BUMP_RIGHT = new Pose2d(10.758, 5.5, new Rotation2d(Math.toRadians(45)));
+  public static final Pose2d RED_TRENCH_LEFT_OUTSIDE = new Pose2d(10.811, 0.814, new Rotation2d(Math.toRadians(0)));
+  public static final Pose2d RED_TRENCH_RIGHT_OUTSIDE = new Pose2d(11.055, 7.371, new Rotation2d(Math.toRadians(0)));
+  public static final Pose2d RED_BUMP_LEFT_OUTSIDE = new Pose2d(10.811, 2.18, new Rotation2d(Math.toRadians(45)));
+  public static final Pose2d RED_BUMP_RIGHT_OUTSIDE = new Pose2d(10.758, 5.5, new Rotation2d(Math.toRadians(45)));
   public static final Pose2d RED_TRENCH_LEFT_INSIDE = new Pose2d(12.208, 0.536, new Rotation2d(Math.toRadians(0)));
   public static final Pose2d RED_TRENCH_RIGHT_INSIDE = new Pose2d(12.208, 7.369, new Rotation2d(Math.toRadians(0)));
   public static final Pose2d RED_BUMP_RIGHT_INSIDE = new Pose2d(12.8, 5.5, new Rotation2d(Math.toRadians(45)));
