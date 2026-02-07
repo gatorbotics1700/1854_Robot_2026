@@ -35,6 +35,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import java.util.function.DoubleSupplier;
 import java.util.function.Supplier;
 
@@ -80,7 +81,7 @@ public class DriveCommands {
       DriveSubsystem drive,
       DoubleSupplier xSupplier,
       DoubleSupplier ySupplier,
-      DoubleSupplier omegaSupplier) {
+      DoubleSupplier omegaSupplier){ //TODO: change this
     return Commands.run(
         () -> {
           // Get linear velocity
@@ -121,7 +122,8 @@ public class DriveCommands {
       DriveSubsystem drive,
       DoubleSupplier xSupplier,
       DoubleSupplier ySupplier,
-      Supplier<Rotation2d> rotationSupplier) {
+      Supplier<Rotation2d> rotationSupplier,
+      Optional<Alliance> alliance){
 
     // Create PID controller
     ProfiledPIDController angleController =
@@ -151,8 +153,8 @@ public class DriveCommands {
                       linearVelocity.getY() * drive.getMaxLinearSpeedMetersPerSec(),
                       omega);
               boolean isFlipped =
-                  DriverStation.getAlliance().isPresent()
-                      && DriverStation.getAlliance().get() == Alliance.Red;
+                  alliance.isPresent()
+                      && alliance.get() == Alliance.Red;
               drive.runVelocity(
                   ChassisSpeeds.fromFieldRelativeSpeeds(
                       speeds,

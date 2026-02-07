@@ -19,6 +19,7 @@ import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.path.PathConstraints;
 
 import edu.wpi.first.math.geometry.Pose2d;
@@ -75,6 +76,13 @@ public class RobotContainer {
   
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
+      //path planner auto commands
+      NamedCommands.registerCommand("shootCenter", new ShootCommand(fuel, Constants.SHOOTER_MOTOR_VOLTAGE, Constants.DIVIDER_MOTOR_VOLTAGE));
+      NamedCommands.registerCommand("deployIntake", new IntakePivotCommand(intake, Constants.DEPLOY_MOTOR_POSITION));
+      NamedCommands.registerCommand("runIntake", new IntakeFuelCommand(intake,Constants.INTAKE_MOTOR_VOLTAGE));
+      NamedCommands.registerCommand("stopIntake",new IntakeFuelCommand(intake, 0));
+      NamedCommands.registerCommand("stopShoot", new ShootCommand(fuel, 0, 0));
+      NamedCommands.registerCommand("retractIntake", new IntakePivotCommand(intake, 0));
       // Set up robot depending on mode
       switch (Constants.currentMode) {
         case REAL:
@@ -188,7 +196,8 @@ public class RobotContainer {
                     drive,
                     () -> modifyJoystickAxis(controller.getLeftY(), false), // Changed to raw values
                     () -> modifyJoystickAxis(controller.getLeftX(),false), // Changed to raw values
-                    () -> getJoystickAngle(-controller.getRightX(),-controller.getRightY()))) // Changed to raw values
+                    () -> getJoystickAngle(-controller.getRightX(),-controller.getRightY()),  // Changed to raw values
+                    getAlliance()))
             .onFalse(DriveCommands.stopDriveCommand(drive));
       } else if (alliance.isPresent() && alliance.get() == DriverStation.Alliance.Blue) {
         driverControl
@@ -197,7 +206,8 @@ public class RobotContainer {
                     drive,
                     () -> modifyJoystickAxis(-controller.getLeftY(),false), // Changed to raw values
                     () -> modifyJoystickAxis(-controller.getLeftX(),false), // Changed to raw values
-                    () -> getJoystickAngle(-controller.getRightX(),-controller.getRightY()))) // Changed to raw values
+                    () -> getJoystickAngle(-controller.getRightX(),-controller.getRightY()), // Changed to raw values
+                    getAlliance()))
             .onFalse(DriveCommands.stopDriveCommand(drive));
       }
       
@@ -218,7 +228,8 @@ public class RobotContainer {
                   drive,
                   () -> -controller.getLeftY(),
                   () -> -controller.getLeftX(),
-                  () -> new Rotation2d()));
+                  () -> new Rotation2d(),
+                  getAlliance()));
   
       // Reset gyro to 0° when B button is pressed
 
@@ -277,7 +288,8 @@ public class RobotContainer {
                 drive,
                 () -> -controller.getLeftY(),
                 () -> -controller.getLeftX(),
-                () -> new Rotation2d()));
+                () -> new Rotation2d(),
+                getAlliance()));
   
 
     // Reset gyro to 0° when B button is pressed
@@ -366,11 +378,11 @@ public class RobotContainer {
               }
               } else {
                 if (isInAllianceZone() == true) {
-                  AutoBuilder.pathfindToPose(Constants.BLUE_TRENCH_RIGHT_INSIDE, constraints, constraints.maxVelocity())
-                  .andThen(AutoBuilder.pathfindToPose(Constants.BLUE_TRENCH_RIGHT_OUTSIDE, constraints, 0.0)).schedule(); 
-                } else {
                   AutoBuilder.pathfindToPose(Constants.BLUE_TRENCH_RIGHT_OUTSIDE, constraints, constraints.maxVelocity())
-                  .andThen(AutoBuilder.pathfindToPose(Constants.BLUE_TRENCH_RIGHT_INSIDE, constraints, 0.0)).schedule();
+                  .andThen(AutoBuilder.pathfindToPose(Constants.BLUE_TRENCH_RIGHT_INSIDE, constraints, 0.0)).schedule(); 
+                } else {
+                  AutoBuilder.pathfindToPose(Constants.BLUE_TRENCH_RIGHT_INSIDE, constraints, constraints.maxVelocity())
+                  .andThen(AutoBuilder.pathfindToPose(Constants.BLUE_TRENCH_RIGHT_OUTSIDE, constraints, 0.0)).schedule();
                 }
               }
             }   
@@ -390,11 +402,11 @@ public class RobotContainer {
               }
               } else {
                 if (isInAllianceZone() == true) {
-                  AutoBuilder.pathfindToPose(Constants.BLUE_TRENCH_LEFT_INSIDE, constraints, constraints.maxVelocity())
-                  .andThen(AutoBuilder.pathfindToPose(Constants.BLUE_TRENCH_LEFT_OUTSIDE, constraints, 0.0)).schedule(); 
-                } else {
                   AutoBuilder.pathfindToPose(Constants.BLUE_TRENCH_LEFT_OUTSIDE, constraints, constraints.maxVelocity())
-                  .andThen(AutoBuilder.pathfindToPose(Constants.BLUE_TRENCH_LEFT_INSIDE, constraints, 0.0)).schedule();
+                  .andThen(AutoBuilder.pathfindToPose(Constants.BLUE_TRENCH_LEFT_INSIDE, constraints, 0.0)).schedule(); 
+                } else {
+                  AutoBuilder.pathfindToPose(Constants.BLUE_TRENCH_LEFT_INSIDE, constraints, constraints.maxVelocity())
+                  .andThen(AutoBuilder.pathfindToPose(Constants.BLUE_TRENCH_LEFT_OUTSIDE, constraints, 0.0)).schedule();
                 }
               }
             }   
@@ -405,8 +417,8 @@ public class RobotContainer {
         .onTrue(
           Commands.runOnce(
             () -> {
-              System.out.println("ALLIANCE " + DriverStation.getAlliance().get());
-              if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
+              System.out.println("ALLIANCE " + getAlliance().get());
+              if (getAlliance().get() == DriverStation.Alliance.Red) {
                 AutoBuilder.pathfindToPose(Constants.RED_SHOOT_LEFT, constraints,0.0).schedule();
               } else {
                 AutoBuilder.pathfindToPose(Constants.BLUE_SHOOT_LEFT, constraints, 0.0).schedule();
@@ -418,7 +430,7 @@ public class RobotContainer {
         .onTrue(
           Commands.runOnce(
             () -> {
-              if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
+              if (getAlliance().get() == DriverStation.Alliance.Red) {
                 AutoBuilder.pathfindToPose(Constants.RED_SHOOT_CENTER, constraints,0.0).schedule();
               } else {
                 AutoBuilder.pathfindToPose(Constants.BLUE_SHOOT_CENTER, constraints, 0.0).schedule();
@@ -431,7 +443,7 @@ public class RobotContainer {
         .onTrue(
           Commands.runOnce(
             () -> {
-              if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
+              if (getAlliance().get() == DriverStation.Alliance.Red) {
                 AutoBuilder.pathfindToPose(Constants.RED_SHOOT_RIGHT, constraints,0.0).schedule();
               } else {
                 AutoBuilder.pathfindToPose(Constants.BLUE_SHOOT_RIGHT, constraints, 0.0).schedule();
@@ -455,10 +467,10 @@ public class RobotContainer {
 
   public Command getIntakeCommand(IntakeSubsystem intake) {
     if (intake.isDeployed() == true){
-              return new IntakePivotCommand(intake, Constants.RETRACT_MOTOR_POSITION);
-            } else {
-              return new IntakePivotCommand(intake,Constants.DEPLOY_MOTOR_POSITION);
-            }
+      return new IntakePivotCommand(intake, Constants.RETRACT_MOTOR_POSITION);
+    } else {
+      return new IntakePivotCommand(intake,Constants.DEPLOY_MOTOR_POSITION);
+    }
   }
 
   public DriveSubsystem getDriveSubsystem() {
@@ -481,7 +493,7 @@ public class RobotContainer {
   }
 
   private boolean isInAllianceZone() {
-    if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
+    if (getAlliance().get() == DriverStation.Alliance.Red) {
       if (drive.getPose().getX() > 12.208) {
         return true;
       } else {
