@@ -555,14 +555,12 @@ public class RobotContainer {
         return DriverStation.getAlliance();
       case SIM: // default to blue in sim
         return Optional.of(DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue));
-      default:
+      default:t
         return DriverStation.getAlliance();
      }
   }
 
   private Rotation2d getJoystickAngle(double x, double y){
-    double xMod = modifyJoystickAxis(x);
-    double yMod = modifyJoystickAxis(y);
-    return new Rotation2d(Math.atan2(xMod,yMod));
+    return new Rotation2d(Math.atan2(x,y));
   }
 }
