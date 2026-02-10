@@ -238,8 +238,8 @@ public class RobotContainer {
           .onTrue(
               Commands.runOnce(
                       () -> {
-                        if (DriverStation.getAlliance().isPresent()
-                            && DriverStation.getAlliance().get() == DriverStation.Alliance.Red) {
+                        if (getAlliance().isPresent()
+                            && getAlliance().get() == DriverStation.Alliance.Red) {
                           drive.setPose(
                               new Pose2d(
                                   drive.getPose().getTranslation(),
@@ -568,11 +568,13 @@ public class RobotContainer {
       case REAL:
         return DriverStation.getAlliance();
       case SIM: // default to blue in sim
-        return Optional.of(DriverStation.getAlliance().orElse(DriverStation.Alliance.Blue));
+        return Optional.of((DriverStation.Alliance.Blue));
       default:
         return DriverStation.getAlliance();
      }
   }
+
+
 
   private Rotation2d getJoystickAngle(double x, double y){
 
