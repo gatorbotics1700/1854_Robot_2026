@@ -83,6 +83,7 @@ public class RobotContainer {
       NamedCommands.registerCommand("stopIntake",new IntakeFuelCommand(intake, 0));
       NamedCommands.registerCommand("stopShoot", new ShootCommand(fuel, 0, 0));
       NamedCommands.registerCommand("retractIntake", new IntakePivotCommand(intake, 0));
+
       // Set up robot depending on mode
       switch (Constants.currentMode) {
         case REAL:

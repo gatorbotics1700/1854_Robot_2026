@@ -7,67 +7,19 @@
         {
           "type": "path",
           "data": {
-            "pathName": "blue hub to center shoot"
+            "pathName": "HubToCenterShoot"
           }
         },
         {
           "type": "named",
           "data": {
             "name": "shootCenter"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "stopShoot"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "center shoot to outpost"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "deployIntake"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "runIntake"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 4.0
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "stopIntake"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "retractIntake"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "outpost to center shoot"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "shootCenter"
+            "waitTime": 5.0
           }
         },
         {
@@ -77,9 +29,39 @@
           }
         },
         {
-          "type": "parallel",
+          "type": "path",
           "data": {
-            "commands": []
+            "pathName": "CenterToDepot"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 5.0
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "DepotToCenterShoot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shootCenter"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 5.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "stopShoot"
           }
         }
       ]
