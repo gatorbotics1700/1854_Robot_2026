@@ -13,6 +13,8 @@
 
 package frc.robot;
 
+import com.ctre.phoenix6.CANBus;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.RobotBase;
@@ -65,6 +67,7 @@ public final class Constants {
 
   public static final int SHOOTER_MOTOR_CAN_ID = 30;
   public static final String MECH_CANBUS_NAME = "rio";
+    public static final CANBus DRIVE_CANIVORE = new CANBus("CANivore");
   public static final int DIVIDER_MOTOR_CAN_ID = 31;
    public static final double DEPLOY_MOTOR_POSITION  = 2;
   public static final double RETRACT_MOTOR_POSITION = 1;

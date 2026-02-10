@@ -46,10 +46,10 @@ import frc.robot.subsystems.drive.ModuleIOSim;
 import frc.robot.subsystems.drive.ModuleIOTalonFX;
 import frc.robot.subsystems.fuel.FuelSubsystem;
 import frc.robot.subsystems.intake.IntakeSubsystem;
-import frc.robot.subsystems.vision.VisionSubsystem;
 import frc.robot.subsystems.vision.VisionConstants;
 import frc.robot.subsystems.vision.VisionIOLimelight;
 import frc.robot.subsystems.vision.VisionIOPhotonVisionSim;
+import frc.robot.subsystems.vision.VisionSubsystem;
 import frc.robot.util.CommandSimMacXboxController;
 import frc.robot.util.RobotConfigLoader;
 
@@ -548,6 +548,7 @@ public class RobotContainer {
     // Log command scheduler status
     Logger.recordOutput("Commands/SchedulerActive", true);
     Logger.recordOutput("Commands/LogTime", System.currentTimeMillis());
+    Logger.recordOutput("LoggedRobot/CANivoreUtil", Constants.DRIVE_CANIVORE.getStatus().BusUtilization);
 
     // Log command information with names
     Command driveCmd = drive.getCurrentCommand();
