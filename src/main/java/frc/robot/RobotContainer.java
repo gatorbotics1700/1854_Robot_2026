@@ -189,6 +189,9 @@ public class RobotContainer {
                   Math.abs(controller.getLeftY()) > 0.1
                       || Math.abs(controller.getLeftX()) > 0.1
                       || Math.abs(controller.getRightX()) > 0.1);
+      // TODO ASAP: remove all places where we check the alliance while binding; instead, check the
+      // alliance while the command runs (ex in a Commands.runOnce) so the code self-corrects if the
+      // driver station lags and fails to initially provide an alliance.
       var alliance = getAlliance();
       if (alliance.isPresent() && alliance.get() == DriverStation.Alliance.Red) {
         driverControl
@@ -210,8 +213,7 @@ public class RobotContainer {
                     () -> getJoystickAngle(-controller.getRightX(),-controller.getRightY()), // Changed to raw values
                     getAlliance()))
             .onFalse(DriveCommands.stopDriveCommand(drive));
-      } // TODO ASAP: if alliance is not provided, yell with a print so the driver knows what's going on, and
-      // bind for a default alliance (red or blue)
+      }
       
       controller
         .x()
