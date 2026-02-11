@@ -210,7 +210,8 @@ public class RobotContainer {
                     () -> getJoystickAngle(-controller.getRightX(),-controller.getRightY()), // Changed to raw values
                     getAlliance()))
             .onFalse(DriveCommands.stopDriveCommand(drive));
-      }
+      } // TODO ASAP: if alliance is not provided, yell with a print so the driver knows what's going on, and
+      // bind for a default alliance (red or blue)
       
       controller
         .x()
