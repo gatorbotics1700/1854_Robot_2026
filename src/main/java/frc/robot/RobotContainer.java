@@ -188,6 +188,7 @@ public class RobotContainer {
               () ->
                   Math.abs(controller.getLeftY()) > 0.1
                       || Math.abs(controller.getLeftX()) > 0.1
+                      || Math.abs(controller.getRightY()) > 0.1
                       || Math.abs(controller.getRightX()) > 0.1);
       var alliance = getAlliance();
       if (alliance.isPresent() && alliance.get() == DriverStation.Alliance.Red) {
