@@ -74,6 +74,8 @@ public class DriveCommands {
     }
 
 
+
+
   /**
    * Field relative drive command using two joysticks (controlling linear and angular velocities).
    */
@@ -100,9 +102,10 @@ public class DriveCommands {
                   linearVelocity.getX() * drive.getMaxLinearSpeedMetersPerSec(),
                   linearVelocity.getY() * drive.getMaxLinearSpeedMetersPerSec(),
                   omega * drive.getMaxAngularSpeedRadPerSec());
-          boolean isFlipped =
+          boolean isFlipped =// else if default to alliance
               DriverStation.getAlliance().isPresent()
                   && DriverStation.getAlliance().get() == Alliance.Red;
+
           drive.runVelocity(
               ChassisSpeeds.fromFieldRelativeSpeeds(
                   speeds,
@@ -155,6 +158,7 @@ public class DriveCommands {
               boolean isFlipped =
                   alliance.isPresent()
                       && alliance.get() == Alliance.Red;
+              System.out.println("drive command running");
               drive.runVelocity(
                   ChassisSpeeds.fromFieldRelativeSpeeds(
                       speeds,

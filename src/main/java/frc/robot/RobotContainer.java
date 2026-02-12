@@ -190,6 +190,11 @@ public class RobotContainer {
                       || Math.abs(controller.getLeftX()) > 0.1
                       || Math.abs(controller.getRightX()) > 0.1);
       var alliance = getAlliance();
+      Trigger ifAllianceChanged = 
+          new Trigger(
+            () ->
+                  getAlliance() != alliance);//TODO: use
+          
       if (alliance.isPresent() && alliance.get() == DriverStation.Alliance.Red) {
         driverControl
             .whileTrue(
@@ -200,7 +205,7 @@ public class RobotContainer {
                     () -> getJoystickAngle(-controller.getRightX(),-controller.getRightY()),  // Changed to raw values
                     getAlliance()))
             .onFalse(DriveCommands.stopDriveCommand(drive));
-      } else if (alliance.isPresent() && alliance.get() == DriverStation.Alliance.Blue) {
+      } else { // blue = default when no alliance
         driverControl
             .whileTrue(
                 DriveCommands.joystickDriveAtAngle(
@@ -210,7 +215,7 @@ public class RobotContainer {
                     () -> getJoystickAngle(-controller.getRightX(),-controller.getRightY()), // Changed to raw values
                     getAlliance()))
             .onFalse(DriveCommands.stopDriveCommand(drive));
-      } // TODO: do something about when an alliance is not provided
+      }
       
       controller
         .x()
@@ -320,7 +325,7 @@ public class RobotContainer {
         .onTrue(
           Commands.runOnce(
             () -> {
-              if (getAlliance().get() == DriverStation.Alliance.Red) {
+              if (getAlliance().isPresent() && getAlliance().get() == DriverStation.Alliance.Red) {
                 if (isInAllianceZone() == true) {
                   AutoBuilder.pathfindToPose(Constants.RED_BUMP_RIGHT_INSIDE, constraints, constraints.maxVelocity())
                   .andThen(AutoBuilder.pathfindToPose(Constants.RED_BUMP_RIGHT_OUTSIDE, constraints, 0.0)).schedule(); 
@@ -344,7 +349,7 @@ public class RobotContainer {
         .onTrue(
           Commands.runOnce(
             () -> {
-              if (getAlliance().get() == DriverStation.Alliance.Red) {
+              if (getAlliance().isPresent() && getAlliance().get() == DriverStation.Alliance.Red) {
                 if (isInAllianceZone() == true) {
                   AutoBuilder.pathfindToPose(Constants.RED_BUMP_LEFT_INSIDE, constraints, constraints.maxVelocity())
                   .andThen(AutoBuilder.pathfindToPose(Constants.RED_BUMP_LEFT_OUTSIDE, constraints, 0.0)).schedule(); 
@@ -369,7 +374,7 @@ public class RobotContainer {
         .onTrue(
           Commands.runOnce(
             () -> {
-              if (getAlliance().get() == DriverStation.Alliance.Red) {
+              if (getAlliance().isPresent() && getAlliance().get() == DriverStation.Alliance.Red) {
                 if (isInAllianceZone() == true) {
                 AutoBuilder.pathfindToPose(Constants.RED_TRENCH_RIGHT_INSIDE, constraints, constraints.maxVelocity())
                 .andThen(AutoBuilder.pathfindToPose(Constants.RED_TRENCH_RIGHT_OUTSIDE, constraints, 0.0)).schedule(); 
@@ -393,7 +398,7 @@ public class RobotContainer {
         .onTrue(
           Commands.runOnce(
             () -> {
-              if (getAlliance().get() == DriverStation.Alliance.Red) {
+              if (getAlliance().isPresent() && getAlliance().get() == DriverStation.Alliance.Red) {
                 if (isInAllianceZone() == true) {
                 AutoBuilder.pathfindToPose(Constants.RED_TRENCH_LEFT_INSIDE, constraints, constraints.maxVelocity())
                 .andThen(AutoBuilder.pathfindToPose(Constants.RED_TRENCH_LEFT_OUTSIDE, constraints, 0.0)).schedule(); 
@@ -431,7 +436,7 @@ public class RobotContainer {
         .onTrue(
           Commands.runOnce(
             () -> {
-              if (getAlliance().get() == DriverStation.Alliance.Red) {
+              if (getAlliance().isPresent() && getAlliance().get() == DriverStation.Alliance.Red) {
                 AutoBuilder.pathfindToPose(Constants.RED_SHOOT_CENTER, constraints,0.0).schedule();
               } else {
                 AutoBuilder.pathfindToPose(Constants.BLUE_SHOOT_CENTER, constraints, 0.0).schedule();
@@ -444,7 +449,7 @@ public class RobotContainer {
         .onTrue(
           Commands.runOnce(
             () -> {
-              if (getAlliance().get() == DriverStation.Alliance.Red) {
+              if (getAlliance().isPresent() && getAlliance().get() == DriverStation.Alliance.Red) {
                 AutoBuilder.pathfindToPose(Constants.RED_SHOOT_RIGHT, constraints,0.0).schedule();
               } else {
                 AutoBuilder.pathfindToPose(Constants.BLUE_SHOOT_RIGHT, constraints, 0.0).schedule();
@@ -494,7 +499,7 @@ public class RobotContainer {
   }
 
   private boolean isInAllianceZone() {
-    if (getAlliance().get() == DriverStation.Alliance.Red) {
+    if (getAlliance().isPresent() && getAlliance().get() == DriverStation.Alliance.Red) {
       if (drive.getPose().getX() > 12.208) {
         return true;
       } else {
