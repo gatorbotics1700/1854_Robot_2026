@@ -30,6 +30,7 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -76,6 +77,16 @@ public class RobotContainer {
   
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
+      // STYLE TODO 02/13: We also define these commands later in the button bindings.
+      // Let's define the commands up here once and recycle them.
+      // For example:
+      // Command shootCommand = new ShootCommand(fuel, Constants.SHOOTER_MOTOR_VOLTAGE, Constants.DIVIDER_MOTOR_VOLTAGE));
+      // ...
+      // NamedCommands.registerCommand("shootCenter", shootCommand);
+      // ...
+      // controller_two.b().onTrue(shootCommand);
+
+
       //path planner auto commands
       NamedCommands.registerCommand("shootCenter", new ShootCommand(fuel, Constants.SHOOTER_MOTOR_VOLTAGE, Constants.DIVIDER_MOTOR_VOLTAGE));
       NamedCommands.registerCommand("deployIntake", new IntakePivotCommand(intake, Constants.DEPLOY_MOTOR_POSITION));
@@ -83,6 +94,27 @@ public class RobotContainer {
       NamedCommands.registerCommand("stopIntake",new IntakeFuelCommand(intake, 0));
       NamedCommands.registerCommand("stopShoot", new ShootCommand(fuel, 0, 0));
       NamedCommands.registerCommand("retractIntake", new IntakePivotCommand(intake, 0));
+
+      // STYLE TODO 02/13: This block is big and bulky.
+      // We should try to have no methods >100 lines.
+      // Consider relocating these to their own method.
+      //
+      // Ex:
+      // public void setupSubsystems() {
+      //     switch (Constants.currentMode) {
+      //     ...
+      //     }
+      // }
+      // public void setupControllers() {
+      //     switch (Constants.currentMode) {
+      //     ...
+      //     }
+      //     configureButtonBindings();
+      // }
+      //
+      // Then, here, just call:
+      //    setupSubsystems();
+      //    setupControllers();
 
       // Set up robot depending on mode
       switch (Constants.currentMode) {
@@ -136,7 +168,7 @@ public class RobotContainer {
           DriverStation.silenceJoystickConnectionWarning(true);
           break;
   
-        default: // TODO: should the default be real as a safety for matches? to be discussed
+        default:
           // Replayed robot, disable IO implementations
           controller = new CommandXboxController(Constants.CONTROLLER_PORT_DRIVER);
           controller_two = new CommandXboxController(Constants.CONTROLLER_PORT_CODRIVER);
@@ -155,22 +187,6 @@ public class RobotContainer {
       // Set up auto routines
       autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
   
-      // Set up SysId routines
-      // autoChooser.addOption(
-      //     "Drive Wheel Radius Characterization", DriveCommands.wheelRadiusCharacterization(drive));
-      // autoChooser.addOption(
-      //     "Drive Simple FF Characterization", DriveCommands.feedforwardCharacterization(drive));
-      // autoChooser.addOption(
-      //     "Drive SysId (Quasistatic Forward)",
-      //     drive.sysIdQuasistatic(SysIdRoutine.Direction.kForward));
-      // autoChooser.addOption(
-      //     "Drive SysId (Quasistatic Reverse)",
-      //     drive.sysIdQuasistatic(SysIdRoutine.Direction.kReverse));
-      // autoChooser.addOption(
-      //     "Drive SysId (Dynamic Forward)", drive.sysIdDynamic(SysIdRoutine.Direction.kForward));
-      // autoChooser.addOption(
-      //     "Drive SysId (Dynamic Reverse)", drive.sysIdDynamic(SysIdRoutine.Direction.kReverse));
-  
       // Configure the button bindings
       configureButtonBindings();
     }
@@ -182,6 +198,25 @@ public class RobotContainer {
      * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     public void configureButtonBindings() {
+      // STYLE TODO 02/13: this method is WAAAAY TOO big and bulky.
+      // Consider moving the driver bindings and codriver bindings into their own separate methods.
+      //
+      // For example:
+      // public void configureDriverButtonBindings() {
+      //     ...
+      // }
+      // public void configureCodriverButtonBindings() {
+      //      ...
+      // }
+      //
+      // Then, here, just call:
+      //    configureDriverButtonBindings();
+      //    configureCodriverButtonBindings();
+
+
+      // Reset any existing set of button bindings (ex: in case we run this method twice)
+      CommandScheduler.getInstance().getActiveButtonLoop().clear();
+
       // Default command, normal field-relative drive
       Trigger driverControl =
           new Trigger(
@@ -238,28 +273,22 @@ public class RobotContainer {
                   () -> new Rotation2d(),
                   getAlliance()));
   
-      // Reset gyro to 0° when B button is pressed
+      // TODO 02/13: b is very easy to press accidentally. 
+      // Consider moving this to an out-of-the-way button (like back or start).
 
+      // Reset gyro to 0° when B button is pressed
       controller
           .b()
           .onTrue(
               Commands.runOnce(
-                      () -> {
-                        if (getAlliance().isPresent()
-                            && getAlliance().get() == DriverStation.Alliance.Red) {
-                          drive.setPose(
-                              new Pose2d(
-                                  drive.getPose().getTranslation(),
-                                  new Rotation2d(Math.toRadians(0))));
-                        } else {
-                          drive.setPose(
-                              new Pose2d(
-                                  drive.getPose().getTranslation(),
-                                  new Rotation2d(Math.toRadians(0))));
-                        }
-                      },
-                      drive)
-                  .ignoringDisable(true));
+                () -> {
+                        drive.setPose(
+                          new Pose2d(
+                            drive.getPose().getTranslation(),
+                            new Rotation2d(Math.toRadians(0))));
+                },
+              drive)
+          .ignoringDisable(true));
   
       controller_two            
           .b()
@@ -285,19 +314,7 @@ public class RobotContainer {
           //.y()
           //.onTrue(
             //new IntakeFuelCommand(intake, 0.0)
-          //);
-        
-    // Lock to 0° when A button is held
-    controller
-        .a()
-        .whileTrue(
-            DriveCommands.joystickDriveAtAngle(
-                drive,
-                () -> -controller.getLeftY(),
-                () -> -controller.getLeftX(),
-                () -> new Rotation2d(),
-                getAlliance()));
-  
+          //);  
 
     // Reset gyro to 0° when B button is pressed
     controller
@@ -321,6 +338,21 @@ public class RobotContainer {
                     drive)
                 .ignoringDisable(true));
 
+      // STYLE TODO 02/13: these command definitions are large and bulky.
+      // Consider making a file for managing these, similar to DriveCommands.
+      //
+      // Ex:
+      //    in "commands" directory, make PathCommands.java, then make methods like
+      //
+      // public static Command driveOverLeftBump(PathConstraints constraints) {
+      //   return Commands.runOnce(
+      //     ...
+      //   );
+      // }
+      //
+      // Then, here, just call:
+      //       controller.rightBumper().onTrue(PathCommands.driveOverLeftBump())
+      //
       controller
         .rightBumper()
         .onTrue(
@@ -573,7 +605,9 @@ public class RobotContainer {
 
   private Optional<Alliance> getAlliance() {
     switch (Constants.currentMode) {
-      case REAL:
+      case REAL: 
+        // TODO 02/13: default use the same alliance from our auto path.
+        // If none provided, rely on driver station.
         return DriverStation.getAlliance();
       case SIM: // default to blue in sim
         return Optional.of((DriverStation.Alliance.Blue));
@@ -585,7 +619,6 @@ public class RobotContainer {
 
 
   private Rotation2d getJoystickAngle(double x, double y){
-
     double a = modifyJoystickAxis(x, true);
     double b = modifyJoystickAxis(y, true);
     return new Rotation2d(Math.atan2(a,b));
