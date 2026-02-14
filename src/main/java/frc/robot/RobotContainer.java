@@ -163,19 +163,7 @@ public class RobotContainer {
 
 
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
-    public RobotContainer() {
-      
-      NamedCommands.registerCommand("shootCenter",  shootCommand);
-      NamedCommands.registerCommand("runIntake", runIntakeFuelCommand);
-      NamedCommands.registerCommand("stopShoot", stopShootCommand);
-      NamedCommands.registerCommand("stopIntake", stopIntakeCommand);
-      
-      
     
-      setupSubsystems();
-      setupControllers();
-      autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
-    }
       // Set up robot depending on mode
      
 
@@ -481,6 +469,22 @@ public class RobotContainer {
    *
    * @return the command to run in autonomous
    */
+
+   public RobotContainer() {
+      
+      NamedCommands.registerCommand("shootCenter",  shootCommand);
+      NamedCommands.registerCommand("runIntake", runIntakeFuelCommand);
+      NamedCommands.registerCommand("stopShoot", stopShootCommand);
+      NamedCommands.registerCommand("stopIntake", stopIntakeCommand);
+      
+      
+    
+      setupSubsystems();
+      setupControllers();
+      configureButtonBindings();
+
+      autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
+    }
   public Command getAutonomousCommand() {
     try {
       return autoChooser.get();
