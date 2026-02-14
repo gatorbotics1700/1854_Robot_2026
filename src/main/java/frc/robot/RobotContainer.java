@@ -622,10 +622,15 @@ public class RobotContainer {
     switch (Constants.currentMode) {
       case REAL: 
         
-        // TODO 02/13: default use the same alliance from our auto path.
-        getAutonomousCommand().getName();
-        // If none provided, rely on driver station.
-        return DriverStation.getAlliance();
+        if (getAutonomousCommand().getName().startsWith("Blue", 0)) {
+          return Optional.of((DriverStation.Alliance.Blue));
+        } else if (getAutonomousCommand().getName().startsWith("Red",0)) {
+          return Optional.of((DriverStation.Alliance.Red));
+        } else {
+          // If none provided, rely on driver station.
+          return DriverStation.getAlliance();
+        }
+        
       case SIM: // default to blue in sim
         return Optional.of((DriverStation.Alliance.Blue));
       default:
