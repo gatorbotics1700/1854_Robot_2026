@@ -37,6 +37,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.IntakeFuelCommand;
 import frc.robot.commands.IntakePivotCommand;
+import frc.robot.commands.PathCommands;
 import frc.robot.commands.ShootCommand;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.drive.DriveSubsystem;
@@ -330,100 +331,44 @@ public class RobotContainer {
       controller
         .rightBumper()
         .onTrue(
-          Commands.runOnce(
-            () -> {
-              if (getAlliance().isPresent() && getAlliance().get() == DriverStation.Alliance.Red) {
-                if (isInAllianceZone() == true) {
-                  AutoBuilder.pathfindToPose(Constants.RED_BUMP_RIGHT_INSIDE, constraints, constraints.maxVelocity())
-                  .andThen(AutoBuilder.pathfindToPose(Constants.RED_BUMP_RIGHT_OUTSIDE, constraints, 0.0)).schedule(); 
-                } else {
-                  AutoBuilder.pathfindToPose(Constants.RED_BUMP_RIGHT_OUTSIDE, constraints, constraints.maxVelocity())
-                  .andThen(AutoBuilder.pathfindToPose(Constants.RED_BUMP_RIGHT_INSIDE, constraints, 0.0)).schedule();
-                }
-              } else {
-                if (isInAllianceZone() == true) {
-                  AutoBuilder.pathfindToPose(Constants.BLUE_BUMP_RIGHT_INSIDE, constraints, constraints.maxVelocity())
-                  .andThen(AutoBuilder.pathfindToPose(Constants.BLUE_BUMP_RIGHT_OUTSIDE, constraints, 0.0)).schedule(); 
-                } else {
-                  AutoBuilder.pathfindToPose(Constants.BLUE_BUMP_RIGHT_OUTSIDE, constraints, constraints.maxVelocity())
-                  .andThen(AutoBuilder.pathfindToPose(Constants.BLUE_BUMP_RIGHT_INSIDE, constraints, 0.0)).schedule();
+            Commands.runOnce(
+              () -> {    
+                if (getAlliance().isPresent() == true) {
+                  PathCommands.driveRightBump(isInAllianceZone(), getAlliance().get(), constraints);
                 }
               }
-            }
-          ));
+        ));
       controller
         .leftBumper()
         .onTrue(
-          Commands.runOnce(
-            () -> {
-              if (getAlliance().isPresent() && getAlliance().get() == DriverStation.Alliance.Red) {
-                if (isInAllianceZone() == true) {
-                  AutoBuilder.pathfindToPose(Constants.RED_BUMP_LEFT_INSIDE, constraints, constraints.maxVelocity())
-                  .andThen(AutoBuilder.pathfindToPose(Constants.RED_BUMP_LEFT_OUTSIDE, constraints, 0.0)).schedule(); 
-                } else {
-                  AutoBuilder.pathfindToPose(Constants.RED_BUMP_LEFT_OUTSIDE, constraints, constraints.maxVelocity())
-                  .andThen(AutoBuilder.pathfindToPose(Constants.RED_BUMP_LEFT_INSIDE, constraints, 0.0)).schedule();
-                }
-              } else {
-                if (isInAllianceZone() == true) {
-                  AutoBuilder.pathfindToPose(Constants.BLUE_BUMP_LEFT_INSIDE, constraints, constraints.maxVelocity())
-                  .andThen(AutoBuilder.pathfindToPose(Constants.BLUE_BUMP_LEFT_OUTSIDE, constraints, 0.0)).schedule(); 
-                } else {
-                  AutoBuilder.pathfindToPose(Constants.BLUE_BUMP_LEFT_OUTSIDE, constraints, constraints.maxVelocity())
-                  .andThen(AutoBuilder.pathfindToPose(Constants.BLUE_BUMP_LEFT_INSIDE, constraints, 0.0)).schedule();
+            Commands.runOnce(
+              () -> {    
+                if (getAlliance().isPresent() == true) {
+                  PathCommands.driveLeftBump(isInAllianceZone(), getAlliance().get(), constraints);
                 }
               }
-            }
-          ));
+        ));
 
       controller
         .rightTrigger()
         .onTrue(
-          Commands.runOnce(
-            () -> {
-              if (getAlliance().isPresent() && getAlliance().get() == DriverStation.Alliance.Red) {
-                if (isInAllianceZone() == true) {
-                AutoBuilder.pathfindToPose(Constants.RED_TRENCH_RIGHT_INSIDE, constraints, constraints.maxVelocity())
-                .andThen(AutoBuilder.pathfindToPose(Constants.RED_TRENCH_RIGHT_OUTSIDE, constraints, 0.0)).schedule(); 
-                } else {
-                AutoBuilder.pathfindToPose(Constants.RED_TRENCH_RIGHT_OUTSIDE, constraints, constraints.maxVelocity())
-                .andThen(AutoBuilder.pathfindToPose(Constants.RED_TRENCH_RIGHT_INSIDE, constraints, 0.0)).schedule();
-              }
-              } else {
-                if (isInAllianceZone() == true) {
-                  AutoBuilder.pathfindToPose(Constants.BLUE_TRENCH_RIGHT_OUTSIDE, constraints, constraints.maxVelocity())
-                  .andThen(AutoBuilder.pathfindToPose(Constants.BLUE_TRENCH_RIGHT_INSIDE, constraints, 0.0)).schedule(); 
-                } else {
-                  AutoBuilder.pathfindToPose(Constants.BLUE_TRENCH_RIGHT_INSIDE, constraints, constraints.maxVelocity())
-                  .andThen(AutoBuilder.pathfindToPose(Constants.BLUE_TRENCH_RIGHT_OUTSIDE, constraints, 0.0)).schedule();
+            Commands.runOnce(
+              () -> {    
+                if (getAlliance().isPresent() == true) {
+                  PathCommands.driveRightTrench(isInAllianceZone(), getAlliance().get(), constraints);
                 }
               }
-            }   
-          ));
+        ));
       controller
         .leftTrigger()
         .onTrue(
-          Commands.runOnce(
-            () -> {
-              if (getAlliance().isPresent() && getAlliance().get() == DriverStation.Alliance.Red) {
-                if (isInAllianceZone() == true) {
-                AutoBuilder.pathfindToPose(Constants.RED_TRENCH_LEFT_INSIDE, constraints, constraints.maxVelocity())
-                .andThen(AutoBuilder.pathfindToPose(Constants.RED_TRENCH_LEFT_OUTSIDE, constraints, 0.0)).schedule(); 
-                } else {
-                AutoBuilder.pathfindToPose(Constants.RED_TRENCH_LEFT_OUTSIDE, constraints, constraints.maxVelocity())
-                .andThen(AutoBuilder.pathfindToPose(Constants.RED_TRENCH_LEFT_INSIDE, constraints, 0.0)).schedule();
-              }
-              } else {
-                if (isInAllianceZone() == true) {
-                  AutoBuilder.pathfindToPose(Constants.BLUE_TRENCH_LEFT_OUTSIDE, constraints, constraints.maxVelocity())
-                  .andThen(AutoBuilder.pathfindToPose(Constants.BLUE_TRENCH_LEFT_INSIDE, constraints, 0.0)).schedule(); 
-                } else {
-                  AutoBuilder.pathfindToPose(Constants.BLUE_TRENCH_LEFT_INSIDE, constraints, constraints.maxVelocity())
-                  .andThen(AutoBuilder.pathfindToPose(Constants.BLUE_TRENCH_LEFT_OUTSIDE, constraints, 0.0)).schedule();
+            Commands.runOnce(
+              () -> {    
+                if (getAlliance().isPresent() == true) {
+                  PathCommands.driveLeftTrench(isInAllianceZone(), getAlliance().get(), constraints);
                 }
               }
-            }   
-          ));
+        ));
 
       controller
         .povLeft()
