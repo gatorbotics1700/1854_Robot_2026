@@ -249,21 +249,7 @@ public class RobotContainer {
                   () -> -controller.getLeftX(),
                   () -> new Rotation2d(),
                   getAlliance()));
-  
 
-      // Reset gyro to 0° when B button is pressed
-      controller
-          .start()
-          .onTrue(
-              Commands.runOnce(
-                () -> {
-                        drive.setPose(
-                          new Pose2d(
-                            drive.getPose().getTranslation(),
-                            new Rotation2d(Math.toRadians(0))));
-                },
-              drive)
-          .ignoringDisable(true));
   
       controller_two            
           .b()
@@ -293,7 +279,7 @@ public class RobotContainer {
 
     // Reset gyro to 0° when B button is pressed
     controller
-        .b()
+        .start()
         .onTrue(
             Commands.runOnce(
                     () -> {
@@ -307,7 +293,7 @@ public class RobotContainer {
                         drive.setPose(
                             new Pose2d(
                                 drive.getPose().getTranslation(),
-                                new Rotation2d(Math.toRadians(0))));
+                                new Rotation2d(Math.toRadians(180))));
                       }
                     },
                     drive)
