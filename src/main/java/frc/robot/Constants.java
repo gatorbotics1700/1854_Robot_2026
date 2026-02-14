@@ -89,12 +89,12 @@ public final class Constants {
 //subtract 7.29
 // TODO: SANITY CHECK ALLIANCE POINTS
   public static final Pose2d BLUE_SHOOT_CENTER = new Pose2d(3.345, 4.029, new Rotation2d(Math.toRadians(0)));
-  public static final Pose2d BLUE_SHOOT_RIGHT = new Pose2d(3.349, 2.560, new Rotation2d(Math.toRadians(0)));
-  public static final Pose2d BLUE_SHOOT_LEFT = new Pose2d(3.347, 5.604, new Rotation2d(Math.toRadians(0)));
+  public static final Pose2d BLUE_SHOOT_RIGHT = new Pose2d(3.349, 2.560, new Rotation2d(Math.toRadians(225))); //TODO: TWEAK COORDINATES
+  public static final Pose2d BLUE_SHOOT_LEFT = new Pose2d(3.347, 5.604, new Rotation2d(Math.toRadians(135))); //TODO: TWEAK COORDINATES
   public static final Pose2d BLUE_TRENCH_LEFT_INSIDE = new Pose2d(3.171, 7.371, new Rotation2d(Math.toRadians(0)));
-  public static final Pose2d BLUE_TRENCH_LEFT_OUTSIDE = new Pose2d(6.218, 7.369, new Rotation2d(Math.toRadians(0)));
+  public static final Pose2d BLUE_TRENCH_LEFT_OUTSIDE = new Pose2d(6.218, 7.371, new Rotation2d(Math.toRadians(0)));
   public static final Pose2d BLUE_TRENCH_RIGHT_INSIDE = new Pose2d(3.171, 0.814, new Rotation2d(Math.toRadians(0)));
-  public static final Pose2d BLUE_TRENCH_RIGHT_OUTSIDE = new Pose2d(6.218, 0.536, new Rotation2d(Math.toRadians(0)));
+  public static final Pose2d BLUE_TRENCH_RIGHT_OUTSIDE = new Pose2d(6.218, 0.814, new Rotation2d(Math.toRadians(0)));
   public static final Pose2d BLUE_BUMP_RIGHT_INSIDE = new Pose2d(3.521, 2.18, new Rotation2d(Math.toRadians(45)));
   public static final Pose2d BLUE_BUMP_LEFT_INSIDE = new Pose2d(3.468, 5.5, new Rotation2d(Math.toRadians(45)));
   public static final Pose2d BLUE_BUMP_LEFT_OUTSIDE = new Pose2d(5.51, 5.5, new Rotation2d(Math.toRadians(45)));

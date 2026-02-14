@@ -334,7 +334,7 @@ public class RobotContainer {
             Commands.runOnce(
               () -> {    
                 if (getAlliance().isPresent() == true) {
-                  PathCommands.driveRightBump(isInAllianceZone(), getAlliance().get(), constraints);
+                  PathCommands.driveRightBump(isInAllianceZone(), getAlliance().get(), constraints).schedule();
                 }
               }
         ));
@@ -344,7 +344,7 @@ public class RobotContainer {
             Commands.runOnce(
               () -> {    
                 if (getAlliance().isPresent() == true) {
-                  PathCommands.driveLeftBump(isInAllianceZone(), getAlliance().get(), constraints);
+                  PathCommands.driveLeftBump(isInAllianceZone(), getAlliance().get(), constraints).schedule();
                 }
               }
         ));
@@ -355,7 +355,7 @@ public class RobotContainer {
             Commands.runOnce(
               () -> {    
                 if (getAlliance().isPresent() == true) {
-                  PathCommands.driveRightTrench(isInAllianceZone(), getAlliance().get(), constraints);
+                  PathCommands.driveRightTrench(isInAllianceZone(), getAlliance().get(), constraints).schedule();
                 }
               }
         ));
@@ -365,7 +365,7 @@ public class RobotContainer {
             Commands.runOnce(
               () -> {    
                 if (getAlliance().isPresent() == true) {
-                  PathCommands.driveLeftTrench(isInAllianceZone(), getAlliance().get(), constraints);
+                  PathCommands.driveLeftTrench(isInAllianceZone(), getAlliance().get(), constraints).schedule();
                 }
               }
         ));
