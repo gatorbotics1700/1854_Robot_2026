@@ -62,15 +62,15 @@ import frc.robot.util.RobotConfigLoader;
  */
 public class RobotContainer {
   // Subsystems 
-  private final DriveSubsystem drive;
-  private final VisionSubsystem vision;
-  private final IntakeSubsystem intake = new IntakeSubsystem();
-  private final FuelSubsystem fuel = new FuelSubsystem(); 
+  private DriveSubsystem drive;
+  private VisionSubsystem vision;
+  private IntakeSubsystem intake = new IntakeSubsystem();
+  private FuelSubsystem fuel = new FuelSubsystem(); 
   private PathConstraints constraints = new PathConstraints(3.0,5.0, Units.degreesToRadians(540), Units.degreesToRadians(720));
   
     // Controllers
-    private final CommandXboxController controller;
-    private final CommandXboxController controller_two;
+    private CommandXboxController controller;
+    private CommandXboxController controller_two;
   
     // Dashboard inputs
     private final LoggedDashboardChooser<Command> autoChooser;
@@ -81,64 +81,33 @@ public class RobotContainer {
     Command stopIntakeCommand = new IntakeFuelCommand(intake, 0.0);
 
 
-    /** The container for the robot. Contains subsystems, OI devices, and commands. */
-    public RobotContainer() {
-      // STYLE TODO 02/13: We also define these commands later in the button bindings.
-      // Let's define the commands up here once and recycle them.
-      // For example:
-      // Command shootCommand = new ShootCommand(fuel, Constants.SHOOTER_MOTOR_VOLTAGE, Constants.DIVIDER_MOTOR_VOLTAGE));
-      // ...
-    
-
-      
-      //Command deployIntakeCommand = new deployIntakeCommand(intake, Constants.DEPLOY_MOTOR_POSITION);
-
-
-
-      // NamedCommands.registerCommand("shootCenter", shootCommand);
-      NamedCommands.registerCommand("shootCenter",  shootCommand);
-      NamedCommands.registerCommand("runIntake", runIntakeFuelCommand);
-      NamedCommands.registerCommand("stopShoot", stopShootCommand);
-      NamedCommands.registerCommand("stopIntake", stopIntakeCommand);
-           // NamedCommands.registerCommand("deployIntake", deployIntakeCommand); // where is the buttton binding for this?
-      // ...
-      // controller_two.b().onTrue(shootCommand);
-
-
-      //path planner auto commands
-     // NamedCommands.registerCommand("deployIntake", new IntakePivotCommand(intake, Constants.DEPLOY_MOTOR_POSITION));
-      NamedCommands.registerCommand("runIntake", new IntakeFuelCommand(intake,Constants.INTAKE_MOTOR_VOLTAGE));
-      NamedCommands.registerCommand("stopIntake",new IntakeFuelCommand(intake, 0));
-      NamedCommands.registerCommand("stopShoot", new ShootCommand(fuel, 0, 0));
-      NamedCommands.registerCommand("retractIntake", new IntakePivotCommand(intake, 0));
-
-      // STYLE TODO 02/13: This block is big and bulky.
-      // We should try to have no methods >100 lines.
-      // Consider relocating these to their own method.
-      //
-      // Ex:
-      // public void setupSubsystems() {
-      //     switch (Constants.currentMode) {
-      //     ...
-      //     }
-      // }
-      // public void setupControllers() {
-      //     switch (Constants.currentMode) {
-      //     ...
-      //     }
-      //     configureButtonBindings();
-      // }
-      //
-      // Then, here, just call:
-      //    setupSubsystems();
-      //    setupControllers();
-
-      // Set up robot depending on mode
-      switch (Constants.currentMode) {
+     public void setupControllers(){
+        switch (Constants.currentMode) {
         case REAL:
           // Real robot, instantiate hardware IO implementations
           controller = new CommandXboxController(Constants.CONTROLLER_PORT_DRIVER);
           controller_two = new CommandXboxController(Constants.CONTROLLER_PORT_CODRIVER);
+          break;
+         case SIM:
+          String osName = System.getProperty("os.name");
+          if (osName.contains("Mac")) {
+            controller = new CommandSimMacXboxController(Constants.CONTROLLER_PORT_DRIVER);
+            controller_two = new CommandSimMacXboxController(Constants.CONTROLLER_PORT_CODRIVER);
+          } else {
+            controller = new CommandXboxController(Constants.CONTROLLER_PORT_DRIVER);
+            controller_two = new CommandXboxController(Constants.CONTROLLER_PORT_CODRIVER);}
+          break;
+          default:
+          // Replayed robot, disable IO implementations
+            controller = new CommandXboxController(Constants.CONTROLLER_PORT_DRIVER);
+            controller_two = new CommandXboxController(Constants.CONTROLLER_PORT_CODRIVER);
+      }
+    }
+     
+    public void setupSubsystems(){
+        switch (Constants.currentMode) {
+        case REAL:
+          // Real robot, instantiate hardware IO implementations
           drive =
               new DriveSubsystem(
                   new GyroIOPigeon2(),
@@ -147,6 +116,7 @@ public class RobotContainer {
                   new ModuleIOTalonFX(TunerConstants.BackLeft),
                   new ModuleIOTalonFX(TunerConstants.BackRight),
                   (pose) -> {});
+    
           vision =
               new VisionSubsystem(
                   drive,
@@ -156,16 +126,8 @@ public class RobotContainer {
                       VisionConstants.ROBOT_TO_LIMELIGHT_0));
   
           break;
-  
+
         case SIM:
-          String osName = System.getProperty("os.name");
-          if (osName.contains("Mac")) {
-            controller = new CommandSimMacXboxController(Constants.CONTROLLER_PORT_DRIVER);
-            controller_two = new CommandSimMacXboxController(Constants.CONTROLLER_PORT_CODRIVER);
-          } else {
-            controller = new CommandXboxController(Constants.CONTROLLER_PORT_DRIVER);
-            controller_two = new CommandXboxController(Constants.CONTROLLER_PORT_CODRIVER);
-          }
           // Sim robot, instantiate physics sim IO implementations
           drive =
               new DriveSubsystem(
@@ -187,8 +149,6 @@ public class RobotContainer {
   
         default:
           // Replayed robot, disable IO implementations
-          controller = new CommandXboxController(Constants.CONTROLLER_PORT_DRIVER);
-          controller_two = new CommandXboxController(Constants.CONTROLLER_PORT_CODRIVER);
           drive =
               new DriveSubsystem(
                   new GyroIO() {},
@@ -198,16 +158,43 @@ public class RobotContainer {
                   new ModuleIO() {},
                   (pose) -> {});
           vision = new VisionSubsystem(drive);
-          break;
-      }
-  
-      // Set up auto routines
+          break;}
+         }
+
+
+    /** The container for the robot. Contains subsystems, OI devices, and commands. */
+    public RobotContainer() {
+      
+      NamedCommands.registerCommand("shootCenter",  shootCommand);
+      NamedCommands.registerCommand("runIntake", runIntakeFuelCommand);
+      NamedCommands.registerCommand("stopShoot", stopShootCommand);
+      NamedCommands.registerCommand("stopIntake", stopIntakeCommand);
       autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
-  
-      // Configure the button bindings
-      configureButtonBindings();
-    }
-  
+      
+      // STYLE TODO 02/13: This block is big and bulky.
+      // We should try to have no methods >100 lines.
+      // Consider relocating these to their own method.
+      //
+      // Ex:
+      // public void setupSubsystems() {
+      //     switch (Constants.currentMode) {
+      //     ...
+      //     }
+      // }
+      // public void setupControllers() {
+      //     switch (Constants.currentMode) {
+      //     ...
+      //     }
+      //     configureButtonBindings();
+      // }
+      //
+      // Then, here, just call:
+      setupSubsystems();
+      setupControllers();}
+
+      // Set up robot depending on mode
+     
+
     /**
      * Use this method to define your button->command mappings. Buttons can be created by
      * instantiating a {@link GenericHID} or one of its subclasses ({@link
