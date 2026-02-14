@@ -290,12 +290,10 @@ public class RobotContainer {
                   () -> new Rotation2d(),
                   getAlliance()));
   
-      // TODO 02/13: b is very easy to press accidentally. 
-      // Consider moving this to an out-of-the-way button (like back or start).
 
       // Reset gyro to 0° when B button is pressed
       controller
-          .b()
+          .start()
           .onTrue(
               Commands.runOnce(
                 () -> {
@@ -623,7 +621,9 @@ public class RobotContainer {
   private Optional<Alliance> getAlliance() {
     switch (Constants.currentMode) {
       case REAL: 
+        
         // TODO 02/13: default use the same alliance from our auto path.
+        getAutonomousCommand().getName();
         // If none provided, rely on driver station.
         return DriverStation.getAlliance();
       case SIM: // default to blue in sim
