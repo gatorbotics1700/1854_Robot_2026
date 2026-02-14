@@ -171,24 +171,7 @@ public class RobotContainer {
       NamedCommands.registerCommand("stopIntake", stopIntakeCommand);
       autoChooser = new LoggedDashboardChooser<>("Auto Choices", AutoBuilder.buildAutoChooser());
       
-      // STYLE TODO 02/13: This block is big and bulky.
-      // We should try to have no methods >100 lines.
-      // Consider relocating these to their own method.
-      //
-      // Ex:
-      // public void setupSubsystems() {
-      //     switch (Constants.currentMode) {
-      //     ...
-      //     }
-      // }
-      // public void setupControllers() {
-      //     switch (Constants.currentMode) {
-      //     ...
-      //     }
-      //     configureButtonBindings();
-      // }
-      //
-      // Then, here, just call:
+      
       setupSubsystems();
       setupControllers();}
 
@@ -201,7 +184,7 @@ public class RobotContainer {
      * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
      * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
-    public void configureButtonBindings() {
+    public void configureDriverButtonBindings() {
       // STYLE TODO 02/13: this method is WAAAAY TOO big and bulky.
       // Consider moving the driver bindings and codriver bindings into their own separate methods.
       //
@@ -291,71 +274,9 @@ public class RobotContainer {
                 },
               drive)
           .ignoringDisable(true));
-  
-      controller_two            
-          .b()
-          .onTrue(
-            new ShootCommand(fuel, Constants.SHOOTER_MOTOR_VOLTAGE, Constants.DIVIDER_MOTOR_VOLTAGE)
-            ); 
-
-      controller_two
-          .a()
-          .onTrue(
-            runIntakeFuelCommand
-          );
-
-      controller_two
-          .x()
-          .onTrue(
-            shootCommand
-          );
 
 
-
-      controller_two
-          .y()
-          .onTrue(
-            stopIntakeCommand
-          );  
-
-    // Reset gyro to 0° when B button is pressed
-    controller
-        .b()
-        .onTrue(
-            Commands.runOnce(
-                    () -> {
-                      if (getAlliance().isPresent()
-                          && getAlliance().get() == DriverStation.Alliance.Red) {
-                        drive.setPose(
-                            new Pose2d(
-                                drive.getPose().getTranslation(),
-                                new Rotation2d(Math.toRadians(0))));
-                      } else {
-                        drive.setPose(
-                            new Pose2d(
-                                drive.getPose().getTranslation(),
-                                new Rotation2d(Math.toRadians(0))));
-                      }
-                    },
-                    drive)
-                .ignoringDisable(true));
-
-      // STYLE TODO 02/13: these command definitions are large and bulky.
-      // Consider making a file for managing these, similar to DriveCommands.
-      //
-      // Ex:
-      //    in "commands" directory, make PathCommands.java, then make methods like
-      //
-      // public static Command driveOverLeftBump(PathConstraints constraints) {
-      //   return Commands.runOnce(
-      //     ...
-      //   );
-      // }
-      //
-      // Then, here, just call:
-      //       controller.rightBumper().onTrue(PathCommands.driveOverLeftBump())
-      //
-      controller
+          controller
         .rightBumper()
         .onTrue(
           Commands.runOnce(
@@ -492,6 +413,56 @@ public class RobotContainer {
               }}   
           ));
   }
+              
+
+      
+
+     public void configureCodriverButtonBindings() {         
+      controller_two            
+          .b()
+          .onTrue(
+            new ShootCommand(fuel, Constants.SHOOTER_MOTOR_VOLTAGE, Constants.DIVIDER_MOTOR_VOLTAGE)
+            ); 
+
+      controller_two
+          .a()
+          .onTrue(
+            runIntakeFuelCommand
+          );
+
+      controller_two
+          .x()
+          .onTrue(
+            shootCommand
+          );
+
+
+
+      controller_two
+          .y()
+          .onTrue(
+            stopIntakeCommand
+          );  
+     }
+    // Reset gyro to 0° when B button is pressed
+    
+
+      // STYLE TODO 02/13: these command definitions are large and bulky.
+      // Consider making a file for managing these, similar to DriveCommands.
+      //
+      // Ex:
+      //    in "commands" directory, make PathCommands.java, then make methods like
+      //
+      // public static Command driveOverLeftBump(PathConstraints constraints) {
+      //   return Commands.runOnce(
+      //     ...
+      //   );
+      // }
+      //
+      // Then, here, just call:
+      //       controller.rightBumper().onTrue(PathCommands.driveOverLeftBump())
+      //
+      
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
