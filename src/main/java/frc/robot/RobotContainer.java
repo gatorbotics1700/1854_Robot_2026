@@ -74,7 +74,13 @@ public class RobotContainer {
   
     // Dashboard inputs
     private final LoggedDashboardChooser<Command> autoChooser;
-  
+
+    Command shootCommand = new ShootCommand(fuel, Constants.SHOOTER_MOTOR_VOLTAGE, Constants.DIVIDER_MOTOR_VOLTAGE);
+    Command runIntakeFuelCommand = new IntakeFuelCommand(intake, Constants.INTAKE_MOTOR_VOLTAGE);
+    Command stopShootCommand = new ShootCommand(fuel,0, 0);
+    Command stopIntakeCommand = new IntakeFuelCommand(intake, 0.0);
+
+
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer() {
       // STYLE TODO 02/13: We also define these commands later in the button bindings.
@@ -82,14 +88,25 @@ public class RobotContainer {
       // For example:
       // Command shootCommand = new ShootCommand(fuel, Constants.SHOOTER_MOTOR_VOLTAGE, Constants.DIVIDER_MOTOR_VOLTAGE));
       // ...
+    
+
+      
+      //Command deployIntakeCommand = new deployIntakeCommand(intake, Constants.DEPLOY_MOTOR_POSITION);
+
+
+
       // NamedCommands.registerCommand("shootCenter", shootCommand);
+      NamedCommands.registerCommand("shootCenter",  shootCommand);
+      NamedCommands.registerCommand("runIntake", runIntakeFuelCommand);
+      NamedCommands.registerCommand("stopShoot", stopShootCommand);
+      NamedCommands.registerCommand("stopIntake", stopIntakeCommand);
+           // NamedCommands.registerCommand("deployIntake", deployIntakeCommand); // where is the buttton binding for this?
       // ...
       // controller_two.b().onTrue(shootCommand);
 
 
       //path planner auto commands
-      NamedCommands.registerCommand("shootCenter", new ShootCommand(fuel, Constants.SHOOTER_MOTOR_VOLTAGE, Constants.DIVIDER_MOTOR_VOLTAGE));
-      NamedCommands.registerCommand("deployIntake", new IntakePivotCommand(intake, Constants.DEPLOY_MOTOR_POSITION));
+     // NamedCommands.registerCommand("deployIntake", new IntakePivotCommand(intake, Constants.DEPLOY_MOTOR_POSITION));
       NamedCommands.registerCommand("runIntake", new IntakeFuelCommand(intake,Constants.INTAKE_MOTOR_VOLTAGE));
       NamedCommands.registerCommand("stopIntake",new IntakeFuelCommand(intake, 0));
       NamedCommands.registerCommand("stopShoot", new ShootCommand(fuel, 0, 0));
@@ -299,22 +316,22 @@ public class RobotContainer {
       controller_two
           .a()
           .onTrue(
-            new IntakeFuelCommand(intake, Constants.INTAKE_MOTOR_VOLTAGE)
+            runIntakeFuelCommand
           );
 
       controller_two
           .x()
           .onTrue(
-            new ShootCommand(fuel,0, 0)
+            shootCommand
           );
 
 
 
-      //controller_two
-          //.y()
-          //.onTrue(
-            //new IntakeFuelCommand(intake, 0.0)
-          //);  
+      controller_two
+          .y()
+          .onTrue(
+            stopIntakeCommand
+          );  
 
     // Reset gyro to 0° when B button is pressed
     controller
