@@ -108,6 +108,39 @@ public class PathCommands {
             }   
           );
     }
+    public static Command driveShootLeft(Alliance alliance, PathConstraints constraints) {
+          return Commands.runOnce(
+            () -> {
+              System.out.println("ALLIANCE " + alliance);
+              if (alliance == DriverStation.Alliance.Red) {
+                AutoBuilder.pathfindToPose(Constants.RED_SHOOT_LEFT, constraints,0.0).schedule();
+              } else {
+                AutoBuilder.pathfindToPose(Constants.BLUE_SHOOT_LEFT, constraints, 0.0).schedule();
+              }}   
+          );
+    }
+    public static Command driveShootCenter(Alliance alliance, PathConstraints constraints) {
+          return Commands.runOnce(
+            () -> {
+              if (alliance == DriverStation.Alliance.Red) {
+                AutoBuilder.pathfindToPose(Constants.RED_SHOOT_CENTER, constraints,0.0).schedule();
+              } else {
+                AutoBuilder.pathfindToPose(Constants.BLUE_SHOOT_CENTER, constraints, 0.0).schedule();
+              }}   
+          );
+    }
+    public static Command driveShootRight(Alliance alliance, PathConstraints constraints) {
+          return Commands.runOnce(
+            () -> {
+              System.out.println("ALLIANCE " + alliance);
+              if (alliance == DriverStation.Alliance.Red) {
+                AutoBuilder.pathfindToPose(Constants.RED_SHOOT_RIGHT, constraints,0.0).schedule();
+              } else {
+                AutoBuilder.pathfindToPose(Constants.BLUE_SHOOT_RIGHT, constraints, 0.0).schedule();
+              }}   
+          );
+    }
+
     
 
 

@@ -268,7 +268,7 @@ public class RobotContainer {
       controller_two            
           .b()
           .onTrue(
-            new ShootCommand(fuel, Constants.SHOOTER_MOTOR_VOLTAGE, Constants.DIVIDER_MOTOR_VOLTAGE)
+            shootCommand
             ); 
 
       controller_two
@@ -280,7 +280,7 @@ public class RobotContainer {
       controller_two
           .x()
           .onTrue(
-            shootCommand
+            stopShootCommand
           );
 
 
@@ -373,41 +373,20 @@ public class RobotContainer {
       controller
         .povLeft()
         .onTrue(
-          Commands.runOnce(
-            () -> {
-              System.out.println("ALLIANCE " + getAlliance().get());
-              if (getAlliance().get() == DriverStation.Alliance.Red) {
-                AutoBuilder.pathfindToPose(Constants.RED_SHOOT_LEFT, constraints,0.0).schedule();
-              } else {
-                AutoBuilder.pathfindToPose(Constants.BLUE_SHOOT_LEFT, constraints, 0.0).schedule();
-              }}   
-          ));
+            PathCommands.driveShootLeft(getAlliance().get(), constraints)
+          );
       
       controller
         .povUp()                                                                                                                                                                                                                                 
         .onTrue(
-          Commands.runOnce(
-            () -> {
-              if (getAlliance().isPresent() && getAlliance().get() == DriverStation.Alliance.Red) {
-                AutoBuilder.pathfindToPose(Constants.RED_SHOOT_CENTER, constraints,0.0).schedule();
-              } else {
-                AutoBuilder.pathfindToPose(Constants.BLUE_SHOOT_CENTER, constraints, 0.0).schedule();
-              
-              }}   
-          )); 
+            PathCommands.driveShootCenter(getAlliance().get(), constraints)
+          ); 
       
       controller
         .povRight()
         .onTrue(
-          Commands.runOnce(
-            () -> {
-              if (getAlliance().isPresent() && getAlliance().get() == DriverStation.Alliance.Red) {
-                AutoBuilder.pathfindToPose(Constants.RED_SHOOT_RIGHT, constraints,0.0).schedule();
-              } else {
-                AutoBuilder.pathfindToPose(Constants.BLUE_SHOOT_RIGHT, constraints, 0.0).schedule();
-              
-              }}   
-          ));
+          PathCommands.driveShootRight(getAlliance().get(), constraints)
+        );
   }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
