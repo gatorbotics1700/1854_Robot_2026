@@ -1,12 +1,10 @@
 package frc.robot.subsystems.intake;
+import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.hardware.TalonFX;
-import com.ctre.phoenix6.signals.ControlModeValue;
 
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.Mode;
-import frc.robot.commands.IntakePivotCommand;
 
 public class IntakeSubsystem extends SubsystemBase{
     private  TalonFX fuelMotor;
@@ -18,12 +16,17 @@ public class IntakeSubsystem extends SubsystemBase{
     public IntakeSubsystem(){
         fuelMotor= new TalonFX(Constants.INTAKE_MOTOR_CAN_ID, Constants.MECH_CANBUS_NAME);
         deployMotor = new TalonFX(Constants.DEPLOY_MOTOR_CAN_ID, Constants.MECH_CANBUS_NAME);
+        currentLimitDeployMotor();
         isDeployed = false;
         System.out.println("lebron initializing");
     }
 
-    @Override
-    public void periodic(){
+    private void currentLimitDeployMotor(){
+        CurrentLimitsConfigs limits = new CurrentLimitsConfigs();
+        limits.SupplyCurrentLimitEnable = true;
+        limits.SupplyCurrentLimit = 60;
+
+        deployMotor.getConfigurator().apply(limits);
     }
    
     public void moveFuelMotor(double voltage){
@@ -52,9 +55,7 @@ public class IntakeSubsystem extends SubsystemBase{
             return deployMotorPosition;
         }
         
-    }
-
-    
+    }  
 
     public double getIntakeMotorVoltage(Mode currentMode) {
         if(currentMode == Mode.REAL){
