@@ -7,14 +7,14 @@ import frc.robot.Constants;
 import frc.robot.Constants.Mode;
 
 public class IntakeSubsystem extends SubsystemBase{
-    private  TalonFX fuelMotor;
+    private  TalonFX intakeMotor;
     private  TalonFX deployMotor;
     private double intakeMotorVoltage;
     private boolean isDeployed;
     private double deployMotorPosition;
     
     public IntakeSubsystem(){
-        fuelMotor= new TalonFX(Constants.INTAKE_MOTOR_CAN_ID, Constants.MECH_CANBUS_NAME);
+        intakeMotor= new TalonFX(Constants.INTAKE_MOTOR_CAN_ID, Constants.MECH_CANBUS_NAME);
         deployMotor = new TalonFX(Constants.DEPLOY_MOTOR_CAN_ID, Constants.MECH_CANBUS_NAME);
         currentLimitDeployMotor();
         isDeployed = false;
@@ -29,13 +29,9 @@ public class IntakeSubsystem extends SubsystemBase{
         deployMotor.getConfigurator().apply(limits);
     }
    
-    public void moveFuelMotor(double voltage){
-        fuelMotor.setVoltage(Math.max(voltage, 2));
+    public void moveIntakeMotor(double voltage){
+        intakeMotor.setVoltage(Math.max(voltage, 2));
         intakeMotorVoltage = voltage;
-    }
-
-    public double getFuelMotorVoltage(){
-        return fuelMotor.getMotorVoltage().getValueAsDouble();
     }
 
     public void setIsDeployed(boolean deployStat){
@@ -59,7 +55,7 @@ public class IntakeSubsystem extends SubsystemBase{
 
     public double getIntakeMotorVoltage(Mode currentMode) {
         if(currentMode == Mode.REAL){
-            return fuelMotor.getMotorVoltage().getValueAsDouble();
+            return intakeMotor.getMotorVoltage().getValueAsDouble();
         } else {
             return intakeMotorVoltage;
         }  

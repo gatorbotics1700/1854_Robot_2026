@@ -19,13 +19,13 @@ public class IntakeFuelCommand extends Command {
 
     @Override
     public void execute() {
-        intakeSubsystem.moveFuelMotor(voltage);
+        intakeSubsystem.moveIntakeMotor(voltage);
     
     }
     
     @Override
     public boolean isFinished() {
-        if(intakeSubsystem.getFuelMotorVoltage() == voltage){
+        if(intakeSubsystem.getIntakeMotorVoltage() == voltage){
             return true;
         } 
         return false;
