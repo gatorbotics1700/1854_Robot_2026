@@ -25,7 +25,7 @@ public class IntakeFuelCommand extends Command {
     
     @Override
     public boolean isFinished() {
-        if(intakeSubsystem.getIntakeMotorVoltage() == voltage){
+        if(intakeSubsystem.getIntakeMotorVoltage() == voltage){ //TODO:find out how to deal with this bcs it needs a mode
             return true;
         } 
         return false;
