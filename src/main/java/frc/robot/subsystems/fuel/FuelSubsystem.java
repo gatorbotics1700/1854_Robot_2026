@@ -1,4 +1,5 @@
 package frc.robot.subsystems.fuel;
+import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
 import com.ctre.phoenix6.hardware.TalonFX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -11,13 +12,25 @@ public class FuelSubsystem extends SubsystemBase{
     
     public FuelSubsystem(){
             shooterMotor = new TalonFX(Constants.SHOOTER_MOTOR_CAN_ID, Constants.MECH_CANBUS_NAME);
+            currentLimitShooterMotor();
             dividerMotor = new TalonFX(Constants.DIVIDER_MOTOR_CAN_ID, Constants.MECH_CANBUS_NAME);
+            currentLimitDividerMotor();
     }
 
+    private void currentLimitShooterMotor(){
+        CurrentLimitsConfigs limits = new CurrentLimitsConfigs();
+        limits.SupplyCurrentLimitEnable = true;
+        limits.SupplyCurrentLimit = 45; // assuming that only drivetrain and dividerMotor will also be running
 
-    @Override
-    public void periodic(){
-        // TODO: take this out
+        shooterMotor.getConfigurator().apply(limits);
+    }
+
+        private void currentLimitDividerMotor(){
+        CurrentLimitsConfigs limits = new CurrentLimitsConfigs();
+        limits.SupplyCurrentLimitEnable = true;
+        limits.SupplyCurrentLimit = 15; // assuming that only drivetrain and shooterMotor will also be running
+
+        dividerMotor.getConfigurator().apply(limits);
     }
 
     public void moveShooterMotor(double voltage){

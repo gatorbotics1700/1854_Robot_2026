@@ -15,6 +15,7 @@ public class IntakeSubsystem extends SubsystemBase{
     
     public IntakeSubsystem(){
         intakeMotor= new TalonFX(Constants.INTAKE_MOTOR_CAN_ID, Constants.MECH_CANBUS_NAME);
+        currentLimitIntakeMotor();
         deployMotor = new TalonFX(Constants.DEPLOY_MOTOR_CAN_ID, Constants.MECH_CANBUS_NAME);
         currentLimitDeployMotor();
         isDeployed = false;
@@ -24,9 +25,17 @@ public class IntakeSubsystem extends SubsystemBase{
     private void currentLimitDeployMotor(){
         CurrentLimitsConfigs limits = new CurrentLimitsConfigs();
         limits.SupplyCurrentLimitEnable = true;
-        limits.SupplyCurrentLimit = 60;
+        limits.SupplyCurrentLimit = 60; // assuming that only drivetrain will also be running
 
         deployMotor.getConfigurator().apply(limits);
+    }
+
+    private void currentLimitIntakeMotor(){
+        CurrentLimitsConfigs limits = new CurrentLimitsConfigs();
+        limits.SupplyCurrentLimitEnable = true;
+        limits.SupplyCurrentLimit = 60; //assuming that only drivetrain will also be running
+
+        intakeMotor.getConfigurator().apply(limits);
     }
    
     public void moveIntakeMotor(double voltage){
