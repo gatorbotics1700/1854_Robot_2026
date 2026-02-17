@@ -77,9 +77,9 @@ public class RobotContainer {
     private final LoggedDashboardChooser<Command> autoChooser;
 
     Command shootCommand = new ShootCommand(fuel, Constants.SHOOTER_MOTOR_VOLTAGE, Constants.DIVIDER_MOTOR_VOLTAGE);
-    Command runIntakeFuelCommand = new IntakeFuelCommand(intake, Constants.INTAKE_MOTOR_VOLTAGE);
+    Command runIntakeFuelCommand = new IntakeFuelCommand(intake, Constants.INTAKE_MOTOR_VOLTAGE,Constants.currentMode);
     Command stopShootCommand = new ShootCommand(fuel,0, 0);
-    Command stopIntakeCommand = new IntakeFuelCommand(intake, 0.0);
+    Command stopIntakeCommand = new IntakeFuelCommand(intake, 0.0,Constants.currentMode);
 
 
      public void setupControllers(){
