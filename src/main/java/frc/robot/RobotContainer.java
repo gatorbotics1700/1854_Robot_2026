@@ -18,12 +18,14 @@ import java.util.Optional;
 import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
+import com.ctre.phoenix6.hardware.CANdle;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.path.PathConstraints;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
@@ -48,6 +50,7 @@ import frc.robot.subsystems.drive.ModuleIOSim;
 import frc.robot.subsystems.drive.ModuleIOTalonFX;
 import frc.robot.subsystems.fuel.FuelSubsystem;
 import frc.robot.subsystems.intake.IntakeSubsystem;
+import frc.robot.subsystems.led.LedSubsystem;
 import frc.robot.subsystems.vision.VisionConstants;
 import frc.robot.subsystems.vision.VisionIOLimelight;
 import frc.robot.subsystems.vision.VisionIOPhotonVisionSim;
@@ -66,7 +69,10 @@ public class RobotContainer {
   private DriveSubsystem drive;
   private VisionSubsystem vision;
   private IntakeSubsystem intake = new IntakeSubsystem();
-  private FuelSubsystem fuel = new FuelSubsystem(); 
+  private FuelSubsystem fuel = new FuelSubsystem();
+  private LedSubsystem led = new LedSubsystem();
+
+  
   private PathConstraints constraints = new PathConstraints(3.0,5.0, Units.degreesToRadians(540), Units.degreesToRadians(720));
   
     // Controllers
@@ -501,6 +507,31 @@ public class RobotContainer {
 
     // Log if commands are running
     Logger.recordOutput("Commands/DriveCommandActive", driveCmd != null);
+    
+    Pose2d pose = drive.getPose();
+
+    Translation2d target = new Translation2d(3.0, 2.0); 
+
+    if (getAlliance().isEmpty()){
+      led.setSolidColor(255,255,0);
+    }
+
+    else{
+      Alliance alliance = getAlliance().get();
+
+      if (pose.getTranslation().getDistance(target) < 0.5) {
+        led.setSolidColor(0, 255, 0);
+      } else {
+        if (alliance == DriverStation.Alliance.Blue){
+            led.setSolidColor(0,0,255);
+        }
+        if (alliance == DriverStation.Alliance.Red){
+            led.setSolidColor(255,0,0);
+        }
+      }
+
+    }
+
   }
 
   private Optional<Alliance> getAlliance() {

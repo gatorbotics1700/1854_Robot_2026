@@ -73,6 +73,10 @@ public final class Constants {
   public static final double RETRACT_MOTOR_POSITION = 1;
   public static final double PIVOT_DEADBAND = 2;
 
+  public static final int CTRLED_CAN_ID = 2;
+  public static final int CTRLED_GRB = 255;
+  public static final int CTRLED_RGB = 0;
+  public static final int CTRLED_BRG = 0;
 
   public static final Pose2d RED_SHOOT_CENTER = new Pose2d(14.025, 4.029, new Rotation2d(Math.toRadians(0)));
   public static final Pose2d RED_SHOOT_LEFT = new Pose2d(14.021, 2.560, new Rotation2d(Math.toRadians(315)));
