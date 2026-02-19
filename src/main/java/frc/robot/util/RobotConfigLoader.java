@@ -12,9 +12,10 @@ public final class RobotConfigLoader {
   private static final String HUANG_HE_SERIAL = "032D20FA";
   private static final String MISSISSIPPI_SERIAL = "032D2198";
   private static final String EXPERIMENTAL_SERIAL = "032BE421";
+  private static final String COMP_SERIAL = "03415984";
   private static final String DEFAULT_SIM_SERIAL = "SIMULATION";
 
-  private static final String DEFAULT_CONFIG_FILE = "config_sting.properties";
+  private static final String DEFAULT_CONFIG_FILE = "config_comp.properties";
   private static final String SERIAL_PROPERTY_KEY = "robot.serial";
   private static final String SERIAL_ENV_KEY = "ROBOT_SERIAL";
   private static final String CONFIG_PROPERTY_KEY = "robot.config";
@@ -143,6 +144,7 @@ public final class RobotConfigLoader {
       case SHENANDOAH_SERIAL -> "config_hulk.properties";
       case MISSISSIPPI_SERIAL -> "config_sting.properties";
       case EXPERIMENTAL_SERIAL -> "config_experimental.properties";
+      case COMP_SERIAL -> "config_comp.properties";
       default -> {
         System.err.println(
             "RobotConfigLoader: Unknown serial '"
