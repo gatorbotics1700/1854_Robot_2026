@@ -11,7 +11,7 @@ public class IntakeSubsystem extends SubsystemBase{
     private  TalonFX deployMotor;
     private double intakeMotorVoltage;
     private boolean isDeployed;
-    private double deployMotorPosition;
+    private double deployMotorVoltage;
     
     public IntakeSubsystem(){
         intakeMotor= new TalonFX(Constants.INTAKE_MOTOR_CAN_ID, Constants.MECH_CANBUS_NAME);
@@ -25,7 +25,7 @@ public class IntakeSubsystem extends SubsystemBase{
     private void currentLimitDeployMotor(){
         CurrentLimitsConfigs limits = new CurrentLimitsConfigs();
         limits.SupplyCurrentLimitEnable = true;
-        limits.SupplyCurrentLimit = 60; // assuming that only drivetrain will also be running
+        limits.SupplyCurrentLimit = Constants.DEPLOY_CURRENT_LIMIT; // assuming that only drivetrain will also be running
 
         deployMotor.getConfigurator().apply(limits);
     }
@@ -33,7 +33,7 @@ public class IntakeSubsystem extends SubsystemBase{
     private void currentLimitIntakeMotor(){
         CurrentLimitsConfigs limits = new CurrentLimitsConfigs();
         limits.SupplyCurrentLimitEnable = true;
-        limits.SupplyCurrentLimit = 60; //assuming that only drivetrain will also be running
+        limits.SupplyCurrentLimit = Constants.DEPLOY_CURRENT_LIMIT; //assuming that only drivetrain will also be running
 
         intakeMotor.getConfigurator().apply(limits);
     }
@@ -47,17 +47,16 @@ public class IntakeSubsystem extends SubsystemBase{
         isDeployed = deployStat;
     }
 
-    public void moveDeployMotor(double position) {
-       // deployMotor.set(new PositionDutyCycle(position)); // TODO fix
-       // can use a PID
-       deployMotorPosition = position;
+    public void setDeployMotorVoltage(double voltage) {
+        deployMotor.setVoltage(voltage);
+        deployMotorVoltage = voltage;
     }
 
-    public double getDeployMotorPosition(Mode currentMode) {
+    public double getDeployMotorVoltage(Mode currentMode) {
         if(currentMode == Mode.REAL) {
-            return deployMotor.getPosition().getValueAsDouble();
+            return deployMotor.getMotorVoltage().getValueAsDouble();
         } else {
-            return deployMotorPosition;
+            return deployMotorVoltage;
         }
         
     }  
@@ -70,8 +69,15 @@ public class IntakeSubsystem extends SubsystemBase{
         }  
     }
 
+    public double getDeployMotorCurrent() {
+        return deployMotor.getStatorCurrent().getValueAsDouble();
+        
+    }  
+
+
     public boolean isDeployed() {
         return isDeployed;
     }
+    
 
 }

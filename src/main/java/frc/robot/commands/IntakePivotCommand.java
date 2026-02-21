@@ -8,37 +8,41 @@ import frc.robot.subsystems.intake.IntakeSubsystem;
 public class IntakePivotCommand extends Command {
     
     private final IntakeSubsystem intakeSubsystem;
-    private double position;
+    private double voltage;
     private long startTime;
 
-    public IntakePivotCommand (IntakeSubsystem intakeSubsystem, double position){
+
+    public IntakePivotCommand (IntakeSubsystem intakeSubsystem, double voltage){
         this.intakeSubsystem = intakeSubsystem;
-        this.position = position;
+        this.voltage = voltage;
         startTime = System.currentTimeMillis();
         addRequirements(intakeSubsystem);
     }
 
     @Override
     public void execute() {
-        if (position == Constants.DEPLOY_MOTOR_POSITION) {
+        if (voltage == Constants.DEPLOY_MOTOR_VOLTAGE) {
             System.out.println("DEPLOYING");
             intakeSubsystem.setIsDeployed(true);
         }
-        else if (position == Constants.RETRACT_MOTOR_POSITION) {
+        else if (voltage == Constants.RETRACT_MOTOR_VOLTAGE) {
             System.out.println("RETRACTING");
             intakeSubsystem.setIsDeployed(false);
         }
-        intakeSubsystem.moveDeployMotor(position);
+        intakeSubsystem.setDeployMotorVoltage(voltage);
     }
 
     @Override 
     public boolean isFinished () {
-        if (Math.abs(intakeSubsystem.getDeployMotorPosition(Constants.currentMode) - position) < Constants.PIVOT_DEADBAND) { 
+        if (intakeSubsystem.getDeployMotorCurrent() >= Constants.DEPLOY_CURRENT_LIMIT - 10) { 
+            intakeSubsystem.setDeployMotorVoltage(0);
             return true;
+
         }
-        else if (( System.currentTimeMillis() - startTime) > 3000) {
+        else if (( System.currentTimeMillis() - startTime) > 1000) {
+            intakeSubsystem.setDeployMotorVoltage(0);
             return true;
-        }
+        } 
         return false;
     }
 }

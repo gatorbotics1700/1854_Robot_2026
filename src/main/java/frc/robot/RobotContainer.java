@@ -412,9 +412,9 @@ public class RobotContainer {
 
   public Command getIntakeCommand(IntakeSubsystem intake) {
     if (intake.isDeployed() == true){
-      return new IntakePivotCommand(intake, Constants.RETRACT_MOTOR_POSITION);
+      return new IntakePivotCommand(intake, Constants.RETRACT_MOTOR_VOLTAGE);
     } else {
-      return new IntakePivotCommand(intake,Constants.DEPLOY_MOTOR_POSITION);
+      return new IntakePivotCommand(intake,Constants.DEPLOY_MOTOR_VOLTAGE);
     }
   }
 

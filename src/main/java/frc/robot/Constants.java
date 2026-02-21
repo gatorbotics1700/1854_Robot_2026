@@ -69,9 +69,9 @@ public final class Constants {
   public static final String MECH_CANBUS_NAME = "rio";
     public static final CANBus DRIVE_CANIVORE = new CANBus("CANivore");
   public static final int DIVIDER_MOTOR_CAN_ID = 31;
-   public static final double DEPLOY_MOTOR_POSITION  = 2;
-  public static final double RETRACT_MOTOR_POSITION = 1;
-  public static final double PIVOT_DEADBAND = 2;
+   public static final double DEPLOY_MOTOR_VOLTAGE  = 2.0;
+  public static final double RETRACT_MOTOR_VOLTAGE = 2.0;
+  public static final double DEPLOY_CURRENT_LIMIT = 60;
 
   public static final int CTRLED_CAN_ID = 2;
   public static final int CTRLED_GRB = 255;
