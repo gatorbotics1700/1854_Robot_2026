@@ -23,6 +23,7 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.path.PathConstraints;
 
+import edu.wpi.first.hal.util.AllocationException;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -212,8 +213,20 @@ public class RobotContainer {
       Trigger ifAllianceChanged = 
           new Trigger(
             () ->
-                  getAlliance() != alliance);//TODO: use
-          
+                  getAlliance() != alliance)//TODO: use
+                  .onChange(
+                    Commands.runOnce(
+                      () -> {
+                      if (alliance.equals(DriverStation.Alliance.Red)){
+                        led.setSolidColor(255,0,0); 
+                      } 
+                      else{
+                        led.setSolidColor(0,0,255);
+                      }
+                      configureButtonBindings();
+                    }
+                  ));
+
       if (alliance.isPresent() && alliance.get() == DriverStation.Alliance.Red) {
         driverControl
             .whileTrue(
@@ -274,8 +287,6 @@ public class RobotContainer {
           .onTrue(
             stopShootCommand
           );
-
-
 
       controller_two
           .y()
