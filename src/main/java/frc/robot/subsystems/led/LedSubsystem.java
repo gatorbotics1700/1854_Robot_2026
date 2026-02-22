@@ -2,15 +2,18 @@ package frc.robot.subsystems.led;
 
 
 import com.ctre.phoenix6.configs.CANdleConfiguration;
-import com.ctre.phoenix6.hardware.CANdle;
 import com.ctre.phoenix6.configs.LEDConfigs;
 import com.ctre.phoenix6.controls.SolidColor;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
-
-
+import com.ctre.phoenix6.hardware.CANdle;
 import com.ctre.phoenix6.signals.RGBWColor;
 import com.ctre.phoenix6.signals.StripTypeValue;
+
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
+import frc.robot.subsystems.drive.DriveSubsystem;
 
 
 
@@ -44,4 +47,14 @@ public class LedSubsystem extends SubsystemBase{
 
     }
 
+    /*public void setShootRangeLed(DriveSubsystem drive, Alliance alliance){
+        if(Alliance.isPresent() && Alliance.get() == DriverStation.Alliance.Blue)
+            if(Constants.BLUE_SHOOT_CENTER.getX() - Constants.SHOOT_XRANGE <= drive.getPose().getX() && drive.getPose().getX() <= Constants.BLUE_SHOOT_CENTER.getX() + Constants.SHOOT_XRANGE){
+                if(Constants.BLUE_SHOOT_CENTER.getY() - Constants.SHOOT_YRANGE <= drive.getPose().getY() && drive.getPose().getY() <= Constants.BLUE_SHOOT_CENTER.getY() + Constants.SHOOT_YRANGE){
+                    if(Constants.BLUE_SHOOT_CENTER.getRotation().minus(Constants.SHOOT_ANGRANGE).getDegrees() <= drive.getPose().getRotation().getDegrees() && drive.getPose().getX() <= Constants.BLUE_SHOOT_CENTER.getX() + Constants.SHOOT_XRANGE){
+                    }
+                }
+            }
+        }
+        */
 }
