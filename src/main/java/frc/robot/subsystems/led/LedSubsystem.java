@@ -34,6 +34,14 @@ public class LedSubsystem extends SubsystemBase{
         setSolidColor(255,0,0);
 
     }
+  /*@Override
+    public void periodic() {
+    if (DriveSubsystem.isInShootingRange()) {
+        setSolidColor(0, 255, 0); // green
+    } else {
+        setSolidColor(255, 0, 0); // red
+        }
+    }*/
 
     public void setSolidColor(int r, int g, int b) {
         
@@ -47,14 +55,4 @@ public class LedSubsystem extends SubsystemBase{
 
     }
 
-    /*public void setShootRangeLed(DriveSubsystem drive, Alliance alliance){
-        if(Alliance.isPresent() && Alliance.get() == DriverStation.Alliance.Blue)
-            if(Constants.BLUE_SHOOT_CENTER.getX() - Constants.SHOOT_XRANGE <= drive.getPose().getX() && drive.getPose().getX() <= Constants.BLUE_SHOOT_CENTER.getX() + Constants.SHOOT_XRANGE){
-                if(Constants.BLUE_SHOOT_CENTER.getY() - Constants.SHOOT_YRANGE <= drive.getPose().getY() && drive.getPose().getY() <= Constants.BLUE_SHOOT_CENTER.getY() + Constants.SHOOT_YRANGE){
-                    if(Constants.BLUE_SHOOT_CENTER.getRotation().minus(Constants.SHOOT_ANGRANGE).getDegrees() <= drive.getPose().getRotation().getDegrees() && drive.getPose().getX() <= Constants.BLUE_SHOOT_CENTER.getX() + Constants.SHOOT_XRANGE){
-                    }
-                }
-            }
-        }
-        */
 }

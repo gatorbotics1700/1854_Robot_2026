@@ -19,6 +19,16 @@ import static edu.wpi.first.units.Units.Meters;
 import static edu.wpi.first.units.Units.MetersPerSecond;
 import static edu.wpi.first.units.Units.Volts;
 
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+import java.util.function.Consumer;
+
+import org.ironmaple.simulation.drivesims.COTS;
+import org.ironmaple.simulation.drivesims.configs.DriveTrainSimulationConfig;
+import org.ironmaple.simulation.drivesims.configs.SwerveModuleSimulationConfig;
+import org.littletonrobotics.junction.AutoLogOutput;
+import org.littletonrobotics.junction.Logger;
+
 import com.ctre.phoenix6.CANBus;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.config.ModuleConfig;
@@ -27,6 +37,7 @@ import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 import com.pathplanner.lib.pathfinding.Pathfinding;
 import com.pathplanner.lib.util.PathPlannerLogging;
+
 import edu.wpi.first.hal.FRCNetComm.tInstances;
 import edu.wpi.first.hal.FRCNetComm.tResourceType;
 import edu.wpi.first.hal.HAL;
@@ -46,6 +57,7 @@ import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.wpilibj.Alert;
 import edu.wpi.first.wpilibj.Alert.AlertType;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
@@ -54,14 +66,6 @@ import frc.robot.Constants.Mode;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.vision.VisionSubsystem;
 import frc.robot.util.LocalADStarAK;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
-import java.util.function.Consumer;
-import org.ironmaple.simulation.drivesims.COTS;
-import org.ironmaple.simulation.drivesims.configs.DriveTrainSimulationConfig;
-import org.ironmaple.simulation.drivesims.configs.SwerveModuleSimulationConfig;
-import org.littletonrobotics.junction.AutoLogOutput;
-import org.littletonrobotics.junction.Logger;
 
 public class DriveSubsystem extends SubsystemBase implements VisionSubsystem.VisionConsumer {
   // TunerConstants doesn't include these constants, so they are declared locally
@@ -420,4 +424,48 @@ public class DriveSubsystem extends SubsystemBase implements VisionSubsystem.Vis
   public Pose2d getTargetPose() {
     return targetPose;
   }
+
+  /*public boolean isInShootingRange() {
+     if(Alliance.isPresent() && Alliance.get() == DriverStation.Alliance.Blue)
+        if(Constants.BLUE_SHOOT_CENTER.getX() - Constants.SHOOT_XRANGE <= getPose().getX() && getPose().getX() <= Constants.BLUE_SHOOT_CENTER.getX() + Constants.SHOOT_XRANGE){
+            if(Constants.BLUE_SHOOT_CENTER.getY() - Constants.SHOOT_YRANGE <= getPose().getY() && getPose().getY() <= Constants.BLUE_SHOOT_CENTER.getY() + Constants.SHOOT_YRANGE){
+                if(Constants.BLUE_SHOOT_CENTER.getRotation().minus(Constants.SHOOT_ANGRANGE).getDegrees() <= getPose().getRotation().getDegrees() && getPose().getX() <= Constants.BLUE_SHOOT_CENTER.getX() + Constants.SHOOT_XRANGE){
+                  return true;
+                }
+            }
+        } else if(Constants.BLUE_SHOOT_RIGHT.getX() - Constants.SHOOT_XRANGE <= getPose().getX() && getPose().getX() <= Constants.BLUE_SHOOT_RIGHT.getX() + Constants.SHOOT_XRANGE){
+            if(Constants.BLUE_SHOOT_RIGHT.getY() - Constants.SHOOT_YRANGE <= getPose().getY() && getPose().getY() <= Constants.BLUE_SHOOT_RIGHT.getY() + Constants.SHOOT_YRANGE){
+                if(Constants.BLUE_SHOOT_RIGHT.getRotation().minus(Constants.SHOOT_ANGRANGE).getDegrees() <= getPose().getRotation().getDegrees() && getPose().getX() <= Constants.BLUE_SHOOT_RIGHT.getX() + Constants.SHOOT_XRANGE){
+                  return true;
+                }
+            }
+        } else if(Constants.BLUE_SHOOT_LEFT.getX() - Constants.SHOOT_XRANGE <= getPose().getX() && getPose().getX() <= Constants.BLUE_SHOOT_LEFT.getX() + Constants.SHOOT_XRANGE){
+            if(Constants.BLUE_SHOOT_LEFT.getY() - Constants.SHOOT_YRANGE <= getPose().getY() && getPose().getY() <= Constants.BLUE_SHOOT_LEFT.getY() + Constants.SHOOT_YRANGE){
+                if(Constants.BLUE_SHOOT_LEFT.getRotation().minus(Constants.SHOOT_ANGRANGE).getDegrees() <= getPose().getRotation().getDegrees() && getPose().getX() <= Constants.BLUE_SHOOT_LEFT.getX() + Constants.SHOOT_XRANGE){
+                  return true;
+                }
+            }
+        }
+      else {
+        if(Constants.RED_SHOOT_CENTER.getX() - Constants.SHOOT_XRANGE <= getPose().getX() && getPose().getX() <= Constants.RED_SHOOT_CENTER.getX() + Constants.SHOOT_XRANGE){
+            if(Constants.RED_SHOOT_CENTER.getY() - Constants.SHOOT_YRANGE <= getPose().getY() && getPose().getY() <= Constants.RED_SHOOT_CENTER.getY() + Constants.SHOOT_YRANGE){
+                if(Constants.RED_SHOOT_CENTER.getRotation().minus(Constants.SHOOT_ANGRANGE).getDegrees() <= getPose().getRotation().getDegrees() && getPose().getX() <= Constants.RED_SHOOT_CENTER.getX() + Constants.SHOOT_XRANGE){
+                  return true;
+                }
+            }
+        } else if(Constants.RED_SHOOT_RIGHT.getX() - Constants.SHOOT_XRANGE <= getPose().getX() && getPose().getX() <= Constants.RED_SHOOT_RIGHT.getX() + Constants.SHOOT_XRANGE){
+            if(Constants.RED_SHOOT_RIGHT.getY() - Constants.SHOOT_YRANGE <= getPose().getY() && getPose().getY() <= Constants.RED_SHOOT_RIGHT.getY() + Constants.SHOOT_YRANGE){
+                if(Constants.RED_SHOOT_RIGHT.getRotation().minus(Constants.SHOOT_ANGRANGE).getDegrees() <= getPose().getRotation().getDegrees() && getPose().getX() <= Constants.RED_SHOOT_RIGHT.getX() + Constants.SHOOT_XRANGE){
+                  return true;
+                }
+            }
+        } else if(Constants.RED_SHOOT_LEFT.getX() - Constants.SHOOT_XRANGE <= getPose().getX() && getPose().getX() <= Constants.RED_SHOOT_LEFT.getX() + Constants.SHOOT_XRANGE){
+            if(Constants.RED_SHOOT_LEFT.getY() - Constants.SHOOT_YRANGE <= getPose().getY() && getPose().getY() <= Constants.RED_SHOOT_LEFT.getY() + Constants.SHOOT_YRANGE){
+                if(Constants.BLUE_SHOOT_LEFT.getRotation().minus(Constants.SHOOT_ANGRANGE).getDegrees() <= getPose().getRotation().getDegrees() && getPose().getX() <= Constants.RED_SHOOT_LEFT.getX() + Constants.SHOOT_XRANGE){
+                  return true;
+                }
+            }
+          }
+      } return false;
+  }*/
 }
