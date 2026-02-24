@@ -425,48 +425,4 @@ public class DriveSubsystem extends SubsystemBase implements VisionSubsystem.Vis
     return targetPose;
   }
 }
-  /*TODO:compare current current pose with pose2d hub and shooting angle range, add alliance as parameter */
-  /*public boolean isInShootingRange() {
-     if(Alliance.isPresent() && Alliance.get() == DriverStation.Alliance.Blue)
-        if(Constants.BLUE_SHOOT_CENTER.getX() - Constants.SHOOT_XRANGE <= getPose().getX() && getPose().getX() <= Constants.BLUE_SHOOT_CENTER.getX() + Constants.SHOOT_XRANGE){
-            if(Constants.BLUE_SHOOT_CENTER.getY() - Constants.SHOOT_YRANGE <= getPose().getY() && getPose().getY() <= Constants.BLUE_SHOOT_CENTER.getY() + Constants.SHOOT_YRANGE){
-                if(Constants.BLUE_SHOOT_CENTER.getRotation().minus(Constants.SHOOT_ANGRANGE).getDegrees() <= getPose().getRotation().getDegrees() && getPose().getX() <= Constants.BLUE_SHOOT_CENTER.getX() + Constants.SHOOT_XRANGE){
-                  return true;
-                }
-            }
-        } else if(Constants.BLUE_SHOOT_RIGHT.getX() - Constants.SHOOT_XRANGE <= getPose().getX() && getPose().getX() <= Constants.BLUE_SHOOT_RIGHT.getX() + Constants.SHOOT_XRANGE){
-            if(Constants.BLUE_SHOOT_RIGHT.getY() - Constants.SHOOT_YRANGE <= getPose().getY() && getPose().getY() <= Constants.BLUE_SHOOT_RIGHT.getY() + Constants.SHOOT_YRANGE){
-                if(Constants.BLUE_SHOOT_RIGHT.getRotation().minus(Constants.SHOOT_ANGRANGE).getDegrees() <= getPose().getRotation().getDegrees() && getPose().getX() <= Constants.BLUE_SHOOT_RIGHT.getX() + Constants.SHOOT_XRANGE){
-                  return true;
-                }
-            }
-        } else if(Constants.BLUE_SHOOT_LEFT.getX() - Constants.SHOOT_XRANGE <= getPose().getX() && getPose().getX() <= Constants.BLUE_SHOOT_LEFT.getX() + Constants.SHOOT_XRANGE){
-            if(Constants.BLUE_SHOOT_LEFT.getY() - Constants.SHOOT_YRANGE <= getPose().getY() && getPose().getY() <= Constants.BLUE_SHOOT_LEFT.getY() + Constants.SHOOT_YRANGE){
-                if(Constants.BLUE_SHOOT_LEFT.getRotation().minus(Constants.SHOOT_ANGRANGE).getDegrees() <= getPose().getRotation().getDegrees() && getPose().getX() <= Constants.BLUE_SHOOT_LEFT.getX() + Constants.SHOOT_XRANGE){
-                  return true;
-                }
-            }
-        }
-      else {
-        if(Constants.RED_SHOOT_CENTER.getX() - Constants.SHOOT_XRANGE <= getPose().getX() && getPose().getX() <= Constants.RED_SHOOT_CENTER.getX() + Constants.SHOOT_XRANGE){
-            if(Constants.RED_SHOOT_CENTER.getY() - Constants.SHOOT_YRANGE <= getPose().getY() && getPose().getY() <= Constants.RED_SHOOT_CENTER.getY() + Constants.SHOOT_YRANGE){
-                if(Constants.RED_SHOOT_CENTER.getRotation().minus(Constants.SHOOT_ANGRANGE).getDegrees() <= getPose().getRotation().getDegrees() && getPose().getX() <= Constants.RED_SHOOT_CENTER.getX() + Constants.SHOOT_XRANGE){
-                  return true;
-                }
-            }
-        } else if(Constants.RED_SHOOT_RIGHT.getX() - Constants.SHOOT_XRANGE <= getPose().getX() && getPose().getX() <= Constants.RED_SHOOT_RIGHT.getX() + Constants.SHOOT_XRANGE){
-            if(Constants.RED_SHOOT_RIGHT.getY() - Constants.SHOOT_YRANGE <= getPose().getY() && getPose().getY() <= Constants.RED_SHOOT_RIGHT.getY() + Constants.SHOOT_YRANGE){
-                if(Constants.RED_SHOOT_RIGHT.getRotation().minus(Constants.SHOOT_ANGRANGE).getDegrees() <= getPose().getRotation().getDegrees() && getPose().getX() <= Constants.RED_SHOOT_RIGHT.getX() + Constants.SHOOT_XRANGE){
-                  return true;
-                }
-            }
-        } else if(Constants.RED_SHOOT_LEFT.getX() - Constants.SHOOT_XRANGE <= getPose().getX() && getPose().getX() <= Constants.RED_SHOOT_LEFT.getX() + Constants.SHOOT_XRANGE){
-            if(Constants.RED_SHOOT_LEFT.getY() - Constants.SHOOT_YRANGE <= getPose().getY() && getPose().getY() <= Constants.RED_SHOOT_LEFT.getY() + Constants.SHOOT_YRANGE){
-                if(Constants.BLUE_SHOOT_LEFT.getRotation().minus(Constants.SHOOT_ANGRANGE).getDegrees() <= getPose().getRotation().getDegrees() && getPose().getX() <= Constants.RED_SHOOT_LEFT.getX() + Constants.SHOOT_XRANGE){
-                  return true;
-                }
-            }
-          }
-      } return false;
-  }
-}*/ 
+

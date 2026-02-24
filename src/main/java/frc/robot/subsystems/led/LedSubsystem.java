@@ -29,15 +29,6 @@ public class LedSubsystem extends SubsystemBase{
         setSolidColor(255,255,50); /* yellow */
 
     }
-    /*TODO: move to robot container */
-    /*@Override
-    public void periodic() {
-        if (DriveSubsystem.isInShootingRange()) {
-            setSolidColor(0, 255, 0); // green
-        } else {
-            setSolidColor(255, 0, 0); // red
-        }
-    }*/
 
     public void setSolidColor(int r, int g, int b) {
         

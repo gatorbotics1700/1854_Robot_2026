@@ -521,17 +521,24 @@ public class RobotContainer {
     
     Pose2d pose = drive.getPose();
 
-    Translation2d target = new Translation2d(3.0, 2.0); 
 
     if (getAlliance().isEmpty()){
       led.setSolidColor(255,255,0);
     }
-
     else{
       Alliance alliance = getAlliance().get();
-      //TODO: fix - see LED subsystem
-      if (pose.getTranslation().getDistance(target) < 0.5) {
-        led.setSolidColor(0, 255, 0);
+      if(alliance.equals(Alliance.Blue)){
+         if (pose.getTranslation().getDistance(Constants.blueHub) < Constants.SHOOT_RANGE_MAX && pose.getTranslation().getDistance(Constants.blueHub) > Constants.SHOOT_RANGE_MIN){ // make constants
+          if(pose.getRotation().getDegrees() - Constants.blueHubAng.getDegrees() < Constants.SHOOT_ANG_RANGE_MAX && pose.getRotation().getDegrees() - Constants.blueHubAng.getDegrees() > Constants.SHOOT_ANG_RANGE_MIN){
+            led.setSolidColor(0, 255, 0);
+          }
+        }
+      } else if(alliance.equals(Alliance.Red)) {
+          if (pose.getTranslation().getDistance(Constants.redHub) < Constants.SHOOT_RANGE_MAX && pose.getTranslation().getDistance(Constants.redHub) > Constants.SHOOT_RANGE_MIN){
+            if(pose.getRotation().getDegrees() - Constants.redHubAng.getDegrees() < Constants.SHOOT_ANG_RANGE_MAX && pose.getRotation().getDegrees() - Constants.redHubAng.getDegrees() > Constants.SHOOT_ANG_RANGE_MIN){
+              led.setSolidColor(0, 255, 0);
+            }
+        }
       } else {
         if (alliance == DriverStation.Alliance.Blue){
             led.setSolidColor(0,0,255);
@@ -542,6 +549,7 @@ public class RobotContainer {
       }
 
     }
+  
 
   }
 
