@@ -521,37 +521,43 @@ public class RobotContainer {
     
     Pose2d pose = drive.getPose();
 
-
-    if (getAlliance().isEmpty()){
+    if (getAlliance().isEmpty()) {
       led.setSolidColor(255,255,0);
-    }
-    else{
-      Alliance alliance = getAlliance().get();
-      if(alliance.equals(Alliance.Blue)){
-         if (pose.getTranslation().getDistance(Constants.blueHub) < Constants.SHOOT_RANGE_MAX && pose.getTranslation().getDistance(Constants.blueHub) > Constants.SHOOT_RANGE_MIN){ // make constants
-          if(pose.getRotation().getDegrees() - Constants.blueHubAng.getDegrees() < Constants.SHOOT_ANG_RANGE_MAX && pose.getRotation().getDegrees() - Constants.blueHubAng.getDegrees() > Constants.SHOOT_ANG_RANGE_MIN){
-            led.setSolidColor(0, 255, 0);
-          }
-        }
-      } else if(alliance.equals(Alliance.Red)) {
-          if (pose.getTranslation().getDistance(Constants.redHub) < Constants.SHOOT_RANGE_MAX && pose.getTranslation().getDistance(Constants.redHub) > Constants.SHOOT_RANGE_MIN){
-            if(pose.getRotation().getDegrees() - Constants.redHubAng.getDegrees() < Constants.SHOOT_ANG_RANGE_MAX && pose.getRotation().getDegrees() - Constants.redHubAng.getDegrees() > Constants.SHOOT_ANG_RANGE_MIN){
-              led.setSolidColor(0, 255, 0);
-            }
-        }
-      } else {
-        if (alliance == DriverStation.Alliance.Blue){
-            led.setSolidColor(0,0,255);
-        }
-        if (alliance == DriverStation.Alliance.Red){
-            led.setSolidColor(255,0,0);
-        }
-      }
+      return;
+    } 
 
+    Alliance alliance = getAlliance().get();
+
+    Translation2d target = 
+      alliance == Alliance.Blue ? Constants.blueHub : Constants.redHub;
+
+    double distance = pose.getTranslation().getDistance(target);
+
+    Translation2d robotToTarget = target.minus(pose.getTranslation());
+
+    Rotation2d angleToTarget = robotToTarget.getAngle();
+
+    Rotation2d angleError = angleToTarget.minus(pose.getRotation());
+
+    boolean inDistance =
+        distance < Constants.SHOOT_RANGE_MAX &&
+        distance > Constants.SHOOT_RANGE_MIN;
+    boolean inAngle =
+        Math.abs(angleError.getDegrees()) < Constants.SHOOT_ANG_RANGE;
+
+    if (inDistance && inAngle) {
+      led.setSolidColor(0,255,0);
+    } else {
+      if (alliance == DriverStation.Alliance.Blue){
+          led.setSolidColor(0,0,255);
+      }
+      if (alliance == DriverStation.Alliance.Red){
+          led.setSolidColor(255,0,0);
+      }
     }
-  
 
   }
+  
 
   private Optional<Alliance> getAlliance() {
     switch (Constants.currentMode) {

@@ -98,13 +98,12 @@ public final class Constants {
 
   public static final int SHOOT_RANGE_MAX = 100; // for logic, tweak later
   public static final int SHOOT_RANGE_MIN = 50; // for logic, tweak later
-  public static final int SHOOT_ANG_RANGE_MAX = 15; // for logic, tweak later
-  public static final int SHOOT_ANG_RANGE_MIN = -15; // for logic, tweak later
+  public static final int SHOOT_ANG_RANGE = 15; // for logic, tweak later
+  
   
   public static final Translation2d redHub = new Translation2d(468.56, 158.32);
   public static final Translation2d blueHub = new Translation2d(181.56, 158.32);
-  public static final Rotation2d redHubAng = Rotation2d.fromDegrees(180);
-  public static final Rotation2d blueHubAng = Rotation2d.fromDegrees(-180);
+
 
   
 }
