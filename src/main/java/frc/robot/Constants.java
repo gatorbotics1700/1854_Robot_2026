@@ -19,8 +19,6 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.RobotBase;
 import frc.robot.util.RobotConfigLoader;
-import edu.wpi.first.math.util.Units;
-import edu.wpi.first.units.measure.Angle;
 
 /**
  * This class defines the runtime mode used by AdvantageKit and loads robot-specific configuration
@@ -52,33 +50,26 @@ public final class Constants {
     /** Replaying from a log file. */
     REPLAY
   }
-
+  /* TODO: re-sort all of these so they make more sense */
   public static final int CONTROLLER_PORT_DRIVER = 0;
   public static final int CONTROLLER_PORT_CODRIVER = 1;
-
-  public static final int KRAKEN_TICKS_PER_REV = 2048;
-  public static final double OUTAKE_MOTOR_VOLTAGE = 1.0;
 
   public static final int INTAKE_MOTOR_CAN_ID = 40;
   public static final double INTAKE_MOTOR_VOLTAGE = 10.0;
   public static final int DEPLOY_MOTOR_CAN_ID = 41;
   public static final double SHOOTER_MOTOR_VOLTAGE = 8.0;
   public static final double DIVIDER_MOTOR_VOLTAGE = 1;
-    public static final double RELEASE_SHOOTER_MOTOR_VOLTAGE = 4.0;
-  public static final double RELEASE_DIVIDER_MOTOR_VOLTAGE = 1;
 
   public static final int SHOOTER_MOTOR_CAN_ID = 30;
   public static final String MECH_CANBUS_NAME = "rio";
-    public static final CANBus DRIVE_CANIVORE = new CANBus("CANivore");
+  public static final CANBus DRIVE_CANIVORE = new CANBus("CANivore");
   public static final int DIVIDER_MOTOR_CAN_ID = 31;
-   public static final double DEPLOY_MOTOR_VOLTAGE  = 2.0;
-  public static final double RETRACT_MOTOR_VOLTAGE = 2.0;
+  public static final double DEPLOY_MOTOR_VOLTAGE  = 2.0;
+  public static final double RETRACT_MOTOR_VOLTAGE = -2.0;
   public static final double DEPLOY_CURRENT_LIMIT = 60;
+  public static final double INTAKE_CURRENT_LIMIT = 60;
 
   public static final int CTRLED_CAN_ID = 2;
-  public static final int CTRLED_GRB = 255;
-  public static final int CTRLED_RGB = 0;
-  public static final int CTRLED_BRG = 0;
 
   public static final Pose2d RED_SHOOT_CENTER = new Pose2d(14.025, 4.029, new Rotation2d(Math.toRadians(0)));
   public static final Pose2d RED_SHOOT_LEFT = new Pose2d(14.021, 2.560, new Rotation2d(Math.toRadians(315)));
@@ -92,8 +83,6 @@ public final class Constants {
   public static final Pose2d RED_BUMP_RIGHT_OUTSIDE = new Pose2d(10.758, 5.5, new Rotation2d(Math.toRadians(45)));
   public static final Pose2d RED_BUMP_RIGHT_INSIDE = new Pose2d(12.8, 5.5, new Rotation2d(Math.toRadians(45)));
 
-//subtract 7.29
-// TODO: SANITY CHECK ALLIANCE POINTS
   public static final Pose2d BLUE_SHOOT_CENTER = new Pose2d(3.345, 4.029, new Rotation2d(Math.toRadians(180)));
   public static final Pose2d BLUE_SHOOT_RIGHT = new Pose2d(3.349, 2.560, new Rotation2d(Math.toRadians(225))); //TODO: TWEAK COORDINATES
   public static final Pose2d BLUE_SHOOT_LEFT = new Pose2d(3.347, 5.604, new Rotation2d(Math.toRadians(135))); //TODO: TWEAK COORDINATES

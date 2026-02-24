@@ -424,7 +424,8 @@ public class DriveSubsystem extends SubsystemBase implements VisionSubsystem.Vis
   public Pose2d getTargetPose() {
     return targetPose;
   }
-
+}
+  /*TODO:compare current current pose with pose2d hub and shooting angle range, add alliance as parameter */
   /*public boolean isInShootingRange() {
      if(Alliance.isPresent() && Alliance.get() == DriverStation.Alliance.Blue)
         if(Constants.BLUE_SHOOT_CENTER.getX() - Constants.SHOOT_XRANGE <= getPose().getX() && getPose().getX() <= Constants.BLUE_SHOOT_CENTER.getX() + Constants.SHOOT_XRANGE){
@@ -467,5 +468,5 @@ public class DriveSubsystem extends SubsystemBase implements VisionSubsystem.Vis
             }
           }
       } return false;
-  }*/
-}
+  }
+}*/ 

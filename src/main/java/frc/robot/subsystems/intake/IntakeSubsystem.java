@@ -12,10 +12,11 @@ public class IntakeSubsystem extends SubsystemBase{
     private double intakeMotorVoltage;
     private boolean isDeployed;
     private double deployMotorVoltage;
-    
+    //TODO: implement motion magic
     public IntakeSubsystem(){
         intakeMotor= new TalonFX(Constants.INTAKE_MOTOR_CAN_ID, Constants.MECH_CANBUS_NAME);
         currentLimitIntakeMotor();
+        //TODO: implement motion magic
         deployMotor = new TalonFX(Constants.DEPLOY_MOTOR_CAN_ID, Constants.MECH_CANBUS_NAME);
         currentLimitDeployMotor();
         isDeployed = false;
@@ -33,7 +34,7 @@ public class IntakeSubsystem extends SubsystemBase{
     private void currentLimitIntakeMotor(){
         CurrentLimitsConfigs limits = new CurrentLimitsConfigs();
         limits.SupplyCurrentLimitEnable = true;
-        limits.SupplyCurrentLimit = Constants.DEPLOY_CURRENT_LIMIT; //assuming that only drivetrain will also be running
+        limits.SupplyCurrentLimit = Constants.INTAKE_CURRENT_LIMIT; //assuming that only drivetrain will also be running
 
         intakeMotor.getConfigurator().apply(limits);
     }
@@ -68,7 +69,7 @@ public class IntakeSubsystem extends SubsystemBase{
             return intakeMotorVoltage;
         }  
     }
-
+    /*TODO: return a variable if in sim */
     public double getDeployMotorCurrent() {
         return deployMotor.getStatorCurrent().getValueAsDouble();
         

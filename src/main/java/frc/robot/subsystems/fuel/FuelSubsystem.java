@@ -11,10 +11,10 @@ public class FuelSubsystem extends SubsystemBase{
     private double shooterMotorVoltage;
     
     public FuelSubsystem(){
-            shooterMotor = new TalonFX(Constants.SHOOTER_MOTOR_CAN_ID, Constants.MECH_CANBUS_NAME);
-            currentLimitShooterMotor();
-            dividerMotor = new TalonFX(Constants.DIVIDER_MOTOR_CAN_ID, Constants.MECH_CANBUS_NAME);
-            currentLimitDividerMotor();
+        shooterMotor = new TalonFX(Constants.SHOOTER_MOTOR_CAN_ID, Constants.MECH_CANBUS_NAME);
+        currentLimitShooterMotor();
+        dividerMotor = new TalonFX(Constants.DIVIDER_MOTOR_CAN_ID, Constants.MECH_CANBUS_NAME);
+        currentLimitDividerMotor();
     }
 
     private void currentLimitShooterMotor(){
@@ -25,7 +25,7 @@ public class FuelSubsystem extends SubsystemBase{
         shooterMotor.getConfigurator().apply(limits);
     }
 
-        private void currentLimitDividerMotor(){
+    private void currentLimitDividerMotor(){
         CurrentLimitsConfigs limits = new CurrentLimitsConfigs();
         limits.SupplyCurrentLimitEnable = true;
         limits.SupplyCurrentLimit = 15; // assuming that only drivetrain and shooterMotor will also be running

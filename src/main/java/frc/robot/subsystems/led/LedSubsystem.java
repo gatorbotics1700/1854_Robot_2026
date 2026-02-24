@@ -7,13 +7,8 @@ import com.ctre.phoenix6.controls.SolidColor;
 import com.ctre.phoenix6.hardware.CANdle;
 import com.ctre.phoenix6.signals.RGBWColor;
 import com.ctre.phoenix6.signals.StripTypeValue;
-
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.subsystems.drive.DriveSubsystem;
 
 
 
@@ -31,15 +26,16 @@ public class LedSubsystem extends SubsystemBase{
     public LedSubsystem() {
 
         ctrLED = new CANdle(Constants.CTRLED_CAN_ID);
-        setSolidColor(255,0,0);
+        setSolidColor(255,255,50); /* yellow */
 
     }
-  /*@Override
+    /*TODO: move to robot container */
+    /*@Override
     public void periodic() {
-    if (DriveSubsystem.isInShootingRange()) {
-        setSolidColor(0, 255, 0); // green
-    } else {
-        setSolidColor(255, 0, 0); // red
+        if (DriveSubsystem.isInShootingRange()) {
+            setSolidColor(0, 255, 0); // green
+        } else {
+            setSolidColor(255, 0, 0); // red
         }
     }*/
 
