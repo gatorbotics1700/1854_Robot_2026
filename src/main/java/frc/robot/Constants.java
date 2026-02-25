@@ -51,7 +51,7 @@ public final class Constants {
     /** Replaying from a log file. */
     REPLAY
   }
-  /* TODO: re-sort all of these so they make more sense */
+  
   public static final int CONTROLLER_PORT_DRIVER = 0;
   public static final int CONTROLLER_PORT_CODRIVER = 1;
 

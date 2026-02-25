@@ -9,12 +9,14 @@ public class ShootCommand extends Command{
     private FuelSubsystem fuelSubsystem;
     private double shooterVoltage;
     private double dividerVoltage;
+    private boolean executed;
     
     public ShootCommand(FuelSubsystem fuelSubsystem, double shooterVoltage, double dividerVoltage){
         this.fuelSubsystem = fuelSubsystem; 
         this.shooterVoltage = shooterVoltage;
         this.dividerVoltage = dividerVoltage;
         System.out.println("shoot has been shot");
+        executed = false;
         addRequirements(fuelSubsystem);
     }
 
@@ -28,17 +30,16 @@ public class ShootCommand extends Command{
 
         fuelSubsystem.moveDividerMotor(dividerVoltage);
         fuelSubsystem.moveShooterMotor(shooterVoltage);
+        executed = true;
     }
 
     @Override
     public boolean isFinished(){
-        if (shooterVoltage == fuelSubsystem.getShooterMotorVoltage(Constants.currentMode)) {
+        if (executed) {
             System.out.println("LEBRON IS FINISHED");
             return true; 
         }
-        
         return false;
-        // TODO: should we check what type of condition needs to be met
     }
 }
 

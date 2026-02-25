@@ -33,6 +33,5 @@ public class IntakeFuelCommand extends Command {
             return true;
         } 
         return false;
-        // TODO: should we check what type of condition needs to be met
     }
 }
