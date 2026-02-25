@@ -182,23 +182,7 @@ public class RobotContainer {
      * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
     public void configureButtonBindings() {
-      // STYLE TODO 02/13: this method is WAAAAY TOO big and bulky.
-      // Consider moving the driver bindings and codriver bindings into their own separate methods.
-      //
-      // For example:
-      // public void configureDriverButtonBindings() {
-      //     ...
-      // }
-      // public void configureCodriverButtonBindings() {
-      //      ...
-      // }
-      //
-      // Then, here, just call:
-      //    configureDriverButtonBindings();
-      //    configureCodriverButtonBindings();
-
-
-      // Reset any existing set of button bindings (ex: in case we run this method twice)
+      
       CommandScheduler.getInstance().getActiveButtonLoop().clear();
 
       // Default command, normal field-relative drive
@@ -316,21 +300,7 @@ public class RobotContainer {
                     drive)
                 .ignoringDisable(true));
 
-      // STYLE TODO 02/13: these command definitions are large and bulky.
-      // Consider making a file for managing these, similar to DriveCommands.
-      //
-      // Ex:
-      //    in "commands" directory, make PathCommands.java, then make methods like
-      //
-      // public static Command driveOverLeftBump(PathConstraints constraints) {
-      //   return Commands.runOnce(
-      //     ...
-      //   );
-      // }
-      //
-      // Then, here, just call:
-      //       controller.rightBumper().onTrue(PathCommands.driveOverLeftBump())
-      //
+      
       controller
         .rightBumper()
         .onTrue(
@@ -529,7 +499,7 @@ public class RobotContainer {
     Alliance alliance = getAlliance().get();
 
     Translation2d target = 
-      alliance == Alliance.Blue ? Constants.blueHub : Constants.redHub;
+      alliance == Alliance.Blue ? Constants.BLUE_HUB : Constants.RED_HUB;
 
     double distance = pose.getTranslation().getDistance(target);
 

@@ -56,21 +56,22 @@ public final class Constants {
   public static final int CONTROLLER_PORT_CODRIVER = 1;
 
   public static final int INTAKE_MOTOR_CAN_ID = 40;
-  public static final double INTAKE_MOTOR_VOLTAGE = 10.0;
   public static final int DEPLOY_MOTOR_CAN_ID = 41;
-  public static final double SHOOTER_MOTOR_VOLTAGE = 8.0;
-  public static final double DIVIDER_MOTOR_VOLTAGE = 1;
-
   public static final int SHOOTER_MOTOR_CAN_ID = 30;
-  public static final String MECH_CANBUS_NAME = "rio";
-  public static final CANBus DRIVE_CANIVORE = new CANBus("CANivore");
   public static final int DIVIDER_MOTOR_CAN_ID = 31;
+  public static final int CTRLED_CAN_ID = 2;
+  
+  public static final double SHOOTER_MOTOR_VOLTAGE = 8.0;
+  public static final double INTAKE_MOTOR_VOLTAGE = 10.0;
+  public static final double DIVIDER_MOTOR_VOLTAGE = 1;
   public static final double DEPLOY_MOTOR_VOLTAGE  = 2.0;
   public static final double RETRACT_MOTOR_VOLTAGE = -2.0;
+
+  public static final String MECH_CANBUS_NAME = "rio";
+  public static final CANBus DRIVE_CANIVORE = new CANBus("CANivore");
+  
   public static final double DEPLOY_CURRENT_LIMIT = 60;
   public static final double INTAKE_CURRENT_LIMIT = 60;
-
-  public static final int CTRLED_CAN_ID = 2;
 
   public static final Pose2d RED_SHOOT_CENTER = new Pose2d(14.025, 4.029, new Rotation2d(Math.toRadians(0)));
   public static final Pose2d RED_SHOOT_LEFT = new Pose2d(14.021, 2.560, new Rotation2d(Math.toRadians(315)));
@@ -101,8 +102,8 @@ public final class Constants {
   public static final int SHOOT_ANG_RANGE = 15; // for logic, tweak later
   
   
-  public static final Translation2d redHub = new Translation2d(468.56, 158.32);
-  public static final Translation2d blueHub = new Translation2d(181.56, 158.32);
+  public static final Translation2d RED_HUB = new Translation2d(468.56, 158.32);
+  public static final Translation2d BLUE_HUB = new Translation2d(181.56, 158.32);
 
 
   
