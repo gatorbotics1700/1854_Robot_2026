@@ -181,8 +181,28 @@ public class RobotContainer {
      * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
      * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
+<<<<<<< HEAD
     public void configureButtonBindings() {
-      
+      // STYLE TODO 02/13: this method is WAAAAY TOO big and bulky.
+      // Consider moving the driver bindings and codriver bindings into their own separate methods.
+      //
+      // For example:
+      // public void configureDriverButtonBindings() {
+      //     ...
+      // }
+      // public void configureCodriverButtonBindings() {
+      //      ...
+      // }
+      //
+      // Then, here, just call:
+      //    configureDriverButtonBindings();
+      //    configureCodriverButtonBindings();
+
+
+      // Reset any existing set of button bindings (ex: in case we run this method twice)
+=======
+    public void configureDriverButtonBindings() {
+>>>>>>> 7590016 (seperated driver and codriver)
       CommandScheduler.getInstance().getActiveButtonLoop().clear();
 
       // Default command, normal field-relative drive
