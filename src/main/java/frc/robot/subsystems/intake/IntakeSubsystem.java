@@ -69,12 +69,15 @@ public class IntakeSubsystem extends SubsystemBase{
             return intakeMotorVoltage;
         }  
     }
-    /*TODO: return a variable if in sim */
-    public double getDeployMotorCurrent() {
-        return deployMotor.getStatorCurrent().getValueAsDouble();
+
+    public double getDeployMotorCurrent(Mode currentMode) {
+        if(currentMode == Mode.REAL){
+            return deployMotor.getStatorCurrent().getValueAsDouble();
+        } else{
+            return 0;
+        }
         
     }  
-
 
     public boolean isDeployed() {
         return isDeployed;

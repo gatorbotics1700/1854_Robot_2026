@@ -37,7 +37,7 @@ public class IntakePivotCommand extends Command {
 
     @Override 
     public boolean isFinished () {
-        if (intakeSubsystem.getDeployMotorCurrent() >= Constants.DEPLOY_CURRENT_LIMIT - 10) { 
+        if (intakeSubsystem.getDeployMotorCurrent(Constants.currentMode) >= Constants.DEPLOY_CURRENT_LIMIT - 10) { 
             intakeSubsystem.setDeployMotorVoltage(0);
             System.out.println("lebron hit something, hit current limit");
             return true;
