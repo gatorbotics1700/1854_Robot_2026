@@ -269,7 +269,7 @@ public class RobotContainer {
       controller_two
           .x()
           .onTrue(
-            stopShootCommand
+            getIntakeCommand(intake)
           );
 
       controller_two
