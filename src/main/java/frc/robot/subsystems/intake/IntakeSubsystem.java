@@ -40,7 +40,7 @@ public class IntakeSubsystem extends SubsystemBase{
     }
    
     public void moveIntakeMotor(double voltage){
-        intakeMotor.setVoltage(Math.max(voltage, 2));
+        intakeMotor.setVoltage(voltage);
         intakeMotorVoltage = voltage;
     }
 
