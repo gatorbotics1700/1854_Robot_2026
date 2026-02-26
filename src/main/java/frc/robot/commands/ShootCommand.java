@@ -1,7 +1,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants;
 import frc.robot.subsystems.fuel.FuelSubsystem;
 
 public class ShootCommand extends Command{
@@ -24,10 +23,7 @@ public class ShootCommand extends Command{
     public void execute(){
         if (shooterVoltage != 0) {
             System.out.println("SHOOTING");
-
         }
-        
-
         fuelSubsystem.moveDividerMotor(dividerVoltage);
         fuelSubsystem.moveShooterMotor(shooterVoltage);
         executed = true;
