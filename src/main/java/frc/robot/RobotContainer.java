@@ -87,7 +87,7 @@ public class RobotContainer {
     Command runIntakeFuelCommand = new IntakeFuelCommand(intake, Constants.INTAKE_MOTOR_VOLTAGE,Constants.currentMode);
     Command stopShootCommand = new ShootCommand(fuel,0, 0);
     Command stopIntakeCommand = new IntakeFuelCommand(intake, 0.0,Constants.currentMode);
-
+    Command deployCommand = new IntakePivotCommand(intake,Constants.DEPLOY_MOTOR_VOLTAGE);
 
      public void setupControllers(){
         switch (Constants.currentMode) {
@@ -270,8 +270,11 @@ public class RobotContainer {
       controller_two
           .x()
           .onTrue(
-            getIntakeCommand(intake)
-          );
+            Commands.runOnce(
+              () -> {
+                getIntakeCommand().schedule();
+              }
+          ));
 
       controller_two
           .y()
@@ -374,6 +377,7 @@ public class RobotContainer {
       NamedCommands.registerCommand("runIntake", runIntakeFuelCommand);
       NamedCommands.registerCommand("stopShoot", stopShootCommand);
       NamedCommands.registerCommand("stopIntake", stopIntakeCommand);
+      NamedCommands.registerCommand("deployIntake", deployCommand);
       
       
     
@@ -392,8 +396,8 @@ public class RobotContainer {
     }
   }
 
-  public Command getIntakeCommand(IntakeSubsystem intake) {
-    if (intake.isDeployed() == true){
+  public Command getIntakeCommand() {
+    if (intake.isDeployed()){
       return new IntakePivotCommand(intake, Constants.RETRACT_MOTOR_VOLTAGE);
     } else {
       return new IntakePivotCommand(intake,Constants.DEPLOY_MOTOR_VOLTAGE);
