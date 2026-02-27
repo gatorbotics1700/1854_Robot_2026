@@ -197,15 +197,16 @@ public class RobotContainer {
       Trigger ifAllianceChanged = 
           new Trigger(
             () ->
-                  getAlliance() != alliance)//TODO: use
+                  getAlliance() != alliance)
                   .onChange(
                     Commands.runOnce(
                       () -> {
-                      if (alliance.equals(DriverStation.Alliance.Red)){
+                      if (alliance.equals(Optional.of(DriverStation.Alliance.Red))){
                         led.setSolidColor(255,0,0); 
-                      } 
-                      else{
+                      } else if (alliance.equals(Optional.of(DriverStation.Alliance.Blue))){
                         led.setSolidColor(0,0,255);
+                      }else{
+                        led.setSolidColor(255,255,0);
                       }
                       configureButtonBindings();
                     }

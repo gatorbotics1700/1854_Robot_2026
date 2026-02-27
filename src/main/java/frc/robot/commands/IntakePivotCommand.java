@@ -41,7 +41,6 @@ public class IntakePivotCommand extends Command {
             intakeSubsystem.setDeployMotorVoltage(0);
             System.out.println("lebron hit something, hit current limit");
             return true;
-
         }
         else if (( System.currentTimeMillis() - startTime) > 1000) {
             intakeSubsystem.setDeployMotorVoltage(0);

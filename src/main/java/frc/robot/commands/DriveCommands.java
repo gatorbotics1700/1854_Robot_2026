@@ -81,7 +81,7 @@ public class DriveCommands {
       DriveSubsystem drive,
       DoubleSupplier xSupplier,
       DoubleSupplier ySupplier,
-      DoubleSupplier omegaSupplier){ //TODO: change this
+      DoubleSupplier omegaSupplier){ //TODO: add alliance parameter to flip if necesaary
     return Commands.run(
         () -> {
           // Get linear velocity

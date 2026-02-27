@@ -86,8 +86,8 @@ public final class Constants {
   public static final Pose2d RED_BUMP_RIGHT_INSIDE = new Pose2d(12.8, 5.5, new Rotation2d(Math.toRadians(45)));
 
   public static final Pose2d BLUE_SHOOT_CENTER = new Pose2d(3.345, 4.029, new Rotation2d(Math.toRadians(180)));
-  public static final Pose2d BLUE_SHOOT_RIGHT = new Pose2d(3.349, 2.560, new Rotation2d(Math.toRadians(225))); //TODO: TWEAK COORDINATES
-  public static final Pose2d BLUE_SHOOT_LEFT = new Pose2d(3.347, 5.604, new Rotation2d(Math.toRadians(135))); //TODO: TWEAK COORDINATES
+  public static final Pose2d BLUE_SHOOT_RIGHT = new Pose2d(3.349, 2.560, new Rotation2d(Math.toRadians(225))); 
+  public static final Pose2d BLUE_SHOOT_LEFT = new Pose2d(3.347, 5.604, new Rotation2d(Math.toRadians(135))); 
   public static final Pose2d BLUE_TRENCH_LEFT_INSIDE = new Pose2d(3.171, 7.371, new Rotation2d(Math.toRadians(0)));
   public static final Pose2d BLUE_TRENCH_LEFT_OUTSIDE = new Pose2d(6.218, 7.371, new Rotation2d(Math.toRadians(0)));
   public static final Pose2d BLUE_TRENCH_RIGHT_INSIDE = new Pose2d(3.171, 0.814, new Rotation2d(Math.toRadians(0)));
