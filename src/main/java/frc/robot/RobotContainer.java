@@ -257,8 +257,10 @@ public class RobotContainer {
                   () -> -controller.getLeftX(),
                   () -> new Rotation2d(),
                   getAlliance()));
-
   
+      /* TODO 03/04 Lab Hours: make a start/stopShoot command, but put it on an out-of-the-way button (start, back, etc) */
+      /* TODO 03/04 Lab Hours: automatically deploy the intake first-thing, so we can always be certain from that point onwards the intake is deployed*/
+      /* TODO 03/04 Lab Hours: when you deploy/retract, stop and start the intake automatically */
       controller_two            
           .b()
           .onTrue(
@@ -505,6 +507,7 @@ public class RobotContainer {
       return;
     } 
 
+    /* TODO 03/04 Lab Hours: move this to it's own method. Call during an else of the if above */
     Alliance alliance = getAlliance().get();
 
     Translation2d target = 
@@ -516,6 +519,7 @@ public class RobotContainer {
 
     Rotation2d angleToTarget = robotToTarget.getAngle();
 
+    /* TODO 03/04 Lab Hours: test in sim with log of LED color. */
     Rotation2d angleError = angleToTarget.minus(pose.getRotation());
 
     boolean inDistance =
