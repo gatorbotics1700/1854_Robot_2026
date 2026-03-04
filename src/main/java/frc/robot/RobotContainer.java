@@ -201,16 +201,20 @@ public class RobotContainer {
                   .onChange(
                     Commands.runOnce(
                       () -> {
-                      if (alliance.equals(Optional.of(DriverStation.Alliance.Red))){
+                      if (getAlliance().equals(Optional.of(DriverStation.Alliance.Red))){
                         led.setSolidColor(255,0,0); 
-                      } else if (alliance.equals(Optional.of(DriverStation.Alliance.Blue))){
+                      } else if (getAlliance().equals(Optional.of(DriverStation.Alliance.Blue))){
                         led.setSolidColor(0,0,255);
                       }else{
                         led.setSolidColor(255,255,0);
                       }
-                      configureButtonBindings();
                     }
-                  ));
+                  ).andThen(
+                    Commands.runOnce(() -> {
+                      configureButtonBindings(); 
+                    })
+                  )
+                  .ignoringDisable(true));
 
       if (alliance.isPresent() && alliance.get() == DriverStation.Alliance.Red) {
         driverControl

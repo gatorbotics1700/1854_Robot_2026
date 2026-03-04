@@ -9,6 +9,7 @@ public class ShootCommand extends Command{
     private double shooterVoltage;
     private double dividerVoltage;
     private boolean executed;
+    private long shootStartTime = 0;
     
     public ShootCommand(FuelSubsystem fuelSubsystem, double shooterVoltage, double dividerVoltage){
         this.fuelSubsystem = fuelSubsystem; 
@@ -24,9 +25,14 @@ public class ShootCommand extends Command{
         if (shooterVoltage != 0) {
             System.out.println("SHOOTING");
         }
-        fuelSubsystem.moveDividerMotor(dividerVoltage);
+        if (shootStartTime == 0) {
+            shootStartTime = System.currentTimeMillis();
+        }
         fuelSubsystem.moveShooterMotor(shooterVoltage);
-        executed = true;
+        if (System.currentTimeMillis() > shootStartTime + 3000) {
+            fuelSubsystem.moveDividerMotor(dividerVoltage);
+            executed = true;
+        }
     }
 
     @Override
