@@ -24,11 +24,12 @@ public class LedSubsystem extends SubsystemBase{
     CANdleConfiguration config = new CANdleConfiguration().withLED(config_one);
 
     public LedSubsystem() {
-
         ctrLED = new CANdle(Constants.CTRLED_CAN_ID);
         setSolidColor(255,255,50); /* yellow */
-
     }
+
+    /* TODO 03/04 Lab Hours: make getColor method */
+    /* TODO 03/04 Lab Hours: make setBlinkingColor method -- apply this method in RobotContainer when the limelight can see a target */
 
     public void setSolidColor(int r, int g, int b) {
         
