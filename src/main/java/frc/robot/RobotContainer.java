@@ -282,19 +282,23 @@ public class RobotContainer {
           .onTrue(
             Commands.runOnce(
               () -> {getIntakePivotCommand().schedule();}
+            ,
+            intake
           )
           .andThen(
-            Commands.runOnce(
-              () -> {
-                if(intake.isDeployed()){
-                  stopIntakeCommand.schedule();
-                }
-                else{
-                  runIntakeFuelCommand.schedule();
-                }
-              }
+              Commands.runOnce(
+                () -> {
+                  if(!intake.isDeployed()){
+                    stopIntakeCommand.schedule();
+                  }
+                  else{
+                    runIntakeFuelCommand.schedule();
+                  }
+                },
+                intake
+              )
             )
-          ));
+          );
 
       controller_two
           .y()
