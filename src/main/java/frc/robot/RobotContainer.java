@@ -258,13 +258,16 @@ public class RobotContainer {
                   () -> new Rotation2d(),
                   getAlliance()));
   
-      /* TODO 03/04 Lab Hours: make a start/stopShoot command, but put it on an out-of-the-way button (start, back, etc) */
       /* TODO 03/04 Lab Hours: automatically deploy the intake first-thing, so we can always be certain from that point onwards the intake is deployed*/
       /* TODO 03/04 Lab Hours: when you deploy/retract, stop and start the intake automatically */
       controller_two            
           .b()
           .onTrue(
-            shootCommand
+            Commands.runOnce(
+              () -> {
+                shooterToggleCommand().schedule();
+              }
+          )
             ); 
 
       controller_two
@@ -407,6 +410,14 @@ public class RobotContainer {
       return new IntakePivotCommand(intake, Constants.RETRACT_MOTOR_VOLTAGE);
     } else {
       return new IntakePivotCommand(intake,Constants.DEPLOY_MOTOR_VOLTAGE);
+    }
+  }
+
+  public Command shooterToggleCommand() {
+    if (fuel.shooterOn()){
+      return stopShootCommand;
+    } else {
+      return shootCommand;
     }
   }
 

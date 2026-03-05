@@ -49,4 +49,12 @@ public class FuelSubsystem extends SubsystemBase{
             return shooterMotorVoltage;
         }
     }
+
+    public boolean shooterOn(){
+        if(shooterMotorVoltage != 0){
+            return true;
+        } else{
+            return false;
+        }
+    }
 }
