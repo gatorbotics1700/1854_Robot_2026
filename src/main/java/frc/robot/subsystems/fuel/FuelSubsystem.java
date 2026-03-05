@@ -9,6 +9,7 @@ public class FuelSubsystem extends SubsystemBase{
     private TalonFX shooterMotor; 
     private  TalonFX dividerMotor;
     private double shooterMotorVoltage;
+    private double dividerMotorVoltage;
     
     public FuelSubsystem(){
         shooterMotor = new TalonFX(Constants.SHOOTER_MOTOR_CAN_ID, Constants.MECH_CANBUS_NAME);
@@ -40,6 +41,7 @@ public class FuelSubsystem extends SubsystemBase{
 
     public void moveDividerMotor(double voltage) {
         dividerMotor.setVoltage(voltage);
+        dividerMotorVoltage = voltage;
     }
 
     public double getShooterMotorVoltage(Mode currentMode) {
@@ -50,10 +52,18 @@ public class FuelSubsystem extends SubsystemBase{
         }
     }
 
+    public double getDividerMotorVoltage(Mode currentMode) {
+        if (currentMode == Mode.REAL) {
+            return dividerMotor.getMotorVoltage().getValueAsDouble();
+        } else {
+            return dividerMotorVoltage;
+        }
+    }
+
     public boolean shooterOn(){
-        if(shooterMotorVoltage != 0){
+        if(dividerMotorVoltage != 0){
             return true;
-        } else{
+        } else {
             return false;
         }
     }

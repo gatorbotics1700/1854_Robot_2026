@@ -85,7 +85,8 @@ public class RobotContainer {
 
     Command shootCommand = new ShootCommand(fuel, Constants.SHOOTER_MOTOR_VOLTAGE, Constants.DIVIDER_MOTOR_VOLTAGE);
     Command runIntakeFuelCommand = new IntakeFuelCommand(intake, Constants.INTAKE_MOTOR_VOLTAGE,Constants.currentMode);
-    Command stopShootCommand = new ShootCommand(fuel,0, 0);
+    Command stopShootCommand = new ShootCommand(fuel,Constants.SHOOTER_MOTOR_VOLTAGE, 0);
+    Command fullStopShootCommand = new ShootCommand(fuel, 0, 0);
     Command stopIntakeCommand = new IntakeFuelCommand(intake, 0.0,Constants.currentMode);
     Command deployCommand = new IntakePivotCommand(intake,Constants.DEPLOY_MOTOR_VOLTAGE);
 
@@ -291,6 +292,13 @@ public class RobotContainer {
             stopIntakeCommand
           );  
 
+
+      controller_two
+          .rightBumper()
+          .onTrue(
+            fullStopShootCommand
+          );
+
     // Reset gyro to 0° when B button is pressed
     controller
         .start()
@@ -385,8 +393,10 @@ public class RobotContainer {
       NamedCommands.registerCommand("shootCenter",  shootCommand);
       NamedCommands.registerCommand("runIntake", runIntakeFuelCommand);
       NamedCommands.registerCommand("stopShoot", stopShootCommand);
+      NamedCommands.registerCommand("fullStopShoot", fullStopShootCommand);
       NamedCommands.registerCommand("stopIntake", stopIntakeCommand);
       NamedCommands.registerCommand("deployIntake", deployCommand);
+  
       
       
     
@@ -504,6 +514,7 @@ public class RobotContainer {
 
     Logger.recordOutput("Commands/DriveCommand", driveCmd != null ? driveCmd.getName() : "None");
     Logger.recordOutput("Commands/ShooterVoltage", fuel.getShooterMotorVoltage(Constants.currentMode));
+    Logger.recordOutput("Commands/DividerVoltage", fuel.getDividerMotorVoltage(Constants.currentMode));
     Logger.recordOutput("Commands/IntakeVoltage", intake.getIntakeMotorVoltage(Constants.currentMode));
     Logger.recordOutput("Commands/IntakeState", intake.isDeployed());
     //Logger.recordOutput("Commands/shooterVoltage", shooterMotorVoltage); see if thsi can be fixed
