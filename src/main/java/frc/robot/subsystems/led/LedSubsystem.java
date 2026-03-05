@@ -35,23 +35,17 @@ public class LedSubsystem extends SubsystemBase{
         isBlinking = false;
     }
 
-    /* TODO 03/04 Lab Hours: make getColor method */
     public RGBWColor getColor(){
         return new RGBWColor(ledR,ledG,ledB);
     }
         
-    /* TODO 03/04 Lab Hours: make setBlinkingColor method -- apply this method in RobotContainer when the limelight can see a target */
-
     public void setBlinking(){
         if(isBlinking){
             return;
         } else{                   
-            CANdleConfiguration config = new CANdleConfiguration();
-            
             RGBWColor newColor = new RGBWColor(ledR, ledG, ledB);
-            TwinkleAnimation twinkleAnimation = new TwinkleAnimation(0,7).withColor(newColor);
-
-            ctrLED.getConfigurator().apply(config);
+            TwinkleAnimation twinkleAnimation =
+                new TwinkleAnimation(0,7).withColor(newColor).withUpdateFreqHz(20).withMaxLEDsOnProportion(.5);
             ctrLED.setControl(twinkleAnimation);
             isBlinking = true;   
         }
@@ -63,16 +57,10 @@ public class LedSubsystem extends SubsystemBase{
         ledB = b;
     }
     public void setSolid() {
-        
-        CANdleConfiguration config = new CANdleConfiguration();
-        
         RGBWColor newColor = new RGBWColor(ledR, ledG, ledB);
         SolidColor solidColor = new SolidColor(0,7).withColor(newColor);
-
-        ctrLED.getConfigurator().apply(config);
         ctrLED.setControl(solidColor);
         isBlinking = false;
-
     }
 
 }

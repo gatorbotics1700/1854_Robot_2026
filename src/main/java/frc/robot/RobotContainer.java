@@ -259,8 +259,6 @@ public class RobotContainer {
                   () -> new Rotation2d(),
                   getAlliance()));
   
-      /* TODO 03/04 Lab Hours: automatically deploy the intake first-thing, so we can always be certain from that point onwards the intake is deployed*/
-      /* TODO 03/04 Lab Hours: when you deploy/retract, stop and start the intake automatically */
       controller_two            
           .b()
           .onTrue(
@@ -281,33 +279,19 @@ public class RobotContainer {
           .x()
           .onTrue(
             Commands.runOnce(
-              () -> {
-                if(intake.isDeployed()){
-                   getIntakeCommand().schedule();
-                  //(stopIntakeCommand).schedule();
-                }
-                else{
-                  getIntakeCommand().schedule();
-                  //(runIntakeFuelCommand).schedule();
-                }
-               
-              }
-            
+              () -> {getIntakePivotCommand().schedule();}
           )
-           .andThen(
-           Commands.runOnce(
+          .andThen(
+            Commands.runOnce(
               () -> {
                 if(intake.isDeployed()){
-                   //getIntakeCommand().schedule();
-                  (stopIntakeCommand).schedule();
+                  stopIntakeCommand.schedule();
                 }
                 else{
-                  //getIntakeCommand().schedule();
-                  (runIntakeFuelCommand).schedule();
+                  runIntakeFuelCommand.schedule();
                 }
-               
               }
-           )
+            )
           ));
 
       controller_two
@@ -439,7 +423,7 @@ public class RobotContainer {
     }
   }
 
-  public Command getIntakeCommand() {
+  public Command getIntakePivotCommand() {
     if (intake.isDeployed()){
       return new IntakePivotCommand(intake, Constants.RETRACT_MOTOR_VOLTAGE);
     } else {
@@ -548,15 +532,14 @@ public class RobotContainer {
     
     Pose2d pose = drive.getPose();
 
-   /*  if(vision.poseAccepted){
+    if(vision.poseAccepted){
       led.setBlinking();
     } else{
       led.setSolid();
     }
-*/
+
     if (getAlliance().isEmpty()) {
       led.setColor(255,255,0);
-      led.setSolid();
       return;
     } 
 
@@ -583,7 +566,6 @@ public class RobotContainer {
 
     if (inDistance && inAngle) {
       led.setColor(0,255,0);
-      led.setSolid();
     } else {
       if (alliance == DriverStation.Alliance.Blue){
           led.setColor(0,0,255);
