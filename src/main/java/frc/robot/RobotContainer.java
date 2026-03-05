@@ -504,6 +504,7 @@ public class RobotContainer {
 
     if(vision.poseAccepted){
       led.setBlinking();
+      System.out.println("Lebron is blinking!!!!!!!!!!!!!!!!!!");
     } else{
       led.setSolid();
     }
@@ -541,11 +542,9 @@ public class RobotContainer {
     } else {
       if (alliance == DriverStation.Alliance.Blue){
           led.setColor(0,0,255);
-          led.setSolid();
       }
       if (alliance == DriverStation.Alliance.Red){
           led.setColor(255,0,0);
-          led.setSolid();
       }
     }
 

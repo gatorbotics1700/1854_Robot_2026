@@ -19,6 +19,7 @@ public class LedSubsystem extends SubsystemBase{
     private int ledR;
     private int ledG;
     private int ledB;
+    private boolean isBlinking;
 
     StripTypeValue stripType = StripTypeValue.RGB;
 
@@ -31,6 +32,7 @@ public class LedSubsystem extends SubsystemBase{
         ctrLED = new CANdle(Constants.CTRLED_CAN_ID);
         setColor(255,255,50); /* yellow */
         setSolid();
+        isBlinking = false;
     }
 
     /* TODO 03/04 Lab Hours: make getColor method */
@@ -41,15 +43,18 @@ public class LedSubsystem extends SubsystemBase{
     /* TODO 03/04 Lab Hours: make setBlinkingColor method -- apply this method in RobotContainer when the limelight can see a target */
 
     public void setBlinking(){
-        
-        CANdleConfiguration config = new CANdleConfiguration();
-        
-        RGBWColor newColor = new RGBWColor(ledR, ledG, ledB);
-        TwinkleAnimation twinkleAnimation = new TwinkleAnimation(0,7).withColor(newColor);
+        if(isBlinking){
+            return;
+        } else{                   
+            CANdleConfiguration config = new CANdleConfiguration();
+            
+            RGBWColor newColor = new RGBWColor(ledR, ledG, ledB);
+            TwinkleAnimation twinkleAnimation = new TwinkleAnimation(0,7).withColor(newColor);
 
-        ctrLED.getConfigurator().apply(config);
-        ctrLED.setControl(twinkleAnimation);
-
+            ctrLED.getConfigurator().apply(config);
+            ctrLED.setControl(twinkleAnimation);
+            isBlinking = true;   
+        }
     }
 
     public void setColor(int r, int g, int b){
@@ -66,6 +71,7 @@ public class LedSubsystem extends SubsystemBase{
 
         ctrLED.getConfigurator().apply(config);
         ctrLED.setControl(solidColor);
+        isBlinking = false;
 
     }
 
