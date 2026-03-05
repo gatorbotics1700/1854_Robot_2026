@@ -282,8 +282,32 @@ public class RobotContainer {
           .onTrue(
             Commands.runOnce(
               () -> {
-                getIntakeCommand().schedule();
+                if(intake.isDeployed()){
+                   getIntakeCommand().schedule();
+                  //(stopIntakeCommand).schedule();
+                }
+                else{
+                  getIntakeCommand().schedule();
+                  //(runIntakeFuelCommand).schedule();
+                }
+               
               }
+            
+          )
+           .andThen(
+           Commands.runOnce(
+              () -> {
+                if(intake.isDeployed()){
+                   //getIntakeCommand().schedule();
+                  (stopIntakeCommand).schedule();
+                }
+                else{
+                  //getIntakeCommand().schedule();
+                  (runIntakeFuelCommand).schedule();
+                }
+               
+              }
+           )
           ));
 
       controller_two
@@ -419,7 +443,7 @@ public class RobotContainer {
     if (intake.isDeployed()){
       return new IntakePivotCommand(intake, Constants.RETRACT_MOTOR_VOLTAGE);
     } else {
-      return new IntakePivotCommand(intake,Constants.DEPLOY_MOTOR_VOLTAGE);
+      return new IntakePivotCommand(intake, Constants.DEPLOY_MOTOR_VOLTAGE);
     }
   }
 
@@ -524,13 +548,12 @@ public class RobotContainer {
     
     Pose2d pose = drive.getPose();
 
-    if(vision.poseAccepted){
+   /*  if(vision.poseAccepted){
       led.setBlinking();
-      System.out.println("Lebron is blinking!!!!!!!!!!!!!!!!!!");
     } else{
       led.setSolid();
     }
-
+*/
     if (getAlliance().isEmpty()) {
       led.setColor(255,255,0);
       led.setSolid();
