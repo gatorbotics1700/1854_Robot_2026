@@ -4,6 +4,7 @@ package frc.robot.subsystems.led;
 import com.ctre.phoenix6.configs.CANdleConfiguration;
 import com.ctre.phoenix6.configs.LEDConfigs;
 import com.ctre.phoenix6.controls.SolidColor;
+import com.ctre.phoenix6.controls.StrobeAnimation;
 import com.ctre.phoenix6.controls.TwinkleAnimation;
 import com.ctre.phoenix6.hardware.CANdle;
 import com.ctre.phoenix6.signals.RGBWColor;
@@ -40,15 +41,10 @@ public class LedSubsystem extends SubsystemBase{
     }
         
     public void setBlinking(){
-        if(isBlinking){
-            return;
-        } else{                   
-            RGBWColor newColor = new RGBWColor(ledR, ledG, ledB);
-            TwinkleAnimation twinkleAnimation =
-                new TwinkleAnimation(0,7).withColor(newColor).withUpdateFreqHz(20).withMaxLEDsOnProportion(.5);
-            ctrLED.setControl(twinkleAnimation);
-            isBlinking = true;   
-        }
+        RGBWColor newColor = getColor();
+        SolidColor solidColor = new SolidColor(0,3).withColor(newColor);
+        ctrLED.setControl(solidColor);
+        isBlinking = true;
     }
 
     public void setColor(int r, int g, int b){

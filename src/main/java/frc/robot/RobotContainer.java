@@ -209,6 +209,8 @@ public class RobotContainer {
                       }else{
                         led.setColor(255,255,0);
                       }
+                      System.out.println("Lebron changed teams");
+                      led.setSolid();
                     }
                   ).andThen(
                     Commands.runOnce(() -> {
