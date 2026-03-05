@@ -4,6 +4,7 @@ package frc.robot.subsystems.led;
 import com.ctre.phoenix6.configs.CANdleConfiguration;
 import com.ctre.phoenix6.configs.LEDConfigs;
 import com.ctre.phoenix6.controls.SolidColor;
+import com.ctre.phoenix6.controls.TwinkleAnimation;
 import com.ctre.phoenix6.hardware.CANdle;
 import com.ctre.phoenix6.signals.RGBWColor;
 import com.ctre.phoenix6.signals.StripTypeValue;
@@ -15,6 +16,9 @@ import frc.robot.Constants;
 public class LedSubsystem extends SubsystemBase{
 
     private final CANdle ctrLED;
+    private int ledR;
+    private int ledG;
+    private int ledB;
 
     StripTypeValue stripType = StripTypeValue.RGB;
 
@@ -25,17 +29,39 @@ public class LedSubsystem extends SubsystemBase{
 
     public LedSubsystem() {
         ctrLED = new CANdle(Constants.CTRLED_CAN_ID);
-        setSolidColor(255,255,50); /* yellow */
+        setColor(255,255,50); /* yellow */
+        setSolid();
     }
 
     /* TODO 03/04 Lab Hours: make getColor method */
+    public RGBWColor getColor(){
+        return new RGBWColor(ledR,ledG,ledB);
+    }
+        
     /* TODO 03/04 Lab Hours: make setBlinkingColor method -- apply this method in RobotContainer when the limelight can see a target */
 
-    public void setSolidColor(int r, int g, int b) {
+    public void setBlinking(){
         
         CANdleConfiguration config = new CANdleConfiguration();
         
-        RGBWColor newColor = new RGBWColor(r, g, b);
+        RGBWColor newColor = new RGBWColor(ledR, ledG, ledB);
+        TwinkleAnimation twinkleAnimation = new TwinkleAnimation(0,7).withColor(newColor);
+
+        ctrLED.getConfigurator().apply(config);
+        ctrLED.setControl(twinkleAnimation);
+
+    }
+
+    public void setColor(int r, int g, int b){
+        ledR = r;
+        ledG = g;
+        ledB = b;
+    }
+    public void setSolid() {
+        
+        CANdleConfiguration config = new CANdleConfiguration();
+        
+        RGBWColor newColor = new RGBWColor(ledR, ledG, ledB);
         SolidColor solidColor = new SolidColor(0,7).withColor(newColor);
 
         ctrLED.getConfigurator().apply(config);
@@ -44,3 +70,5 @@ public class LedSubsystem extends SubsystemBase{
     }
 
 }
+
+

@@ -202,11 +202,11 @@ public class RobotContainer {
                     Commands.runOnce(
                       () -> {
                       if (getAlliance().equals(Optional.of(DriverStation.Alliance.Red))){
-                        led.setSolidColor(255,0,0); 
+                        led.setColor(255,0,0); 
                       } else if (getAlliance().equals(Optional.of(DriverStation.Alliance.Blue))){
-                        led.setSolidColor(0,0,255);
+                        led.setColor(0,0,255);
                       }else{
-                        led.setSolidColor(255,255,0);
+                        led.setColor(255,255,0);
                       }
                     }
                   ).andThen(
@@ -502,8 +502,15 @@ public class RobotContainer {
     
     Pose2d pose = drive.getPose();
 
+    if(vision.poseAccepted){
+      led.setBlinking();
+    } else{
+      led.setSolid();
+    }
+
     if (getAlliance().isEmpty()) {
-      led.setSolidColor(255,255,0);
+      led.setColor(255,255,0);
+      led.setSolid();
       return;
     } 
 
@@ -529,13 +536,16 @@ public class RobotContainer {
         Math.abs(angleError.getDegrees()) < Constants.SHOOT_ANG_RANGE;
 
     if (inDistance && inAngle) {
-      led.setSolidColor(0,255,0);
+      led.setColor(0,255,0);
+      led.setSolid();
     } else {
       if (alliance == DriverStation.Alliance.Blue){
-          led.setSolidColor(0,0,255);
+          led.setColor(0,0,255);
+          led.setSolid();
       }
       if (alliance == DriverStation.Alliance.Red){
-          led.setSolidColor(255,0,0);
+          led.setColor(255,0,0);
+          led.setSolid();
       }
     }
 
