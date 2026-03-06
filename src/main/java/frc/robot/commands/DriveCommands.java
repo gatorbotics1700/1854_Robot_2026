@@ -146,7 +146,11 @@ public class DriveCommands {
               double omega =
                   angleController.calculate(
                       drive.getRotation().getRadians(), rotationSupplier.get().getRadians());
-
+              // Add rotational deadband
+              System.out.println(omega);
+              if (Math.abs(omega) < .8) {
+                omega = 0;
+              }
               // Convert to field relative speeds & send command
               ChassisSpeeds speeds =
                   new ChassisSpeeds(

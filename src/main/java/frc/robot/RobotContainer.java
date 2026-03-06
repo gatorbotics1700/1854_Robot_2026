@@ -13,6 +13,7 @@
 
 package frc.robot;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import org.littletonrobotics.junction.Logger;
@@ -25,6 +26,7 @@ import com.pathplanner.lib.path.PathConstraints;
 
 import edu.wpi.first.hal.util.AllocationException;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.util.Units;
@@ -250,7 +252,6 @@ public class RobotContainer {
                 },
                 drive));
 
-      // Lock to 0° when A button is held
       controller
           .b()
           .onTrue(
@@ -524,9 +525,13 @@ public class RobotContainer {
 
     if(vision.poseAccepted){
       led.setBlinking();
-      for(int i = 0; i < vision.allRobotPosesAccepted.size(); i++){
-        Pose2d visionPose = vision.allRobotPosesAccepted.get(i).toPose2d();
-        drive.accept(visionPose, System.currentTimeMillis(), null);// will crash talk to patricia
+      // We must copy the robot poses. This is to avoid a race condition.
+      // -- talk to Patricia if you have questions about why this is necessary
+      ArrayList<Pose3d> acceptedPoses = new ArrayList<Pose3d>();
+      acceptedPoses.addAll(vision.allRobotPosesAccepted);
+      for(int i = 0; i < acceptedPoses.size(); i++){
+        Pose2d visionPose = acceptedPoses.get(i).toPose2d();
+        //drive.accept(visionPose, System.currentTimeMillis(), null);// will crash talk to patricia
       }
     } else{
       led.setSolid();
