@@ -526,13 +526,14 @@ public class RobotContainer {
 
     if(vision.poseAccepted){
       led.setBlinking();
-      // We must copy the robot poses. This is to avoid a race condition.
-      // -- talk to Patricia if you have questions about why this is necessary
+      // We must copy the robot poses. This is to avoid a race condition where 
+      // the list grows+shrinks as we loop through it.
+      // -- talk to Patricia if you're curious about why this is necessary.
       ArrayList<Pose3d> acceptedPoses = new ArrayList<Pose3d>();
       acceptedPoses.addAll(vision.allRobotPosesAccepted);
       for(int i = 0; i < acceptedPoses.size(); i++){
         Pose2d visionPose = acceptedPoses.get(i).toPose2d();
-        //drive.accept(visionPose, System.currentTimeMillis(), null);// will crash talk to patricia
+        drive.accept(visionPose, System.currentTimeMillis());
       }
     } else{
       led.setSolid();
