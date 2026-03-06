@@ -226,8 +226,8 @@ public class RobotContainer {
             .whileTrue(
                 DriveCommands.joystickDriveAtAngle(
                     drive,
-                    () -> modifyJoystickAxis(-controller.getLeftY(), false), // Changed to raw values
-                    () -> modifyJoystickAxis(-controller.getLeftX(),false), // Changed to raw values
+                    () -> modifyJoystickAxis(controller.getLeftY(), false), // Changed to raw values
+                    () -> modifyJoystickAxis(controller.getLeftX(),false), // Changed to raw values
                     () -> getJoystickAngle(-controller.getRightX(),-controller.getRightY()),  // Changed to raw values
                     getAlliance()))
             .onFalse(DriveCommands.stopDriveCommand(drive));
@@ -236,8 +236,8 @@ public class RobotContainer {
             .whileTrue(
                 DriveCommands.joystickDriveAtAngle(
                     drive,
-                    () -> modifyJoystickAxis(controller.getLeftY(),false), // Changed to raw values
-                    () -> modifyJoystickAxis(controller.getLeftX(),false), // Changed to raw values
+                    () -> modifyJoystickAxis(-controller.getLeftY(),false), // Changed to raw values
+                    () -> modifyJoystickAxis(-controller.getLeftX(),false), // Changed to raw values
                     () -> getJoystickAngle(-controller.getRightX(),-controller.getRightY()), // Changed to raw values
                     getAlliance()))
             .onFalse(DriveCommands.stopDriveCommand(drive));
