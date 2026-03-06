@@ -224,8 +224,8 @@ public class RobotContainer {
             .whileTrue(
                 DriveCommands.joystickDriveAtAngle(
                     drive,
-                    () -> modifyJoystickAxis(controller.getLeftY(), false), // Changed to raw values
-                    () -> modifyJoystickAxis(controller.getLeftX(),false), // Changed to raw values
+                    () -> modifyJoystickAxis(-controller.getLeftY(), false), // Changed to raw values
+                    () -> modifyJoystickAxis(-controller.getLeftX(),false), // Changed to raw values
                     () -> getJoystickAngle(-controller.getRightX(),-controller.getRightY()),  // Changed to raw values
                     getAlliance()))
             .onFalse(DriveCommands.stopDriveCommand(drive));
@@ -234,15 +234,15 @@ public class RobotContainer {
             .whileTrue(
                 DriveCommands.joystickDriveAtAngle(
                     drive,
-                    () -> modifyJoystickAxis(-controller.getLeftY(),false), // Changed to raw values
-                    () -> modifyJoystickAxis(-controller.getLeftX(),false), // Changed to raw values
+                    () -> modifyJoystickAxis(controller.getLeftY(),false), // Changed to raw values
+                    () -> modifyJoystickAxis(controller.getLeftX(),false), // Changed to raw values
                     () -> getJoystickAngle(-controller.getRightX(),-controller.getRightY()), // Changed to raw values
                     getAlliance()))
             .onFalse(DriveCommands.stopDriveCommand(drive));
       }
       
       controller
-        .x()
+        .a()
         .onChange( // Set slow when pressed, undo when released
           Commands.runOnce(
                 () -> {
@@ -252,21 +252,22 @@ public class RobotContainer {
 
       // Lock to 0° when A button is held
       controller
-          .a()
-          .whileTrue(
-              DriveCommands.joystickDriveAtAngle(
-                  drive,
-                  () -> -controller.getLeftY(),
-                  () -> -controller.getLeftX(),
-                  () -> new Rotation2d(),
-                  getAlliance()));
-  
-      controller_two            
           .b()
           .onTrue(
             Commands.runOnce(
+                () -> {
+                  if(alliance.isPresent()){
+                    drive.zeroGyroscope(alliance.get());
+                  }
+                },
+                drive));
+  
+      controller_two            
+          .rightTrigger()
+          .onTrue(
+            Commands.runOnce(
               () -> {
-                shooterToggleCommand().schedule();
+                shooterToggleCommand().schedule();// check that this works
               }
           )
             ); 
@@ -278,7 +279,7 @@ public class RobotContainer {
           );
 
       controller_two
-          .x()
+          .leftTrigger()
           .onTrue(
             Commands.runOnce(
               () -> {getIntakePivotCommand().schedule();}
@@ -308,7 +309,7 @@ public class RobotContainer {
 
 
       controller_two
-          .rightBumper()
+          .b()
           .onTrue(
             fullStopShootCommand
           );
@@ -540,6 +541,10 @@ public class RobotContainer {
 
     if(vision.poseAccepted){
       led.setBlinking();
+      for(int i = 0; i < vision.allRobotPosesAccepted.size(); i++){
+        Pose2d visionPose = vision.allRobotPosesAccepted.get(i).toPose2d();
+        drive.accept(visionPose, System.currentTimeMillis(), null);// will crash talk to patricia
+      }
     } else{
       led.setSolid();
     }

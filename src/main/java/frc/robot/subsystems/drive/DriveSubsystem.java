@@ -13,6 +13,8 @@
 
 package frc.robot.subsystems.drive;
 
+import frc.robot.subsystems.drive.GyroIOPigeon2;
+
 import static edu.wpi.first.units.Units.KilogramSquareMeters;
 import static edu.wpi.first.units.Units.Kilograms;
 import static edu.wpi.first.units.Units.Meters;
@@ -406,6 +408,34 @@ public class DriveSubsystem extends SubsystemBase implements VisionSubsystem.Vis
       new Translation2d(TunerConstants.BackRight.LocationX, TunerConstants.BackRight.LocationY)
     };
   }
+
+  public void zeroGyroscope(Alliance alliance) { // will crash in sim
+    Rotation2d zeroedAngle = null;
+    if(alliance == DriverStation.Alliance.Red){
+        zeroedAngle = Rotation2d.fromDegrees(180.0);
+    } else if(alliance == DriverStation.Alliance.Blue){
+        zeroedAngle = Rotation2d.fromDegrees(0.0);
+    }
+    if(zeroedAngle != null){
+        poseEstimator.resetPosition(
+            new Rotation2d(Math.toRadians(((GyroIOPigeon2)(gyroIO)).pigeon.getYaw().getValueAsDouble())),
+            new SwerveModulePosition[] { modules[0].getPosition(), modules[1].getPosition(),
+                modules[2].getPosition(), modules[3].getPosition() },
+            new Pose2d(poseEstimator.getEstimatedPosition().getX(), poseEstimator.getEstimatedPosition().getY(),
+                zeroedAngle)
+        );
+    } else {
+        System.err.println("zeroed angle was null -- setting to 0");
+        poseEstimator.resetPosition(
+            new Rotation2d(Math.toRadians(((GyroIOPigeon2)(gyroIO)).pigeon.getYaw().getValueAsDouble())),
+            new SwerveModulePosition[] { modules[0].getPosition(), modules[1].getPosition(),
+                modules[2].getPosition(), modules[3].getPosition() },
+            new Pose2d(poseEstimator.getEstimatedPosition().getX(), poseEstimator.getEstimatedPosition().getY(),
+                Rotation2d.fromDegrees(0.0))
+        );
+      }
+    }
+
 
   public void setSlowDrive() {
     slowDrive = !slowDrive;

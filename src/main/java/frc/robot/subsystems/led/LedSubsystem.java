@@ -41,10 +41,11 @@ public class LedSubsystem extends SubsystemBase{
     }
         
     public void setBlinking(){
-        RGBWColor newColor = getColor();
+        RGBWColor newColor = new RGBWColor(255,0,255);
         SolidColor solidColor = new SolidColor(0,3).withColor(newColor);
         ctrLED.setControl(solidColor);
         isBlinking = true;
+        System.out.println("Lebron blinking");
     }
 
     public void setColor(int r, int g, int b){

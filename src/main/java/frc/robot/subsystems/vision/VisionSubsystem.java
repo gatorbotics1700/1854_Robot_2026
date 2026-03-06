@@ -43,6 +43,11 @@ public class VisionSubsystem extends SubsystemBase {
   private final List<Pose3d> tagPoses = new LinkedList<>();
 
   public boolean poseAccepted;
+  // Initialize logging values
+  public List<Pose3d> allTagPoses = new LinkedList<>();
+  public List<Pose3d> allRobotPoses = new LinkedList<>();
+  public List<Pose3d> allRobotPosesAccepted = new LinkedList<>();
+  public List<Pose3d> allRobotPosesRejected = new LinkedList<>();
 
   public VisionSubsystem(VisionConsumer consumer, VisionIO... io) {
     this.consumer = consumer;
@@ -81,10 +86,10 @@ public class VisionSubsystem extends SubsystemBase {
     }
 
     // Initialize logging values
-    List<Pose3d> allTagPoses = new LinkedList<>();
-    List<Pose3d> allRobotPoses = new LinkedList<>();
-    List<Pose3d> allRobotPosesAccepted = new LinkedList<>();
-    List<Pose3d> allRobotPosesRejected = new LinkedList<>();
+    allTagPoses = new LinkedList<>();
+    allRobotPoses = new LinkedList<>();
+    allRobotPosesAccepted = new LinkedList<>();
+    allRobotPosesRejected = new LinkedList<>();
 
     // Loop over cameras
     for (int cameraIndex = 0; cameraIndex < io.length; cameraIndex++) {
