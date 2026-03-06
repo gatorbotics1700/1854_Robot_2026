@@ -5,6 +5,7 @@ import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.MotionMagicExpoVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -24,6 +25,8 @@ public class IntakeSubsystem extends SubsystemBase{
         currentLimitIntakeMotor();
         //TODO: implement motion magic
         deployMotor = new TalonFX(Constants.DEPLOY_MOTOR_CAN_ID, Constants.MECH_CANBUS_NAME);
+        // Set to brake mode to prevent intake from flopping out when moving
+        deployMotor.setNeutralMode(NeutralModeValue.Brake);
         currentLimitDeployMotor();
         isDeployed = false;
         System.out.println("lebron initializing");

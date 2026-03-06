@@ -601,12 +601,14 @@ public class RobotContainer {
 
 
   private Rotation2d getJoystickAngle(double x, double y, Rotation2d currentDriveAngle){
-    if (x < .1 && y < .1) { // deadband; keep the robot at it's current angle
+    if (x < .1 && y < .1) { // deadband; keep the robot at its current angle
       return currentDriveAngle;
     } else {
       double a = modifyJoystickAxis(x, true);
       double b = modifyJoystickAxis(y, true);
-      return new Rotation2d(Math.atan2(a,b));
+      Rotation2d newAngle = new Rotation2d(Math.atan2(a,b));
+      System.out.println(newAngle.getDegrees());
+      return newAngle;
     }
   }
 }
