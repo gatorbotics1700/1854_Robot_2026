@@ -221,6 +221,7 @@ public class RobotContainer {
                   )
                   .ignoringDisable(true));
 
+      Rotation2d currentDriveAngle = drive.getRotation();
       if (alliance.isPresent() && alliance.get() == DriverStation.Alliance.Red) {
         driverControl
             .whileTrue(
@@ -228,7 +229,7 @@ public class RobotContainer {
                     drive,
                     () -> modifyJoystickAxis(controller.getLeftY(), false), // Changed to raw values
                     () -> modifyJoystickAxis(controller.getLeftX(),false), // Changed to raw values
-                    () -> getJoystickAngle(-controller.getRightX(),-controller.getRightY()),  // Changed to raw values
+                    () -> getJoystickAngle(-controller.getRightX(),-controller.getRightY(), currentDriveAngle),  // Changed to raw values
                     getAlliance()))
             .onFalse(DriveCommands.stopDriveCommand(drive));
       } else { // blue = default when no alliance
@@ -238,7 +239,7 @@ public class RobotContainer {
                     drive,
                     () -> modifyJoystickAxis(-controller.getLeftY(),false), // Changed to raw values
                     () -> modifyJoystickAxis(-controller.getLeftX(),false), // Changed to raw values
-                    () -> getJoystickAngle(-controller.getRightX(),-controller.getRightY()), // Changed to raw values
+                    () -> getJoystickAngle(-controller.getRightX(),-controller.getRightY(), currentDriveAngle), // Changed to raw values
                     getAlliance()))
             .onFalse(DriveCommands.stopDriveCommand(drive));
       }
@@ -599,9 +600,13 @@ public class RobotContainer {
 
 
 
-  private Rotation2d getJoystickAngle(double x, double y){
-    double a = modifyJoystickAxis(x, true);
-    double b = modifyJoystickAxis(y, true);
-    return new Rotation2d(Math.atan2(a,b));
+  private Rotation2d getJoystickAngle(double x, double y, Rotation2d currentDriveAngle){
+    if (x < .1 && y < .1) { // deadband; keep the robot at it's current angle
+      return currentDriveAngle;
+    } else {
+      double a = modifyJoystickAxis(x, true);
+      double b = modifyJoystickAxis(y, true);
+      return new Rotation2d(Math.atan2(a,b));
+    }
   }
 }
