@@ -202,18 +202,11 @@ public class RobotContainer {
             () ->
                   getAlliance() != alliance)
                   .onChange(
-                    Commands.runOnce(
-                      () -> {
-                      if (getAlliance().equals(Optional.of(DriverStation.Alliance.Red))){
-                        led.setColor(255,0,0); 
-                      } else if (getAlliance().equals(Optional.of(DriverStation.Alliance.Blue))){
-                        led.setColor(0,0,255);
-                      }else{
-                        led.setColor(255,255,0);
-                      }
+                    Commands.runOnce(() -> {
                       System.out.println("Lebron changed teams");
-                      led.setSolid();
-                    }
+                      updateLEDs();
+                    },
+                    led
                   ).andThen(
                     Commands.runOnce(() -> {
                       configureButtonBindings(); 
@@ -522,8 +515,24 @@ public class RobotContainer {
     // Log if commands are running
     Logger.recordOutput("Commands/DriveCommandActive", driveCmd != null);
     
+    updateLEDs();
+
+  }
+
+  public void updateLEDs() {
     Pose2d pose = drive.getPose();
 
+    // Set the color for the alliance
+    if (getAlliance().equals(Optional.of(DriverStation.Alliance.Red))){
+      led.setColor(255,0,0);
+    } else if (getAlliance().equals(Optional.of(DriverStation.Alliance.Blue))){
+      led.setColor(0,0,255);
+    } else {
+      led.setColor(255,255,0); // yellow = BAD
+    }
+    led.setSolid();
+
+    // Add some purple if we see an april tag
     if(vision.poseAccepted){
       led.setBlinking();
       // We must copy the robot poses. This is to avoid a race condition where 
@@ -544,7 +553,6 @@ public class RobotContainer {
       return;
     } 
 
-    /* TODO 03/04 Lab Hours: move this to it's own method. Call during an else of the if above */
     Alliance alliance = getAlliance().get();
 
     Translation2d target = 
@@ -556,7 +564,6 @@ public class RobotContainer {
 
     Rotation2d angleToTarget = robotToTarget.getAngle();
 
-    /* TODO 03/04 Lab Hours: test in sim with log of LED color. */
     Rotation2d angleError = angleToTarget.minus(pose.getRotation());
 
     boolean inDistance =
@@ -597,6 +604,15 @@ public class RobotContainer {
       default:
         return DriverStation.getAlliance();
      }
+  }
+
+  // Schedule commands to stop the intake, and the shooter
+  // Patricia added this for safety -- talk to her before messing with this.
+  public void stopAllMotors() {
+    fuel.moveDividerMotor(0);
+    fuel.moveShooterMotor(0);
+    intake.moveIntakeMotor(0);
+    intake.setDeployMotorVoltage(0);
   }
 
 

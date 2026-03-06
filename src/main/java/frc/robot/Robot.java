@@ -130,11 +130,17 @@ public class Robot extends LoggedRobot {
   @Override
   public void disabledInit() {
     CommandScheduler.getInstance().cancelAll();
+    // Patricia added this for safety -- talk to her before messing with this.
+    robotContainer.stopAllMotors();
   }
 
   /** This function is called periodically when disabled. */
   @Override
-  public void disabledPeriodic() {}
+  public void disabledPeriodic() {
+    // There are safety concerns with adding stuff here.
+    // Do not add stuff here unless you talk to Patricia
+    robotContainer.updateLEDs();
+  }
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
   @Override
@@ -157,13 +163,11 @@ public class Robot extends LoggedRobot {
   @Override
   public void teleopInit() {
     CommandScheduler.getInstance().cancelAll();
-    //robotContainer.deployCommand.schedule();
 
     // This makes sure that the autonomous stops running when teleop starts
     if (autonomousCommand != null) {
       autonomousCommand.cancel();
     }
-    // container.stopElevator();
   }
 
   /** This function is called periodically during operator control. */
