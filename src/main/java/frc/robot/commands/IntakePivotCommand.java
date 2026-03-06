@@ -24,10 +24,12 @@ public class IntakePivotCommand extends Command {
         if (voltage == Constants.DEPLOY_MOTOR_VOLTAGE) {
             System.out.println("DEPLOYING");
             intakeSubsystem.setIsDeployed(true);
+            intakeSubsystem.moveIntakeMotor(Constants.INTAKE_MOTOR_VOLTAGE);
         }
         else if (voltage == Constants.RETRACT_MOTOR_VOLTAGE) {
             System.out.println("RETRACTING");
             intakeSubsystem.setIsDeployed(false);
+            intakeSubsystem.moveIntakeMotor(0);
         }
         else{
             System.out.println("lebron unknown pivot voltage");
@@ -42,7 +44,7 @@ public class IntakePivotCommand extends Command {
             System.out.println("lebron hit something, hit current limit");
             return true;
         }
-        else if (( System.currentTimeMillis() - startTime) > 1000) {
+        else if (( System.currentTimeMillis() - startTime) > 500) {
             intakeSubsystem.setDeployMotorVoltage(0);
             System.out.println("lebron timed out");
             return true;

@@ -64,8 +64,8 @@ public final class Constants {
   public static final double SHOOTER_MOTOR_VOLTAGE = 7.5;
   public static final double INTAKE_MOTOR_VOLTAGE = 10.0;
   public static final double DIVIDER_MOTOR_VOLTAGE = 4;
-  public static final double DEPLOY_MOTOR_VOLTAGE  = 3.0;
-  public static final double RETRACT_MOTOR_VOLTAGE = -3.0;
+  public static final double DEPLOY_MOTOR_VOLTAGE  = -3.0;
+  public static final double RETRACT_MOTOR_VOLTAGE = 3.0;
 
   public static final String MECH_CANBUS_NAME = "rio";
   public static final CANBus DRIVE_CANIVORE = new CANBus("CANivore");

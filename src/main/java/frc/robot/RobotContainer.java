@@ -282,24 +282,13 @@ public class RobotContainer {
           .leftTrigger()
           .onTrue(
             Commands.runOnce(
-              () -> {getIntakePivotCommand().schedule();}
+              () -> {
+                getIntakePivotCommand().schedule();
+              }
             ,
             intake
           )
-          .andThen(
-              Commands.runOnce(
-                () -> {
-                  if(!intake.isDeployed()){
-                    stopIntakeCommand.schedule();
-                  }
-                  else{
-                    runIntakeFuelCommand.schedule();
-                  }
-                },
-                intake
-              )
-            )
-          );
+        );
 
       controller_two
           .y()

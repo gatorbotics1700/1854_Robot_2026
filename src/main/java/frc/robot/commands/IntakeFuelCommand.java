@@ -8,14 +8,12 @@ import frc.robot.Constants.Mode;
 public class IntakeFuelCommand extends Command {
     
     private final double voltage;
-    private final Mode mode;
     private final IntakeSubsystem intakeSubsystem;
     private boolean executed;
 
      public IntakeFuelCommand(IntakeSubsystem intakeSubsystem, double voltage, Mode mode) {
         this.intakeSubsystem = intakeSubsystem;
         this.voltage = voltage;
-        this.mode = mode;
         System.out.println("lebron intake command initialized");
         executed = false;
         addRequirements(intakeSubsystem);
