@@ -267,10 +267,11 @@ public class RobotContainer {
           .onTrue(
             Commands.runOnce(
               () -> {
-                shooterToggleCommand().schedule();// check that this works
+                // Note: this does work, but it takes a while for the divider motor to (visibly) slow down
+                shooterToggleCommand().schedule();
               }
-          )
-            ); 
+            )
+          ); 
 
       controller_two
           .a()
@@ -289,13 +290,6 @@ public class RobotContainer {
             intake
           )
         );
-
-      controller_two
-          .y()
-          .onTrue(
-            stopIntakeCommand
-          );  
-
 
       controller_two
           .b()
