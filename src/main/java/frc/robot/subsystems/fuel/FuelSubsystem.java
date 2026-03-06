@@ -7,9 +7,10 @@ import frc.robot.Constants.Mode;
 
 public class FuelSubsystem extends SubsystemBase{
     private TalonFX shooterMotor; 
-    private  TalonFX dividerMotor;
+    private TalonFX dividerMotor;
     private double shooterMotorVoltage;
     private double dividerMotorVoltage;
+    private long shooterStartTime;
     
     public FuelSubsystem(){
         shooterMotor = new TalonFX(Constants.SHOOTER_MOTOR_CAN_ID, Constants.MECH_CANBUS_NAME);
@@ -22,7 +23,6 @@ public class FuelSubsystem extends SubsystemBase{
         CurrentLimitsConfigs limits = new CurrentLimitsConfigs();
         limits.SupplyCurrentLimitEnable = true;
         limits.SupplyCurrentLimit = 45; // assuming that only drivetrain and dividerMotor will also be running
-
         shooterMotor.getConfigurator().apply(limits);
     }
 
@@ -35,6 +35,9 @@ public class FuelSubsystem extends SubsystemBase{
     }
 
     public void moveShooterMotor(double voltage){
+        if (shooterMotorVoltage == 0) {
+            shooterStartTime = System.currentTimeMillis();
+        }
         shooterMotor.setVoltage(voltage);
         shooterMotorVoltage = voltage;
     }
@@ -62,6 +65,14 @@ public class FuelSubsystem extends SubsystemBase{
 
     public boolean shooterOn(){
         if(dividerMotorVoltage != 0){
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean shooterWarmedUp(){
+        if(shooterMotorVoltage != 0 && System.currentTimeMillis() > shooterStartTime + 3000){
             return true;
         } else {
             return false;
