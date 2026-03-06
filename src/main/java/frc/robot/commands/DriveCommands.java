@@ -143,10 +143,11 @@ public class DriveCommands {
                   getLinearVelocityFromJoysticks(xSupplier.getAsDouble(), ySupplier.getAsDouble());
 
               // Calculate angular speed
-              double omega =
-                  angleController.calculate(
+              double omega = 0;
+              if (Math.abs(drive.getRotation().getDegrees() - rotationSupplier.get().getDegrees()) > 1) {
+                  omega = angleController.calculate(
                       drive.getRotation().getRadians(), rotationSupplier.get().getRadians());
-              // System.out.println(omega);
+              }
               // Convert to field relative speeds & send command
               ChassisSpeeds speeds =
                   new ChassisSpeeds(
@@ -156,7 +157,6 @@ public class DriveCommands {
               boolean isFlipped =
                   alliance.isPresent()
                       && alliance.get() == Alliance.Red;
-              System.out.println("drive command running");
               drive.runVelocity(
                   ChassisSpeeds.fromFieldRelativeSpeeds(
                       speeds,
