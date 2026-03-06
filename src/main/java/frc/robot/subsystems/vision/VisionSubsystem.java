@@ -125,7 +125,10 @@ public class VisionSubsystem extends SubsystemBase {
                 || observation.pose().getX() < 0.0
                 || observation.pose().getX() > VisionConstants.APRIL_TAG_LAYOUT.getFieldLength()
                 || observation.pose().getY() < 0.0
-                || observation.pose().getY() > VisionConstants.APRIL_TAG_LAYOUT.getFieldWidth();
+                || observation.pose().getY() > VisionConstants.APRIL_TAG_LAYOUT.getFieldWidth()
+
+                // Must not be within 1m of the center of the field. This is likely a default value.
+                || (Math.abs(observation.pose().getX() - 8.0) < 1 && Math.abs(observation.pose().getY() - 4.0) < 1); 
 
         // Add pose to log
         robotPoses.add(observation.pose());
