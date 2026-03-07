@@ -618,7 +618,7 @@ public class RobotContainer {
 
 
   private Rotation2d getJoystickAngle(double x, double y, Rotation2d currentDriveAngle){
-    if (x < .1 && y < .1) { // deadband; keep the robot at its current angle
+    if (Math.abs(x) < .1 && Math.abs(y) < .1) { // deadband; keep the robot at its current angle
       return currentDriveAngle;
     } else {
       double a = modifyJoystickAxis(x, true);
