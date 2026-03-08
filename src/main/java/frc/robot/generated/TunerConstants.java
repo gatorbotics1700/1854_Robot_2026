@@ -202,7 +202,7 @@ public class TunerConstants {
       RobotConfigLoader.getBoolean("tuner.back_left_steer_encoder_inverted");
 
   private static final Distance kBackLeftXPos =
-      Inches.of(RobotConfigLoader.getDouble("tuner.back_left_pos.y_inches"));
+      Inches.of(RobotConfigLoader.getDouble("tuner.back_left_pos.x_inches"));
   private static final Distance kBackLeftYPos =
       Inches.of(RobotConfigLoader.getDouble("tuner.back_left_pos.y_inches"));
 
@@ -221,7 +221,7 @@ public class TunerConstants {
       RobotConfigLoader.getBoolean("tuner.back_right_steer_encoder_inverted");
 
   private static final Distance kBackRightXPos =
-      Inches.of(RobotConfigLoader.getDouble("tuner.back_right_pos.y_inches"));
+      Inches.of(RobotConfigLoader.getDouble("tuner.back_right_pos.x_inches"));
   private static final Distance kBackRightYPos =
       Inches.of(RobotConfigLoader.getDouble("tuner.back_right_pos.y_inches"));
 
