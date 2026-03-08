@@ -515,7 +515,6 @@ public class RobotContainer {
     Logger.recordOutput("Commands/DriveCommandActive", driveCmd != null);
     
     updateLEDsAndAcceptVisionPose();
-
   }
 
   public void updateLEDsAndAcceptVisionPose() {
@@ -534,7 +533,7 @@ public class RobotContainer {
     // Add some purple if we see an april tag
     if(vision.poseAccepted){
       led.setBlinking();
-      // We must copy the robot poses. This is to avoid a race condition where 
+    /* /  // We must copy the robot poses. This is to avoid a race condition where 
       // the list grows+shrinks as we loop through it.
       // -- talk to Patricia if you're curious about why this is necessary.
       ArrayList<Pose3d> acceptedPoses = new ArrayList<Pose3d>();
@@ -552,6 +551,8 @@ public class RobotContainer {
       //
       // HOW: use drive.setPose() to set the robot's odometry to match the current estimate at
       // drive -> poseEstimator.getEstimatedPosition() (which takes into account the vision poses the drivetrain just accepted).
+        // drive.accept(visionPose, System.currentTimeMillis()); //TODO make this work again?
+      }*/
     } else{
       led.setSolid();
     }
