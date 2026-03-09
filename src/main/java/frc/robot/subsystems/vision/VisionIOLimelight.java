@@ -62,7 +62,7 @@ public class VisionIOLimelight implements VisionIO {
     LimelightHelpers.setCameraPose_RobotSpace(
         name,
         cameraToRobot.getX(),
-        -cameraToRobot.getY(),
+        cameraToRobot.getY(),
         cameraToRobot.getZ(), // now flipping Y here instead of in constants.java
         Math.toDegrees(cameraToRobot.getRotation().getX()),
         Math.toDegrees(cameraToRobot.getRotation().getY()),

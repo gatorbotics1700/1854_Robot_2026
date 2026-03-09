@@ -380,6 +380,11 @@ public class DriveSubsystem extends SubsystemBase implements VisionSubsystem.Vis
     poseEstimator.resetPosition(rawGyroRotation, getModulePositions(), pose);
   }
 
+    /** Resets the current odometry pose. */
+  public void setPoseToCurrentEstimate() {
+    poseEstimator.resetPosition(rawGyroRotation, getModulePositions(), poseEstimator.getEstimatedPosition());
+  }
+
   /** Adds a new timestamped vision measurement. */
   @Override
   public void accept(
@@ -421,9 +426,9 @@ public class DriveSubsystem extends SubsystemBase implements VisionSubsystem.Vis
   public void zeroGyroscope(Alliance alliance) { // will crash in sim
     Rotation2d zeroedAngle = null;
     if(alliance == DriverStation.Alliance.Red){
-        zeroedAngle = Rotation2d.fromDegrees(180.0);
-    } else if(alliance == DriverStation.Alliance.Blue){
         zeroedAngle = Rotation2d.fromDegrees(0.0);
+    } else if(alliance == DriverStation.Alliance.Blue){
+        zeroedAngle = Rotation2d.fromDegrees(180.0);
     }
     if(zeroedAngle != null){
         poseEstimator.resetPosition(

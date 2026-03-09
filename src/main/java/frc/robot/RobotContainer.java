@@ -219,9 +219,9 @@ public class RobotContainer {
             .whileTrue(
                   DriveCommands.joystickDriveAtAngle(
                     drive,
-                    () -> modifyJoystickAxis(controller.getLeftY(),false), // Changed to raw values
-                    () -> modifyJoystickAxis(controller.getLeftX(),false), // Changed to raw values
-                    () -> getJoystickAngle(-controller.getRightX(),-controller.getRightY(), drive.getRotation()),  // Changed to raw values
+                    () -> modifyJoystickAxis(-controller.getLeftY(),false), // Changed to raw values
+                    () -> modifyJoystickAxis(-controller.getLeftX(),false), // Changed to raw values
+                    () -> getJoystickAngle(controller.getRightX(),-controller.getRightY(), drive.getRotation()),  // Changed to raw values
                     getAlliance()))
             .onFalse(DriveCommands.stopDriveCommand(drive));
       } else { // blue = default when no alliance
@@ -231,7 +231,7 @@ public class RobotContainer {
                     drive,
                     () -> modifyJoystickAxis(-controller.getLeftY(),false), // Changed to raw values
                     () -> modifyJoystickAxis(-controller.getLeftX(),false), // Changed to raw values
-                    () -> getJoystickAngle(-controller.getRightX(),-controller.getRightY(), drive.getRotation()), // Changed to raw values
+                    () -> getJoystickAngle(-controller.getRightX(),controller.getRightY(), drive.getRotation()), // Changed to raw values
                     getAlliance()))
             .onFalse(DriveCommands.stopDriveCommand(drive));
       }
@@ -532,8 +532,7 @@ public class RobotContainer {
 
     // Add some purple if we see an april tag
     if(vision.poseAccepted){
-      led.setBlinking();
-    /* /  // We must copy the robot poses. This is to avoid a race condition where 
+      // We must copy the robot poses. This is to avoid a race condition where 
       // the list grows+shrinks as we loop through it.
       // -- talk to Patricia if you're curious about why this is necessary.
       ArrayList<Pose3d> acceptedPoses = new ArrayList<Pose3d>();
@@ -541,18 +540,11 @@ public class RobotContainer {
       for(int i = 0; i < acceptedPoses.size(); i++){
         Pose2d visionPose = acceptedPoses.get(i).toPose2d();
         drive.accept(visionPose, System.currentTimeMillis());
+      }
+      if (acceptedPoses.size() > 1) {
+        led.setBlinking();
         drive.setPose(drive.poseEstimator.getEstimatedPosition());
       }
-      // 03/08: if we have more than one accepted pose estimate (i.e. we see more than one apriltag), reset our odometry.
-      //
-      // WHY: The way the odometry code currently works, we forget the position assignment we aquired from april tags as soon
-      // as the tags are out of view. This is silly especially considering that we are more confident in the tag-given
-      // pose than the wheel-turn estimated pose.
-      //
-      // HOW: use drive.setPose() to set the robot's odometry to match the current estimate at
-      // drive -> poseEstimator.getEstimatedPosition() (which takes into account the vision poses the drivetrain just accepted).
-        // drive.accept(visionPose, System.currentTimeMillis()); //TODO make this work again?
-      }*/
     } else{
       led.setSolid();
     }
@@ -627,12 +619,10 @@ public class RobotContainer {
   private Rotation2d getJoystickAngle(double x, double y, Rotation2d currentDriveAngle){
     if (Math.abs(x) < .1 && Math.abs(y) < .1) { // deadband; keep the robot at its current angle
       return currentDriveAngle;
-
     } else {
       double a = modifyJoystickAxis(x, true);
       double b = modifyJoystickAxis(y, true);
       Rotation2d newAngle = new Rotation2d(Math.atan2(a,b));
-      System.out.println(newAngle.getDegrees());
       return newAngle;
     }
   }

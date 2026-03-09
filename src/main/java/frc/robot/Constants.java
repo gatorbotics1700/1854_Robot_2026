@@ -61,7 +61,7 @@ public final class Constants {
   public static final int DIVIDER_MOTOR_CAN_ID = 31;
   public static final int CTRLED_CAN_ID = 7;
   
-  public static final double SHOOTER_MOTOR_VOLTAGE = 7.5;
+  public static final double SHOOTER_MOTOR_VOLTAGE = 7;
   public static final double INTAKE_MOTOR_VOLTAGE = 10.0;
   public static final double DIVIDER_MOTOR_VOLTAGE = 4;
   public static final double DEPLOY_MOTOR_VOLTAGE  = -3.0;
@@ -97,9 +97,9 @@ public final class Constants {
   public static final Pose2d BLUE_BUMP_LEFT_OUTSIDE = new Pose2d(5.51, 5.5, new Rotation2d(Math.toRadians(45)));
   public static final Pose2d BLUE_BUMP_RIGHT_OUTSIDE = new Pose2d(5.51, 2.18, new Rotation2d(Math.toRadians(45)));
 
-  public static final int SHOOT_RANGE_MAX = 100; // for logic, tweak later LINA WAS HERE >:)
-  public static final int SHOOT_RANGE_MIN = 50; // for logic, tweak later
-  public static final int SHOOT_ANG_RANGE = 15; // for logic, tweak later
+  public static final int SHOOT_RANGE_MAX = 17; // for logic, tweak later LINA WAS HERE >:)
+  public static final int SHOOT_RANGE_MIN = 15; // for logic, tweak later
+  public static final int SHOOT_ANG_RANGE = 2; // for logic, tweak later
   
   
   public static final Translation2d RED_HUB = new Translation2d(468.56, 158.32);
