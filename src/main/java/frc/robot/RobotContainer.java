@@ -519,6 +519,7 @@ public class RobotContainer {
 
   }
 
+  // TODO 09/08: rename to reflect that we are also processing vision info here.
   public void updateLEDs() {
     Pose2d pose = drive.getPose();
 
@@ -544,6 +545,14 @@ public class RobotContainer {
         Pose2d visionPose = acceptedPoses.get(i).toPose2d();
         drive.accept(visionPose, System.currentTimeMillis());
       }
+      // TODO 03/08: if we have more than one accepted pose estimate (i.e. we see more than one apriltag), reset our odometry.
+      //
+      // WHY: The way the odometry code currently works, we forget the position assignment we aquired from april tags as soon
+      // as the tags are out of view. This is silly especially considering that we are more confident in the tag-given
+      // pose than the wheel-turn estimated pose.
+      //
+      // HOW: use drive.setPose() to set the robot's odometry to match the current estimate at
+      // drive -> poseEstimator.getEstimatedPosition() (which takes into account the vision poses the drivetrain just accepted).
     } else{
       led.setSolid();
     }
@@ -617,9 +626,12 @@ public class RobotContainer {
 
 
 
+  // TODO 03/08 -- there's a bug here on line 630! why won't this work for certain x+y values?
   private Rotation2d getJoystickAngle(double x, double y, Rotation2d currentDriveAngle){
-    if (Math.abs(x) < .1 && Math.abs(y) < .1) { // deadband; keep the robot at its current angle
+    if (x < .1 && y < .1) { // deadband; keep the robot at its current angle
       return currentDriveAngle;
+      // TODO 03/08 -- figure out why we aren't keeping the current angle as the drivetrain strafes.
+      // HINT HINT: where do we get currentDriveAngle? When is that value calculated?
     } else {
       double a = modifyJoystickAxis(x, true);
       double b = modifyJoystickAxis(y, true);
