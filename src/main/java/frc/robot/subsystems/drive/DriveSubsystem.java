@@ -127,7 +127,7 @@ public class DriveSubsystem extends SubsystemBase implements VisionSubsystem.Vis
       new Alert("Disconnected gyro, using kinematics as fallback.", AlertType.kError);
 
   private final SwerveDriveKinematics kinematics =
-      new SwerveDriveKinematics();
+      new SwerveDriveKinematics(getModuleTranslations());
   private Rotation2d rawGyroRotation = new Rotation2d();
   private final SwerveModulePosition[] lastModulePositions = // For delta tracking
       new SwerveModulePosition[] {
