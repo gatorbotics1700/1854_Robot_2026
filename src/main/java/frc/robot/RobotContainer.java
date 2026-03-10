@@ -217,21 +217,21 @@ public class RobotContainer {
       if (alliance.isPresent() && alliance.get() == DriverStation.Alliance.Red) {
         driverControl
             .whileTrue(
-                  DriveCommands.joystickDriveAtAngle(
+                  DriveCommands.joystickDrive(
                     drive,
-                    () -> modifyJoystickAxis(-controller.getLeftY(),false), // Changed to raw values
-                    () -> modifyJoystickAxis(-controller.getLeftX(),false), // Changed to raw values
-                    () -> getJoystickAngle(controller.getRightX(),-controller.getRightY(), drive.getRotation()),  // Changed to raw values
+                    () -> modifyJoystickAxis(-controller.getLeftY(),false, false, true, drive.getPose(), DriverStation.Alliance.Red), // Changed to raw values
+                    () -> modifyJoystickAxis(-controller.getLeftX(),false, true, false, drive.getPose(), DriverStation.Alliance.Red), // Changed to raw values
+                    () -> modifyJoystickAxis(-controller.getRightX(), false, false, false, drive.getPose(), DriverStation.Alliance.Red),  // Changed to raw values
                     getAlliance()))
             .onFalse(DriveCommands.stopDriveCommand(drive));
       } else { // blue = default when no alliance
         driverControl
             .whileTrue(
-                DriveCommands.joystickDriveAtAngle(
+                DriveCommands.joystickDrive(
                     drive,
-                    () -> modifyJoystickAxis(-controller.getLeftY(),false), // Changed to raw values
-                    () -> modifyJoystickAxis(-controller.getLeftX(),false), // Changed to raw values
-                    () -> getJoystickAngle(-controller.getRightX(),controller.getRightY(), drive.getRotation()), // Changed to raw values
+                    () -> modifyJoystickAxis(-controller.getLeftY(),false, false, true, drive.getPose(), DriverStation.Alliance.Blue), // Changed to raw values
+                    () -> modifyJoystickAxis(-controller.getLeftX(),false, true, false, drive.getPose(), DriverStation.Alliance.Blue), // Changed to raw values
+                    () -> modifyJoystickAxis(-controller.getRightX(), false, false, false, drive.getPose(), DriverStation.Alliance.Blue), // Changed to raw values
                     getAlliance()))
             .onFalse(DriveCommands.stopDriveCommand(drive));
       }
@@ -459,20 +459,54 @@ public class RobotContainer {
 
   }
 
-  private double modifyJoystickAxis(double value, boolean isAngle) {
+  private double modifyJoystickAxis(double value, boolean isAngle, boolean isHorizontalStrafe, boolean isVerticalStrafe, Pose2d currentRobotPose, Alliance alliance) {
     // Deadband
     value = deadband(value, 0.026);
+    Boolean willRunIntoWall = false;
+    Double wallCollisionBorder = 0.5; // meters
 
-    // Square the axis
     if (isAngle == false) {
+      if (isHorizontalStrafe) {
+          if (alliance == Alliance.Red) {
+            if (currentRobotPose.getY() < wallCollisionBorder && value > 0) {
+              willRunIntoWall = true;
+            } else if (currentRobotPose.getY() > 8 - wallCollisionBorder && value < 0) {
+              willRunIntoWall = true;
+            }
+          } else {
+            if (currentRobotPose.getY() < wallCollisionBorder && value < 0) {
+              willRunIntoWall = true;
+            } else if (currentRobotPose.getY() > 8 - wallCollisionBorder && value > 0) {
+              willRunIntoWall = true;
+            }
+          }
+      }
+      if (isVerticalStrafe) {
+        if (alliance == Alliance.Red) {
+            if (currentRobotPose.getX() < wallCollisionBorder && value > 0) {
+              willRunIntoWall = true;
+            } else if (currentRobotPose.getX() > 16 - wallCollisionBorder && value < 0) {
+              willRunIntoWall = true;
+            }
+          } else {
+            if (currentRobotPose.getX() < wallCollisionBorder && value < 0) {
+              willRunIntoWall = true;
+            } else if (currentRobotPose.getX() > 16 - wallCollisionBorder && value > 0) {
+              willRunIntoWall = true;
+            }
+          }
+      }
+      // Square the axis
       value =
           Math.copySign(
               RobotConfigLoader.getDouble("container.joystick_scale_factor") * Math.pow(value, 2),
               value);
     }
 
-    if (drive.getSlowDrive()) {
+    if (drive.getSlowDrive() || willRunIntoWall) {
       return 0.5 * value;
+    } else if (willRunIntoWall) {
+      return 0.8 * value;
     }
 
     return value;
@@ -616,7 +650,7 @@ public class RobotContainer {
     intake.setDeployMotorVoltage(0);
   }
 
-  private Rotation2d getJoystickAngle(double x, double y, Rotation2d currentDriveAngle){
+ /*  private Rotation2d getJoystickAngle(double x, double y, Rotation2d currentDriveAngle){
     if (Math.abs(x) < .1 && Math.abs(y) < .1) { // deadband; keep the robot at its current angle
       return currentDriveAngle;
     } else {
@@ -625,5 +659,5 @@ public class RobotContainer {
       Rotation2d newAngle = new Rotation2d(Math.atan2(a,b));
       return newAngle;
     }
-  }
+  }*/
 }

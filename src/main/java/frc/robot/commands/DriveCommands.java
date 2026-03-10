@@ -81,7 +81,8 @@ public class DriveCommands {
       DriveSubsystem drive,
       DoubleSupplier xSupplier,
       DoubleSupplier ySupplier,
-      DoubleSupplier omegaSupplier){ //TODO: add alliance parameter to flip if necesaary
+      DoubleSupplier omegaSupplier,
+      Optional<Alliance> alliance){
     return Commands.run(
         () -> {
           // Get linear velocity
@@ -100,9 +101,9 @@ public class DriveCommands {
                   linearVelocity.getX() * drive.getMaxLinearSpeedMetersPerSec(),
                   linearVelocity.getY() * drive.getMaxLinearSpeedMetersPerSec(),
                   omega * drive.getMaxAngularSpeedRadPerSec());
-          boolean isFlipped =// else if default to alliance
-              DriverStation.getAlliance().isPresent()
-                  && DriverStation.getAlliance().get() == Alliance.Red;
+          boolean isFlipped =
+              alliance.isPresent()
+                  && alliance.get() == Alliance.Red;
 
           drive.runVelocity(
               ChassisSpeeds.fromFieldRelativeSpeeds(
