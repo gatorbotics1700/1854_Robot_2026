@@ -25,6 +25,7 @@ import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.path.PathConstraints;
 
 import edu.wpi.first.hal.util.AllocationException;
+import edu.wpi.first.math.estimator.PoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -74,7 +75,6 @@ public class RobotContainer {
   private IntakeSubsystem intake = new IntakeSubsystem();
   private FuelSubsystem fuel = new FuelSubsystem();
   private LedSubsystem led = new LedSubsystem();
-
   
   private PathConstraints constraints = new PathConstraints(3.0,5.0, Units.degreesToRadians(540), Units.degreesToRadians(720));
   
@@ -204,7 +204,7 @@ public class RobotContainer {
                   .onChange(
                     Commands.runOnce(() -> {
                       System.out.println("Lebron changed teams");
-                      updateLEDs();
+                      updateLEDsAndAcceptVisionPose();
                     },
                     led
                   ).andThen(
@@ -214,15 +214,14 @@ public class RobotContainer {
                   )
                   .ignoringDisable(true));
 
-      Rotation2d currentDriveAngle = drive.getRotation();
       if (alliance.isPresent() && alliance.get() == DriverStation.Alliance.Red) {
         driverControl
             .whileTrue(
-                DriveCommands.joystickDriveAtAngle(
+                  DriveCommands.joystickDriveAtAngle(
                     drive,
                     () -> modifyJoystickAxis(controller.getLeftY(),false), // Changed to raw values
                     () -> modifyJoystickAxis(controller.getLeftX(),false), // Changed to raw values
-                    () -> getJoystickAngle(-controller.getRightX(),-controller.getRightY(), currentDriveAngle),  // Changed to raw values
+                    () -> getJoystickAngle(-controller.getRightX(),-controller.getRightY(), drive.getRotation()),  // Changed to raw values
                     getAlliance()))
             .onFalse(DriveCommands.stopDriveCommand(drive));
       } else { // blue = default when no alliance
@@ -232,7 +231,7 @@ public class RobotContainer {
                     drive,
                     () -> modifyJoystickAxis(-controller.getLeftY(),false), // Changed to raw values
                     () -> modifyJoystickAxis(-controller.getLeftX(),false), // Changed to raw values
-                    () -> getJoystickAngle(-controller.getRightX(),-controller.getRightY(), currentDriveAngle), // Changed to raw values
+                    () -> getJoystickAngle(-controller.getRightX(),-controller.getRightY(), drive.getRotation()), // Changed to raw values
                     getAlliance()))
             .onFalse(DriveCommands.stopDriveCommand(drive));
       }
@@ -515,12 +514,11 @@ public class RobotContainer {
     // Log if commands are running
     Logger.recordOutput("Commands/DriveCommandActive", driveCmd != null);
     
-    updateLEDs();
+    updateLEDsAndAcceptVisionPose();
 
   }
 
-  // TODO 09/08: rename to reflect that we are also processing vision info here.
-  public void updateLEDs() {
+  public void updateLEDsAndAcceptVisionPose() {
     Pose2d pose = drive.getPose();
 
     // Set the color for the alliance
@@ -544,8 +542,9 @@ public class RobotContainer {
       for(int i = 0; i < acceptedPoses.size(); i++){
         Pose2d visionPose = acceptedPoses.get(i).toPose2d();
         drive.accept(visionPose, System.currentTimeMillis());
+        drive.setPose(drive.poseEstimator.getEstimatedPosition());
       }
-      // TODO 03/08: if we have more than one accepted pose estimate (i.e. we see more than one apriltag), reset our odometry.
+      // 03/08: if we have more than one accepted pose estimate (i.e. we see more than one apriltag), reset our odometry.
       //
       // WHY: The way the odometry code currently works, we forget the position assignment we aquired from april tags as soon
       // as the tags are out of view. This is silly especially considering that we are more confident in the tag-given
@@ -624,14 +623,10 @@ public class RobotContainer {
     intake.setDeployMotorVoltage(0);
   }
 
-
-
-  // TODO 03/08 -- there's a bug here on line 630! why won't this work for certain x+y values?
   private Rotation2d getJoystickAngle(double x, double y, Rotation2d currentDriveAngle){
-    if (x < .1 && y < .1) { // deadband; keep the robot at its current angle
+    if (Math.abs(x) < .1 && Math.abs(y) < .1) { // deadband; keep the robot at its current angle
       return currentDriveAngle;
-      // TODO 03/08 -- figure out why we aren't keeping the current angle as the drivetrain strafes.
-      // HINT HINT: where do we get currentDriveAngle? When is that value calculated?
+
     } else {
       double a = modifyJoystickAxis(x, true);
       double b = modifyJoystickAxis(y, true);

@@ -127,7 +127,7 @@ public class DriveSubsystem extends SubsystemBase implements VisionSubsystem.Vis
       new Alert("Disconnected gyro, using kinematics as fallback.", AlertType.kError);
 
   private final SwerveDriveKinematics kinematics =
-      new SwerveDriveKinematics(getModuleTranslations());
+      new SwerveDriveKinematics();
   private Rotation2d rawGyroRotation = new Rotation2d();
   private final SwerveModulePosition[] lastModulePositions = // For delta tracking
       new SwerveModulePosition[] {
@@ -136,7 +136,7 @@ public class DriveSubsystem extends SubsystemBase implements VisionSubsystem.Vis
         new SwerveModulePosition(),
         new SwerveModulePosition()
       };
-  private final SwerveDrivePoseEstimator poseEstimator =
+  public final SwerveDrivePoseEstimator poseEstimator =
       new SwerveDrivePoseEstimator(kinematics, rawGyroRotation, lastModulePositions, new Pose2d());
 
   private final Consumer<Pose2d> resetSimulationPoseCallBack;

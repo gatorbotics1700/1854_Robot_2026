@@ -139,7 +139,7 @@ public class Robot extends LoggedRobot {
   public void disabledPeriodic() {
     // There are safety concerns with adding stuff here.
     // Do not add stuff here unless you talk to Patricia
-    robotContainer.updateLEDs();
+    robotContainer.updateLEDsAndAcceptVisionPose();
   }
 
   /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
