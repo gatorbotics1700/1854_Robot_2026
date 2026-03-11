@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "BlueLeftTrenchToNeutral"
+            "pathName": "RedLeftTrenchToNeutral"
           }
         },
         {
@@ -25,7 +25,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "BlueLeftNeutralToRightNeutral"
+            "pathName": "RedLeftNeutralToRightNeutral"
           }
         },
         {
@@ -38,6 +38,18 @@
           "type": "named",
           "data": {
             "name": "retractIntake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shootCenter"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": null
           }
         }
       ]

@@ -91,6 +91,7 @@ public class RobotContainer {
     Command fullStopShootCommand = new ShootCommand(fuel, 0, 0);
     Command stopIntakeCommand = new IntakeFuelCommand(intake, 0.0,Constants.currentMode);
     Command deployCommand = new IntakePivotCommand(intake,Constants.DEPLOY_MOTOR_VOLTAGE);
+    Command rightShootCommand = PathCommands.driveShootRight(getAlliance().get(),constraints);
 
      public void setupControllers(){
         switch (Constants.currentMode) {
@@ -388,6 +389,7 @@ public class RobotContainer {
       NamedCommands.registerCommand("fullStopShoot", fullStopShootCommand);
       NamedCommands.registerCommand("stopIntake", stopIntakeCommand);
       NamedCommands.registerCommand("deployIntake", deployCommand);
+      NamedCommands.registerCommand("rightShoot", rightShootCommand);
   
       
       
