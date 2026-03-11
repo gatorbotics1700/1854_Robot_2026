@@ -1,13 +1,10 @@
 package frc.robot.subsystems.shooter;
 import org.littletonrobotics.junction.Logger;
-import org.littletonrobotics.junction.networktables.LoggedNetworkNumber;
 
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
-import com.ctre.phoenix6.configs.MotionMagicConfigs;
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
-import com.ctre.phoenix6.controls.MotionMagicExpoVoltage;
-import com.ctre.phoenix6.controls.MotionMagicVelocityVoltage;
+import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -22,17 +19,6 @@ public class ShooterSubsystem extends SubsystemBase{
     private long shooterStartTime;
     private TalonFXConfiguration shooterMotorConfigs;
     private Slot0Configs shooterMotorSlot0Configs;
-    private MotionMagicVelocityVoltage shooterMotorRequest;
-    public static final LoggedNetworkNumber shooterMotorKS = new LoggedNetworkNumber("/Tuning/Shooter/Flywheel kS", 0);
-    public static final LoggedNetworkNumber shooterMotorKV = new LoggedNetworkNumber("/Tuning/Shooter/Flywheel kV", 0);
-    public static final LoggedNetworkNumber shooterMotorKA = new LoggedNetworkNumber("/Tuning/Shooter/Flywheel kA", 0);
-    public static final LoggedNetworkNumber shooterMotorKP = new LoggedNetworkNumber("/Tuning/Shooter/Flywheel kP", 0);
-    public static final LoggedNetworkNumber shooterMotorKD = new LoggedNetworkNumber("/Tuning/Shooter/Flywheel kD", 0);
-    public static final LoggedNetworkNumber shooterMotorKI = new LoggedNetworkNumber("/Tuning/Shooter/Flywheel kI", 0);
-      
-    
-
-    // Tune wihtout deploying on advantage scope then copy values over
     
     public ShooterSubsystem(){
         shooterMotor = new TalonFX(Constants.SHOOTER_MOTOR_CAN_ID, Constants.MECH_CANBUS_NAME);
@@ -41,41 +27,19 @@ public class ShooterSubsystem extends SubsystemBase{
         currentLimitDividerMotor();
         shooterMotorConfigs = new TalonFXConfiguration();
         shooterMotorSlot0Configs = shooterMotorConfigs.Slot0;
-        shooterMotorRequest = new MotionMagicVelocityVoltage(0);
+        shooterMotorSlot0Configs.kS = 0;
+        shooterMotorSlot0Configs.kV = .02;
+        shooterMotorSlot0Configs.kP = 0;
+        shooterMotor
+            .getConfigurator()
+            .apply(shooterMotorConfigs.withSlot0(shooterMotorSlot0Configs));
     }
 
     @Override
     public void periodic() {
-       updateMotorConfigs();
+       shooterMotor.setControl(new VelocityVoltage(shooterMotorTargetVelocity));
        Logger.recordOutput("mech/shooter/targetVelocity", shooterMotorTargetVelocity);
        Logger.recordOutput("mech/shooter/actualVelocity", shooterMotor.getRotorVelocity().getValueAsDouble());
-       shooterMotor.setControl(shooterMotorRequest.withVelocity(shooterMotorTargetVelocity));
-    }
-
-    private void updateMotorConfigs(){
-        double newKS = shooterMotorKS.get();
-        double newKV = shooterMotorKV.get();
-        double newKA = shooterMotorKA.get();
-        double newKP = shooterMotorKP.get();
-        double newKD = shooterMotorKD.get();
-        double newKI = shooterMotorKI.get();
-
-        if(newKS != shooterMotorSlot0Configs.kS ||
-            newKV != shooterMotorSlot0Configs.kV ||
-            newKA != shooterMotorSlot0Configs.kA ||
-            newKP != shooterMotorSlot0Configs.kP ||
-            newKD != shooterMotorSlot0Configs.kI ||
-            newKI != shooterMotorSlot0Configs.kD){
-                shooterMotorSlot0Configs.kS = newKS;
-                shooterMotorSlot0Configs.kV = newKV;
-                shooterMotorSlot0Configs.kA = newKA;
-                shooterMotorSlot0Configs.kP = newKP;
-                shooterMotorSlot0Configs.kD = newKD;
-                shooterMotorSlot0Configs.kI = newKI;
-
-                shooterMotor.getConfigurator().apply(shooterMotorConfigs);
-            }
-
     }
 
     private void currentLimitShooterMotor(){
@@ -88,12 +52,15 @@ public class ShooterSubsystem extends SubsystemBase{
     private void currentLimitDividerMotor(){
         CurrentLimitsConfigs limits = new CurrentLimitsConfigs();
         limits.SupplyCurrentLimitEnable = true;
-        limits.SupplyCurrentLimit = 15; // assuming that only drivetrain and shooterMotor will also be running
+        limits.SupplyCurrentLimit = 30; // assuming that only drivetrain and shooterMotor will also be running
 
         dividerMotor.getConfigurator().apply(limits);
     }
 
     public void setShooterVelocity(double desiredVelocity){
+        if (shooterMotorTargetVelocity == 0) {
+            shooterStartTime = System.currentTimeMillis();
+        }
         shooterMotorTargetVelocity = desiredVelocity;
     }
 

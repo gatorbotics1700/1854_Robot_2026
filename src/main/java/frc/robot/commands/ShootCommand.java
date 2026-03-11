@@ -23,19 +23,19 @@ public class ShootCommand extends Command{
     @Override
     public void execute(){
         executed = false;
-        /*if (shooterVoltage != 0) {
-            System.out.println("SHOOTING");
-        }
-        fuelSubsystem.moveShooterMotor(shooterVoltage);
-        if (shooterVoltage == 0 || fuelSubsystem.shooterWarmedUp()) {
+        // Case 1: we want to stop the top wheels
+        if (shooterVoltage == 0) {
+            System.out.println("STOP SHOOTING");
+            shooterVelocity = 0;
+            fuelSubsystem.setShooterVelocity(shooterVelocity);
             fuelSubsystem.moveDividerMotor(dividerVoltage);
             executed = true;
-        }*/
-        if (shooterVelocity != 0) {
-            System.out.println("SHOOTING");
         }
-        fuelSubsystem.setShooterVelocity(40);
-        if (shooterVelocity == 0 || fuelSubsystem.shooterWarmedUp()) {
+        // Case 2: we want to move the top wheels
+        if (shooterVoltage != 0) {
+            System.out.println("SHOOTING");
+            shooterVelocity = 40;
+            fuelSubsystem.setShooterVelocity(shooterVelocity);
             fuelSubsystem.moveDividerMotor(dividerVoltage);
             executed = true;
         }
