@@ -28,7 +28,7 @@ public class ShooterSubsystem extends SubsystemBase{
         shooterMotorConfigs = new TalonFXConfiguration();
         shooterMotorSlot0Configs = shooterMotorConfigs.Slot0;
         shooterMotorSlot0Configs.kS = 0;
-        shooterMotorSlot0Configs.kV = .02;
+        shooterMotorSlot0Configs.kV = .125;
         shooterMotorSlot0Configs.kP = 0;
         shooterMotor
             .getConfigurator()

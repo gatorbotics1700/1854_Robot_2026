@@ -34,7 +34,7 @@ public class ShootCommand extends Command{
         // Case 2: we want to move the top wheels
         if (shooterVoltage != 0) {
             System.out.println("SHOOTING");
-            shooterVelocity = 40;
+            shooterVelocity = 60;
             fuelSubsystem.setShooterVelocity(shooterVelocity);
             fuelSubsystem.moveDividerMotor(dividerVoltage);
             executed = true;
