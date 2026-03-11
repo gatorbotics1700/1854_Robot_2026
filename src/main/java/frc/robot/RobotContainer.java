@@ -52,9 +52,9 @@ import frc.robot.subsystems.drive.GyroIOPigeon2;
 import frc.robot.subsystems.drive.ModuleIO;
 import frc.robot.subsystems.drive.ModuleIOSim;
 import frc.robot.subsystems.drive.ModuleIOTalonFX;
-import frc.robot.subsystems.fuel.FuelSubsystem;
 import frc.robot.subsystems.intake.IntakeSubsystem;
 import frc.robot.subsystems.led.LedSubsystem;
+import frc.robot.subsystems.shooter.ShooterSubsystem;
 import frc.robot.subsystems.vision.VisionConstants;
 import frc.robot.subsystems.vision.VisionIOLimelight;
 import frc.robot.subsystems.vision.VisionIOPhotonVisionSim;
@@ -73,7 +73,7 @@ public class RobotContainer {
   private DriveSubsystem drive;
   private VisionSubsystem vision;
   private IntakeSubsystem intake = new IntakeSubsystem();
-  private FuelSubsystem fuel = new FuelSubsystem();
+  private ShooterSubsystem fuel = new ShooterSubsystem();
   private LedSubsystem led = new LedSubsystem();
   
   private PathConstraints constraints = new PathConstraints(3.0,5.0, Units.degreesToRadians(540), Units.degreesToRadians(720));
