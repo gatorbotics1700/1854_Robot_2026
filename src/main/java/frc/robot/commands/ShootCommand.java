@@ -1,5 +1,7 @@
 package frc.robot.commands;
 
+import com.ctre.phoenix6.controls.VelocityVoltage;
+
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.shooter.ShooterSubsystem;
 
@@ -27,24 +29,22 @@ public class ShootCommand extends Command{
         if (shooterVoltage == 0) {
             System.out.println("STOP SHOOTING");
             shooterVelocity = 0;
-            fuelSubsystem.setShooterVelocity(shooterVelocity);
-            fuelSubsystem.moveDividerMotor(dividerVoltage);
-            executed = true;
         }
         // Case 2: we want to move the top wheels
-        if (shooterVoltage != 0) {
+        else {
             System.out.println("SHOOTING");
             shooterVelocity = 60;
-            fuelSubsystem.setShooterVelocity(shooterVelocity);
-            fuelSubsystem.moveDividerMotor(dividerVoltage);
-            executed = true;
         }
+           fuelSubsystem.setShooterVelocity(shooterVelocity);
+            fuelSubsystem.moveDividerMotor(dividerVoltage);
+            executed = true;     
+
     }
 
     @Override
     public boolean isFinished(){
         if (executed) {
-            System.out.println("LEBRON IS FINISHED");
+            System.out.println("SHOOTING IS FINISHED");
             return true; 
         }
         return false;
