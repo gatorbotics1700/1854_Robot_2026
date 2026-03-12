@@ -14,7 +14,7 @@ public class ShooterSubsystem extends SubsystemBase{
     private TalonFX shooterMotor; 
     private TalonFX dividerMotor;
     private double shooterMotorVoltage;
-    private double shooterMotorTargetVelocity;
+    private double shooterMotorTargetVelocity = 0;
     private double dividerMotorVoltage;
     private long shooterStartTime;
     private TalonFXConfiguration shooterMotorConfigs;
@@ -64,14 +64,6 @@ public class ShooterSubsystem extends SubsystemBase{
         shooterMotorTargetVelocity = desiredVelocity;
     }
 
-    public void moveShooterMotor(double voltage){
-        if (shooterMotorVoltage == 0) {
-            shooterStartTime = System.currentTimeMillis();
-        }
-        shooterMotor.setVoltage(voltage);
-        shooterMotorVoltage = voltage;
-    }
-
     public void moveDividerMotor(double voltage) {
         dividerMotor.setVoltage(voltage);
         dividerMotorVoltage = voltage;
@@ -102,7 +94,7 @@ public class ShooterSubsystem extends SubsystemBase{
     }
 
     public boolean shooterWarmedUp(){
-        if(shooterMotorVoltage != 0 && System.currentTimeMillis() > shooterStartTime + 3000){
+        if(shooterMotorTargetVelocity != 0 && System.currentTimeMillis() > shooterStartTime + 3000){
             return true;
         } else {
             return false;

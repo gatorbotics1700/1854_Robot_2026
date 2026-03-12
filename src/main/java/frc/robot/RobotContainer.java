@@ -85,9 +85,9 @@ public class RobotContainer {
     // Dashboard inputs
     private final LoggedDashboardChooser<Command> autoChooser;
 
-    Command shootCommand = new ShootCommand(fuel, Constants.SHOOTER_MOTOR_VOLTAGE, Constants.DIVIDER_MOTOR_VOLTAGE);
+    Command shootCommand = new ShootCommand(fuel, Constants.SHOOTER_MOTOR_VELOCITY, Constants.DIVIDER_MOTOR_VOLTAGE);
     Command runIntakeFuelCommand = new IntakeFuelCommand(intake, Constants.INTAKE_MOTOR_VOLTAGE,Constants.currentMode);
-    Command stopShootCommand = new ShootCommand(fuel,Constants.SHOOTER_MOTOR_VOLTAGE, 0);
+    Command stopShootCommand = new ShootCommand(fuel,Constants.SHOOTER_MOTOR_VELOCITY, 0);
     Command fullStopShootCommand = new ShootCommand(fuel, 0, 0);
     Command stopIntakeCommand = new IntakeFuelCommand(intake, 0.0,Constants.currentMode);
     Command deployCommand = new IntakePivotCommand(intake,Constants.DEPLOY_MOTOR_VOLTAGE);
@@ -222,7 +222,7 @@ public class RobotContainer {
                     drive,
                     () -> modifyJoystickAxis(-controller.getLeftY(),false, false, true, drive.getPose(), DriverStation.Alliance.Red), // Changed to raw values
                     () -> modifyJoystickAxis(-controller.getLeftX(),false, true, false, drive.getPose(), DriverStation.Alliance.Red), // Changed to raw values
-                    () -> modifyJoystickAxis(-controller.getRightX(), false, false, false, drive.getPose(), DriverStation.Alliance.Red),  // Changed to raw values
+                    () -> modifyJoystickAxis(-.8 * controller.getRightX(), false, false, false, drive.getPose(), DriverStation.Alliance.Red),  // Changed to raw values
                     getAlliance()))
             .onFalse(DriveCommands.stopDriveCommand(drive));
       } else { // blue = default when no alliance
@@ -232,7 +232,7 @@ public class RobotContainer {
                     drive,
                     () -> modifyJoystickAxis(-controller.getLeftY(),false, false, true, drive.getPose(), DriverStation.Alliance.Blue), // Changed to raw values
                     () -> modifyJoystickAxis(-controller.getLeftX(),false, true, false, drive.getPose(), DriverStation.Alliance.Blue), // Changed to raw values
-                    () -> modifyJoystickAxis(-controller.getRightX(), false, false, false, drive.getPose(), DriverStation.Alliance.Blue), // Changed to raw values
+                    () -> modifyJoystickAxis(-.8 * controller.getRightX(), false, false, false, drive.getPose(), DriverStation.Alliance.Blue), // Changed to raw values
                     getAlliance()))
             .onFalse(DriveCommands.stopDriveCommand(drive));
       }
@@ -647,7 +647,7 @@ public class RobotContainer {
   // Patricia added this for safety -- talk to her before messing with this.
   public void stopAllMotors() {
     fuel.moveDividerMotor(0);
-    fuel.moveShooterMotor(0);
+    fuel.setShooterVelocity(0);
     intake.moveIntakeMotor(0);
     intake.setDeployMotorVoltage(0);
   }
