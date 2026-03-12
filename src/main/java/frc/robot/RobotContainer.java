@@ -382,6 +382,7 @@ public class RobotContainer {
    */
 
    public RobotContainer() {
+      RobotController.setBrownoutVoltage(5.5); // do not mess with this without talking to Patricia
       
       NamedCommands.registerCommand("shootCenter",  shootCommand);
       NamedCommands.registerCommand("runIntake", runIntakeFuelCommand);
