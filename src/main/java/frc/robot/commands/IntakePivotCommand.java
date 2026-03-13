@@ -44,7 +44,7 @@ public class IntakePivotCommand extends Command {
             System.out.println("lebron hit something, hit current limit");
             return true;
         }
-        else if (( System.currentTimeMillis() - startTime) > 500) {
+        else if (( System.currentTimeMillis() - startTime) > 750) {
             intakeSubsystem.setDeployMotorVoltage(0);
             System.out.println("lebron timed out");
             return true;
