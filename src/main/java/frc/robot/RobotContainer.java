@@ -639,7 +639,7 @@ public class RobotContainer {
         }
         
       case SIM: // default to blue in sim
-        return Optional.of((DriverStation.Alliance.Blue));
+        return Optional.of((DriverStation.Alliance.Red));
       default:
         return DriverStation.getAlliance();
      }
