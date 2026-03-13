@@ -7,61 +7,49 @@
         {
           "type": "path",
           "data": {
-            "pathName": "BlueHubToCenterShoot"
+            "pathName": "BlueRightTrenchToNeutral"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "deployIntake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "runIntake"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BlueRightNeutralToLeftNeutral"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "stopIntake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "retractIntake"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BlueLeftNeutralToShoot"
           }
         },
         {
           "type": "named",
           "data": {
             "name": "shootCenter"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 5.0
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "stopShoot"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "BlueCenterToDepot"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 5.0
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "BlueDepotToCenterShoot"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "shootCenter"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 5.0
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "stopShoot"
           }
         }
       ]

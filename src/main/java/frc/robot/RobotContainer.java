@@ -92,7 +92,8 @@ public class RobotContainer {
     Command fullStopShootCommand = new ShootCommand(fuel, 0, 0);
     Command stopIntakeCommand = new IntakeFuelCommand(intake, 0.0,Constants.currentMode);
     Command deployCommand = new IntakePivotCommand(intake,Constants.DEPLOY_MOTOR_VOLTAGE);
-    Command rightShootCommand = PathCommands.driveShootRight(getAlliance().get(),constraints);
+    Command rightShootBlueCommand = PathCommands.driveShootRight(Alliance.Blue,constraints);
+    Command rightShootRedCommand = PathCommands.driveShootRight(Alliance.Red,constraints);
 
      public void setupControllers(){
         switch (Constants.currentMode) {
@@ -385,13 +386,14 @@ public class RobotContainer {
    public RobotContainer() {
       RobotController.setBrownoutVoltage(5.5); // do not mess with this without talking to Patricia
       
-      NamedCommands.registerCommand("shootCenter",  shootCommand);
+      NamedCommands.registerCommand("shoot",  shootCommand);
       NamedCommands.registerCommand("runIntake", runIntakeFuelCommand);
       NamedCommands.registerCommand("stopShoot", stopShootCommand);
       NamedCommands.registerCommand("fullStopShoot", fullStopShootCommand);
       NamedCommands.registerCommand("stopIntake", stopIntakeCommand);
       NamedCommands.registerCommand("deployIntake", deployCommand);
-      NamedCommands.registerCommand("rightShoot", rightShootCommand);
+      NamedCommands.registerCommand("rightShootBlue", rightShootBlueCommand);
+      NamedCommands.registerCommand("rightShootRed", rightShootRedCommand);
   
       
       

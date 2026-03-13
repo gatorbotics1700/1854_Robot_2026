@@ -39,6 +39,18 @@
           "data": {
             "name": "retractIntake"
           }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BlueRightNeutralToShoot"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "shootCenter"
+          }
         }
       ]
     }

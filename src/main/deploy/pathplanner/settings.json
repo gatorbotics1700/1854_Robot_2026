@@ -3,7 +3,9 @@
   "robotLength": 0.78,
   "holonomicMode": true,
   "pathFolders": [
-    "Leave Paths"
+    "Blue Paths",
+    "Leave Paths",
+    "Red Paths"
   ],
   "autoFolders": [
     "Leave Autos"

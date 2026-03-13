@@ -41,15 +41,15 @@
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "shootCenter"
+            "pathName": "RedRightNeutralToShoot"
           }
         },
         {
           "type": "named",
           "data": {
-            "name": null
+            "name": "shootCenter"
           }
         }
       ]

@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "HubToCenterShoot"
+            "pathName": "BlueHubToCenterShoot"
           }
         },
         {
@@ -25,7 +25,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "CenterShootToOutpost"
+            "pathName": "BlueCenterShootToOutpost"
           }
         },
         {
@@ -61,7 +61,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "OutpostToCenterShoot"
+            "pathName": "BlueOutpostToCenterShoot"
           }
         },
         {

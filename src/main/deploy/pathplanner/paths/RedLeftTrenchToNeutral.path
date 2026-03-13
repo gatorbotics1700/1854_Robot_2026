@@ -17,11 +17,11 @@
     {
       "anchor": {
         "x": 8.75,
-        "y": 1.7245
+        "y": 1.113
       },
       "prevControl": {
         "x": 9.431961786179315,
-        "y": 1.2413569568452385
+        "y": 0.6298569568452379
       },
       "nextControl": null,
       "isLocked": false,
@@ -45,7 +45,7 @@
     "rotation": 90.0
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Red Paths",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 0.0
