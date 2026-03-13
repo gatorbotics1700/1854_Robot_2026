@@ -7,17 +7,17 @@ import frc.robot.subsystems.shooter.ShooterSubsystem;
 
 public class ShootCommand extends Command{
 
-    private ShooterSubsystem fuelSubsystem;
+    private ShooterSubsystem shooterSubsystem;
     private double dividerVoltage;
     private boolean executed;
     private double shooterVelocity;
     
-    public ShootCommand(ShooterSubsystem fuelSubsystem, double shooterVelocity, double dividerVoltage){
-        this.fuelSubsystem = fuelSubsystem; 
+    public ShootCommand(ShooterSubsystem shooterSubsystem, double shooterVelocity, double dividerVoltage){
+        this.shooterSubsystem = shooterSubsystem; 
         this.dividerVoltage = dividerVoltage;
         this.shooterVelocity = shooterVelocity;
         executed = false;
-        addRequirements(fuelSubsystem);
+        addRequirements(shooterSubsystem);
     }
 
     @Override
@@ -31,12 +31,12 @@ public class ShootCommand extends Command{
         else {
             System.out.println("SHOOTING");
         }
-        fuelSubsystem.setShooterVelocity(shooterVelocity);
-        if (dividerVoltage > 0 && fuelSubsystem.shooterWarmedUp()) {
-            fuelSubsystem.moveDividerMotor(dividerVoltage);
+        shooterSubsystem.setShooterVelocity(shooterVelocity);
+        if (dividerVoltage > 0 && shooterSubsystem.shooterWarmedUp()) {
+            shooterSubsystem.moveDividerMotor(dividerVoltage);
             executed = true;
         } else if (dividerVoltage == 0) {
-            fuelSubsystem.moveDividerMotor(dividerVoltage);
+            shooterSubsystem.moveDividerMotor(dividerVoltage);
             executed = true;
 
         }

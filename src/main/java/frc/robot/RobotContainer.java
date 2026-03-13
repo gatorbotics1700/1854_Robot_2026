@@ -42,7 +42,7 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.DriveCommands;
-import frc.robot.commands.IntakeFuelCommand;
+import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakePivotCommand;
 import frc.robot.commands.PathCommands;
 import frc.robot.commands.ShootCommand;
@@ -74,7 +74,7 @@ public class RobotContainer {
   private DriveSubsystem drive;
   private VisionSubsystem vision;
   private IntakeSubsystem intake = new IntakeSubsystem();
-  private ShooterSubsystem fuel = new ShooterSubsystem();
+  private ShooterSubsystem shooter = new ShooterSubsystem();
   private LedSubsystem led = new LedSubsystem();
   
   private PathConstraints constraints = new PathConstraints(3.0,5.0, Units.degreesToRadians(540), Units.degreesToRadians(720));
@@ -86,11 +86,11 @@ public class RobotContainer {
     // Dashboard inputs
     private final LoggedDashboardChooser<Command> autoChooser;
 
-    Command shootCommand = new ShootCommand(fuel, Constants.SHOOTER_MOTOR_VELOCITY, Constants.DIVIDER_MOTOR_VOLTAGE);
-    Command runIntakeFuelCommand = new IntakeFuelCommand(intake, Constants.INTAKE_MOTOR_VOLTAGE,Constants.currentMode);
-    Command stopShootCommand = new ShootCommand(fuel,Constants.SHOOTER_MOTOR_VELOCITY, 0);
-    Command fullStopShootCommand = new ShootCommand(fuel, 0, 0);
-    Command stopIntakeCommand = new IntakeFuelCommand(intake, 0.0,Constants.currentMode);
+    Command shootCommand = new ShootCommand(shooter, Constants.SHOOTER_MOTOR_VELOCITY, Constants.DIVIDER_MOTOR_VOLTAGE);
+    Command runIntakeCommand = new IntakeCommand(intake, Constants.INTAKE_MOTOR_VOLTAGE,Constants.currentMode);
+    Command stopShootCommand = new ShootCommand(shooter,Constants.SHOOTER_MOTOR_VELOCITY, 0);
+    Command fullStopShootCommand = new ShootCommand(shooter, 0, 0);
+    Command stopIntakeCommand = new IntakeCommand(intake, 0.0,Constants.currentMode);
     Command deployCommand = new IntakePivotCommand(intake,Constants.DEPLOY_MOTOR_VOLTAGE);
     Command rightShootBlueCommand = PathCommands.driveShootRight(Alliance.Blue,constraints);
     Command rightShootRedCommand = PathCommands.driveShootRight(Alliance.Red,constraints);
@@ -273,7 +273,7 @@ public class RobotContainer {
       controller_two
           .a()
           .onTrue(
-            runIntakeFuelCommand
+            runIntakeCommand
           );
 
       controller_two
@@ -387,7 +387,7 @@ public class RobotContainer {
       RobotController.setBrownoutVoltage(5.5); // do not mess with this without talking to Patricia
       
       NamedCommands.registerCommand("shoot",  shootCommand);
-      NamedCommands.registerCommand("runIntake", runIntakeFuelCommand);
+      NamedCommands.registerCommand("runIntake", runIntakeCommand);
       NamedCommands.registerCommand("stopShoot", stopShootCommand);
       NamedCommands.registerCommand("fullStopShoot", fullStopShootCommand);
       NamedCommands.registerCommand("stopIntake", stopIntakeCommand);
@@ -422,7 +422,7 @@ public class RobotContainer {
   }
 
   public Command shooterToggleCommand() {
-    if (fuel.shooterOn()){
+    if (shooter.shooterOn()){
       return stopShootCommand;
     } else {
       return shootCommand;
@@ -542,11 +542,11 @@ public class RobotContainer {
     // Log command information with names
     Command driveCmd = drive.getCurrentCommand();
 
-    //double shooterMotorVoltage = fuel.getShooterMotorVoltage(Constants.currentMode); see if this could be fixed
+    //double shooterMotorVoltage = shooter.getShooterMotorVoltage(Constants.currentMode); see if this could be fixed
 
     Logger.recordOutput("Commands/DriveCommand", driveCmd != null ? driveCmd.getName() : "None");
-    Logger.recordOutput("Commands/ShooterVoltage", fuel.getShooterMotorVoltage(Constants.currentMode));
-    Logger.recordOutput("Commands/DividerVoltage", fuel.getDividerMotorVoltage(Constants.currentMode));
+    Logger.recordOutput("Commands/ShooterVoltage", shooter.getShooterMotorVoltage(Constants.currentMode));
+    Logger.recordOutput("Commands/DividerVoltage", shooter.getDividerMotorVoltage(Constants.currentMode));
     Logger.recordOutput("Commands/IntakeVoltage", intake.getIntakeMotorVoltage(Constants.currentMode));
     Logger.recordOutput("Commands/IntakeState", intake.isDeployed());
     //Logger.recordOutput("Commands/shooterVoltage", shooterMotorVoltage); see if thsi can be fixed
@@ -650,8 +650,8 @@ public class RobotContainer {
   // Schedule commands to stop the intake, and the shooter
   // Patricia added this for safety -- talk to her before messing with this.
   public void stopAllMotors() {
-    fuel.moveDividerMotor(0);
-    fuel.setShooterVelocity(0);
+    shooter.moveDividerMotor(0);
+    shooter.setShooterVelocity(0);
     intake.moveIntakeMotor(0);
     intake.setDeployMotorVoltage(0);
   }
