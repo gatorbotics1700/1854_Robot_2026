@@ -260,7 +260,7 @@ public class RobotContainer {
                 drive));
   
       controller_two            
-          .rightTrigger()
+          .rightTrigger().or(controller_two.rightBumper())
           .onTrue(
             Commands.runOnce(
               () -> {
@@ -277,7 +277,7 @@ public class RobotContainer {
           );
 
       controller_two
-          .leftTrigger()
+          .leftTrigger().or(controller_two.leftBumper())
           .onTrue(
             Commands.runOnce(
               () -> {
