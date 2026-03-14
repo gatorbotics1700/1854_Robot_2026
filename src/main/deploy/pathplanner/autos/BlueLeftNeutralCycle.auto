@@ -17,9 +17,27 @@
           }
         },
         {
+          "type": "named",
+          "data": {
+            "name": "runIntake"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "BlueLeftNeutralToRightNeutral"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "stopIntake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "retractIntake"
           }
         },
         {
