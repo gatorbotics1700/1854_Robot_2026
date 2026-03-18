@@ -388,6 +388,7 @@ public class RobotContainer {
       RobotController.setBrownoutVoltage(5.5); // do not mess with this without talking to Patricia
       
       NamedCommands.registerCommand("shootCenter",  shootCommand);
+      NamedCommands.registerCommand("warmupShoot", shootWarmupCommand);
       NamedCommands.registerCommand("runIntake", runIntakeCommand);
       NamedCommands.registerCommand("stopShoot", stopShootCommand);
       NamedCommands.registerCommand("fullStopShoot", fullStopShootCommand);
