@@ -89,6 +89,7 @@ public class RobotContainer {
     Command shootCommand = new ShootCommand(shooter, Constants.SHOOTER_MOTOR_VELOCITY, Constants.DIVIDER_MOTOR_VOLTAGE);
     Command runIntakeCommand = new IntakeCommand(intake, Constants.INTAKE_MOTOR_VOLTAGE,Constants.currentMode);
     Command stopShootCommand = new ShootCommand(shooter,Constants.SHOOTER_MOTOR_VELOCITY, 0);
+    Command shootWarmupCommand = new ShootCommand(shooter, Constants.SHOOTER_MOTOR_VELOCITY, 0);
     Command fullStopShootCommand = new ShootCommand(shooter, 0, 0);
     Command stopIntakeCommand = new IntakeCommand(intake, 0.0,Constants.currentMode);
     Command deployCommand = new IntakePivotCommand(intake,Constants.DEPLOY_MOTOR_VOLTAGE);
