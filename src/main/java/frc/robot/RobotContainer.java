@@ -386,7 +386,7 @@ public class RobotContainer {
    public RobotContainer() {
       RobotController.setBrownoutVoltage(5.5); // do not mess with this without talking to Patricia
       
-      NamedCommands.registerCommand("shoot",  shootCommand);
+      NamedCommands.registerCommand("shootCenter",  shootCommand);
       NamedCommands.registerCommand("runIntake", runIntakeCommand);
       NamedCommands.registerCommand("stopShoot", stopShootCommand);
       NamedCommands.registerCommand("fullStopShoot", fullStopShootCommand);
@@ -509,10 +509,10 @@ public class RobotContainer {
               value);
     }
 
-    if (drive.getSlowDrive() || willRunIntoWall) {
+    if (drive.getSlowDrive()) {
       return 0.5 * value;
     } else if (willRunIntoWall) {
-      return 0.8 * value;
+      return value;
     }
 
     return value;
