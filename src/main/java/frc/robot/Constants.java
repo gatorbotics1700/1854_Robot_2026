@@ -97,13 +97,13 @@ public final class Constants {
   public static final Pose2d BLUE_BUMP_LEFT_OUTSIDE = new Pose2d(6.2, 5.5, new Rotation2d(Math.toRadians(45)));
   public static final Pose2d BLUE_BUMP_RIGHT_OUTSIDE = new Pose2d(6.2, 2.18, new Rotation2d(Math.toRadians(45)));
 
-  public static final int SHOOT_RANGE_MAX = 17; // for logic, tweak later LINA WAS HERE >:)
-  public static final int SHOOT_RANGE_MIN = 15; // for logic, tweak later
+  public static final double SHOOT_RANGE_MAX = 0.17; // for logic, tweak later LINA WAS HERE >:)
+  public static final double SHOOT_RANGE_MIN = 0.15; // for logic, tweak later
   public static final int SHOOT_ANG_RANGE = 2; // for logic, tweak later
   
   
-  public static final Translation2d RED_HUB = new Translation2d(468.56, 158.32);
-  public static final Translation2d BLUE_HUB = new Translation2d(181.56, 158.32);
+  public static final Translation2d RED_HUB = new Translation2d(11.864, 4);
+  public static final Translation2d BLUE_HUB = new Translation2d(4.649, 4);
 
 
   

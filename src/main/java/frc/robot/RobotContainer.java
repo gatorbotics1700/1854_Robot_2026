@@ -46,6 +46,7 @@ import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakePivotCommand;
 import frc.robot.commands.PathCommands;
 import frc.robot.commands.ShootCommand;
+import frc.robot.commands.HubOrbitCommand;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.drive.DriveSubsystem;
 import frc.robot.subsystems.drive.GyroIO;
@@ -62,6 +63,7 @@ import frc.robot.subsystems.vision.VisionIOPhotonVisionSim;
 import frc.robot.subsystems.vision.VisionSubsystem;
 import frc.robot.util.CommandSimMacXboxController;
 import frc.robot.util.RobotConfigLoader;
+import frc.robot.Constants;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -251,6 +253,12 @@ public class RobotContainer {
 
       controller
           .b()
+          .whileTrue(
+            new HubOrbitCommand(drive, () -> -controller.getLeftX(), getAlliance().get() == DriverStation.Alliance.Red)
+           );
+        
+      controller
+          .y()
           .onTrue(
             Commands.runOnce(
                 () -> {
@@ -259,7 +267,7 @@ public class RobotContainer {
                   }
                 },
                 drive));
-  
+
       controller_two            
           .rightTrigger().or(controller_two.rightBumper())
           .onTrue(
