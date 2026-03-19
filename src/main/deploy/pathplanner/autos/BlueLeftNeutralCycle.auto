@@ -5,6 +5,12 @@
     "data": {
       "commands": [
         {
+          "type": "named",
+          "data": {
+            "name": "warmupSHoot"
+          }
+        },
+        {
           "type": "path",
           "data": {
             "pathName": "BlueLeftTrenchToNeutral"
