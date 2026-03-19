@@ -135,6 +135,9 @@ public class Robot extends LoggedRobot {
     CommandScheduler.getInstance().cancelAll();
     // Patricia added this for safety -- talk to her before messing with this.
     robotContainer.stopAllMotors();
+    UsbCamera camera = CameraServer.startAutomaticCapture();
+    camera.setResolution(320, 240);
+    camera.setFPS(10);
   }
 
   /** This function is called periodically when disabled. */
@@ -171,9 +174,7 @@ public class Robot extends LoggedRobot {
     if (autonomousCommand != null) {
       autonomousCommand.cancel();
     }
-    UsbCamera camera = CameraServer.startAutomaticCapture();
-    camera.setResolution(320, 240);
-    camera.setFPS(10);
+    
 
   }
 
