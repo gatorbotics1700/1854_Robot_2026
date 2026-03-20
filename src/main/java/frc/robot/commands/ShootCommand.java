@@ -9,13 +9,15 @@ public class ShootCommand extends Command{
 
     private ShooterSubsystem shooterSubsystem;
     private double dividerVoltage;
+    private double floorVoltage;
     private boolean executed;
     private double shooterVelocity;
     
-    public ShootCommand(ShooterSubsystem shooterSubsystem, double shooterVelocity, double dividerVoltage){
+    public ShootCommand(ShooterSubsystem shooterSubsystem, double shooterVelocity, double dividerVoltage, double floorVoltage){
         this.shooterSubsystem = shooterSubsystem; 
         this.dividerVoltage = dividerVoltage;
         this.shooterVelocity = shooterVelocity;
+        this.floorVoltage = floorVoltage;
         executed = false;
         addRequirements(shooterSubsystem);
     }
@@ -32,14 +34,10 @@ public class ShootCommand extends Command{
             System.out.println("SHOOTING");
         }
         shooterSubsystem.setShooterVelocity(shooterVelocity);
-        if (dividerVoltage > 0 && shooterSubsystem.shooterWarmedUp()) {
-            shooterSubsystem.moveDividerMotor(dividerVoltage);
-            executed = true;
-        } else if (dividerVoltage == 0) {
-            shooterSubsystem.moveDividerMotor(dividerVoltage);
-            executed = true;
+        shooterSubsystem.moveDividerMotor(dividerVoltage);
+        shooterSubsystem.moveFloorMotor(floorVoltage);
+        executed = true;
 
-        }
 
     }
 

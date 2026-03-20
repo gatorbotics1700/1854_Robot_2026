@@ -59,6 +59,7 @@ public final class Constants {
   public static final int DEPLOY_MOTOR_CAN_ID = 41;
   public static final int SHOOTER_MOTOR_CAN_ID = 30;
   public static final int DIVIDER_MOTOR_CAN_ID = 31;
+  public static final int FLOOR_MOTOR_CAN_ID = 59; //TODO: change this number later
   public static final int CTRLED_CAN_ID = 7;
   
   public static final double INTAKE_MOTOR_VOLTAGE = 10.0;
@@ -66,6 +67,7 @@ public final class Constants {
   public static final double DEPLOY_MOTOR_VOLTAGE  = -6.0;
   public static final double RETRACT_MOTOR_VOLTAGE = 8.0;
   public static final double SHOOTER_MOTOR_VELOCITY = 50.0;
+  public static final double FLOOR_MOTOR_VOLTAGE = 4; //TODO: change this number later
 
   public static final String MECH_CANBUS_NAME = "rio";
   public static final CANBus DRIVE_CANIVORE = new CANBus("CANivore");

@@ -13,9 +13,11 @@ import frc.robot.Constants.Mode;
 public class ShooterSubsystem extends SubsystemBase{
     private TalonFX shooterMotor; 
     private TalonFX dividerMotor;
+    private TalonFX floorMotor;
     private double shooterMotorVoltage;
     private double shooterMotorTargetVelocity = 0;
     private double dividerMotorVoltage;
+    private double floorMotorVoltage;
     private long shooterStartTime;
     private TalonFXConfiguration shooterMotorConfigs;
     private Slot0Configs shooterMotorSlot0Configs;
@@ -25,6 +27,8 @@ public class ShooterSubsystem extends SubsystemBase{
         currentLimitShooterMotor();
         dividerMotor = new TalonFX(Constants.DIVIDER_MOTOR_CAN_ID, Constants.MECH_CANBUS_NAME);
         currentLimitDividerMotor();
+        floorMotor = new TalonFX(Constants.FLOOR_MOTOR_CAN_ID, Constants.MECH_CANBUS_NAME);
+        //TODO: Add currentlimit for floorMotor
         shooterMotorConfigs = new TalonFXConfiguration();
         shooterMotorSlot0Configs = shooterMotorConfigs.Slot0;
         shooterMotorSlot0Configs.kS = 0;
@@ -69,6 +73,12 @@ public class ShooterSubsystem extends SubsystemBase{
         dividerMotorVoltage = voltage;
     }
 
+    public void moveFloorMotor(double voltage) {
+        floorMotor.setVoltage(voltage);
+        floorMotorVoltage = voltage;
+    }
+
+
     public double getShooterMotorVoltage(Mode currentMode) {
         if (currentMode == Mode.REAL) {
             return shooterMotor.getMotorVoltage().getValueAsDouble();
@@ -82,6 +92,14 @@ public class ShooterSubsystem extends SubsystemBase{
             return dividerMotor.getMotorVoltage().getValueAsDouble();
         } else {
             return dividerMotorVoltage;
+        }
+    }
+
+    public double getFloorMotorVoltage(Mode currentMode) {
+        if (currentMode == Mode.REAL) {
+            return floorMotor.getMotorVoltage().getValueAsDouble();
+        } else {
+            return floorMotorVoltage;
         }
     }
 
