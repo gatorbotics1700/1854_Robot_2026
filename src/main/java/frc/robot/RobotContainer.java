@@ -574,6 +574,7 @@ public class RobotContainer {
     Logger.recordOutput("Commands/DividerVoltage", shooter.getDividerMotorVoltage(Constants.currentMode));
     Logger.recordOutput("Commands/IntakeVoltage", intake.getIntakeMotorVoltage(Constants.currentMode));
     Logger.recordOutput("Commands/IntakeState", intake.isDeployed());
+    Logger.recordOutput("Commands/FloorVoltage", shooter.getFloorMotorVoltage(Constants.currentMode));
     //Logger.recordOutput("Commands/shooterVoltage", shooterMotorVoltage); see if thsi can be fixed
 
     // Log if commands are running
