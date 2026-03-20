@@ -78,6 +78,11 @@ public class RobotContainer {
   private IntakeSubsystem intake = new IntakeSubsystem();
   private ShooterSubsystem shooter = new ShooterSubsystem();
   private LedSubsystem led = new LedSubsystem();
+
+  ModuleIOTalonFX frontLeft = new ModuleIOTalonFX(TunerConstants.FrontLeft);
+  ModuleIOTalonFX frontRight = new ModuleIOTalonFX(TunerConstants.FrontRight);
+  ModuleIOTalonFX backLeft =  new ModuleIOTalonFX(TunerConstants.BackLeft);
+  ModuleIOTalonFX backRight = new ModuleIOTalonFX(TunerConstants.BackRight);
   
   private PathConstraints constraints = new PathConstraints(3.0,5.0, Units.degreesToRadians(540), Units.degreesToRadians(720));
   
@@ -128,10 +133,10 @@ public class RobotContainer {
           drive =
               new DriveSubsystem(
                   new GyroIOPigeon2(),
-                  new ModuleIOTalonFX(TunerConstants.FrontLeft),
-                  new ModuleIOTalonFX(TunerConstants.FrontRight),
-                  new ModuleIOTalonFX(TunerConstants.BackLeft),
-                  new ModuleIOTalonFX(TunerConstants.BackRight),
+                  frontLeft, 
+                  frontRight, 
+                  backLeft, 
+                  backRight,
                   (pose) -> {});
     
           vision =
@@ -543,6 +548,16 @@ public class RobotContainer {
     Logger.recordOutput("Buttons/Controller2/B", controller_two.b().getAsBoolean());
     Logger.recordOutput("Buttons/Controller2/X", controller_two.x().getAsBoolean());
     Logger.recordOutput("Buttons/Controller2/Y", controller_two.y().getAsBoolean());
+
+    Logger.recordOutput("Current/Motors/FrontLeftDrive", frontLeft.driveCurrent.getValueAsDouble());
+    Logger.recordOutput("Current/Motors/FrontRightDrive", frontRight.driveCurrent.getValueAsDouble());
+    Logger.recordOutput("Current/Motors/BackLeftDrive", backLeft.driveCurrent.getValueAsDouble());
+    Logger.recordOutput("Current/Motors/BackRightDrive", backRight.driveCurrent.getValueAsDouble());
+
+    Logger.recordOutput("Current/Motors/FrontLeftSteer", frontLeft.turnCurrent.getValueAsDouble());
+    Logger.recordOutput("Current/Motors/FrontRightSteer", frontRight.turnCurrent.getValueAsDouble());
+    Logger.recordOutput("Current/Motors/BackLeftSteer", backLeft.turnCurrent.getValueAsDouble());
+    Logger.recordOutput("Current/Motors/BackRightSteer", backRight.turnCurrent.getValueAsDouble());
 
     // Log command scheduler status
     Logger.recordOutput("Commands/SchedulerActive", true);
