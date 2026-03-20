@@ -33,10 +33,19 @@ public class ShootCommand extends Command{
         else {
             System.out.println("SHOOTING");
         }
+        //keep these if statements to make sure the floor and divider motor are only running if shooter is warmed up
         shooterSubsystem.setShooterVelocity(shooterVelocity);
-        shooterSubsystem.moveDividerMotor(dividerVoltage);
-        shooterSubsystem.moveFloorMotor(floorVoltage);
-        executed = true;
+        if (dividerVoltage > 0 && shooterSubsystem.shooterWarmedUp()) {
+            shooterSubsystem.moveDividerMotor(dividerVoltage);
+            shooterSubsystem.moveFloorMotor(floorVoltage);
+            executed=true;
+        }
+        else if (dividerVoltage==0){
+            shooterSubsystem.moveDividerMotor(dividerVoltage);
+            shooterSubsystem.moveFloorMotor(floorVoltage);
+            executed=true;
+        }
+
 
 
     }
