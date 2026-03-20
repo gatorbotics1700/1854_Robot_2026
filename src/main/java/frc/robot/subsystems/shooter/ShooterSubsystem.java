@@ -28,7 +28,7 @@ public class ShooterSubsystem extends SubsystemBase{
         dividerMotor = new TalonFX(Constants.DIVIDER_MOTOR_CAN_ID, Constants.MECH_CANBUS_NAME);
         currentLimitDividerMotor();
         floorMotor = new TalonFX(Constants.FLOOR_MOTOR_CAN_ID, Constants.MECH_CANBUS_NAME);
-        //TODO: Add currentlimit for floorMotor
+        currentLimitFloorMotor();
         shooterMotorConfigs = new TalonFXConfiguration();
         shooterMotorSlot0Configs = shooterMotorConfigs.Slot0;
         shooterMotorSlot0Configs.kS = 0;
@@ -54,6 +54,13 @@ public class ShooterSubsystem extends SubsystemBase{
     }
 
     private void currentLimitDividerMotor(){
+        CurrentLimitsConfigs limits = new CurrentLimitsConfigs();
+        limits.SupplyCurrentLimitEnable = true;
+        limits.SupplyCurrentLimit = 30; // assuming that only drivetrain and shooterMotor will also be running
+
+        dividerMotor.getConfigurator().apply(limits);
+    }
+    private void currentLimitFloorMotor(){
         CurrentLimitsConfigs limits = new CurrentLimitsConfigs();
         limits.SupplyCurrentLimitEnable = true;
         limits.SupplyCurrentLimit = 30; // assuming that only drivetrain and shooterMotor will also be running
