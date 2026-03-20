@@ -225,7 +225,7 @@ public class RobotContainer {
                   )
                   .ignoringDisable(true));
 
-      if (alliance.isPresent() && alliance.get() == DriverStation.Alliance.Red) {
+      if (alliance.isPresent() && alliance.get() == DriverStation.Alliance.Red && controller.b().getAsBoolean()) {
         driverControl
             .whileTrue(
                   DriveCommands.joystickDrive(

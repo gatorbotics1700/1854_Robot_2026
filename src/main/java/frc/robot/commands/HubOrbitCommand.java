@@ -97,6 +97,7 @@ public class HubOrbitCommand extends Command {
         onArc = false;
         headingPID.reset();
         schedulePathToArc();
+        System.out.println("path scheduled");
     }
  
     @Override
@@ -107,10 +108,12 @@ public class HubOrbitCommand extends Command {
  
         if (distToArc <= ON_ARC_TOLERANCE) {
             onArc = true;
+            System.out.println("on arc");
         }
  
         if (onArc && (pathCommand == null || !pathCommand.isScheduled())) {
            runOrbitMode(pose);
+           System.out.println("can begin orbiting");
         }
     }
  
