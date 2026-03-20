@@ -132,12 +132,17 @@ public class Robot extends LoggedRobot {
   /** This function is called once when the robot is disabled. */
   @Override
   public void disabledInit() {
+    
     CommandScheduler.getInstance().cancelAll();
     // Patricia added this for safety -- talk to her before messing with this.
     robotContainer.stopAllMotors();
-    UsbCamera camera = CameraServer.startAutomaticCapture();
-    camera.setResolution(320, 240);
-    camera.setFPS(10);
+
+    if(Constants.currentMode == Constants.Mode.REAL){
+        UsbCamera camera = CameraServer.startAutomaticCapture();
+      camera.setResolution(320, 240);
+      camera.setFPS(10);
+    }
+    
   }
 
   /** This function is called periodically when disabled. */
