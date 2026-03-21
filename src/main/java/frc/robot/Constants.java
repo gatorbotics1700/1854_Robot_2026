@@ -66,7 +66,7 @@ public final class Constants {
   public static final double DIVIDER_MOTOR_VOLTAGE = 4;
   public static final double DEPLOY_MOTOR_VOLTAGE  = 6.0;
   public static final double RETRACT_MOTOR_VOLTAGE = -8.0;
-  public static final double SHOOTER_MOTOR_VELOCITY = 10.0;
+  public static final double SHOOTER_MOTOR_VELOCITY = 50.0;
   public static final double FLOOR_MOTOR_VOLTAGE = 4; //TODO: change this number later
 
   public static final String MECH_CANBUS_NAME = "rio";
