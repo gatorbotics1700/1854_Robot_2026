@@ -82,7 +82,7 @@ public class ModuleIOTalonFX implements ModuleIO {
   public final StatusSignal<Current> driveCurrent;
 
   // Inputs from turn motor
-  private final StatusSignal<Angle> turnAbsolutePosition; 
+  private final StatusSignal<Angle> turnAbsolutePosition;
   private final StatusSignal<Angle> turnPosition;
   private final Queue<Double> turnPositionQueue;
   private final StatusSignal<AngularVelocity> turnVelocity;
@@ -103,7 +103,7 @@ public class ModuleIOTalonFX implements ModuleIO {
     cancoder = new CANcoder(constants.EncoderId, TunerConstants.DrivetrainConstants.CANBusName);
 
     // Configure drive motor
-    var driveConfig = constants.DriveMotorInitialConfigs;
+    var driveConfig = constants.DriveMotorInitialConfigs.clone();
     driveConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
     driveConfig.Slot0 = constants.DriveMotorGains;
     driveConfig.Feedback.SensorToMechanismRatio = constants.DriveMotorGearRatio;
@@ -118,8 +118,10 @@ public class ModuleIOTalonFX implements ModuleIO {
     tryUntilOk(5, () -> driveTalon.getConfigurator().apply(driveConfig, 0.25));
     tryUntilOk(5, () -> driveTalon.setPosition(0.0, 0.25));
 
-    // Configure turn motor
-    var turnConfig = new TalonFXConfiguration();
+    // Start from Tuner steer template (current limits, etc.), then overlay module-specific
+    // settings. Clone so we do not mutate the shared SteerMotorInitialConfigs reference on
+    // SwerveModuleConstants.
+    var turnConfig = constants.SteerMotorInitialConfigs.clone();
     turnConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
     turnConfig.Slot0 = constants.SteerMotorGains;
     turnConfig.Feedback.FeedbackRemoteSensorID = constants.EncoderId;
