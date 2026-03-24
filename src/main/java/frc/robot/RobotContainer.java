@@ -657,7 +657,9 @@ public class RobotContainer {
     switch (Constants.currentMode) {
       case REAL: 
         
-        if (getAutonomousCommand().getName().startsWith("Blue", 0)) {
+        if (getAutonomousCommand() == null) {
+          return DriverStation.getAlliance();
+        } else if (getAutonomousCommand().getName().startsWith("Blue", 0)) {
           return Optional.of((DriverStation.Alliance.Blue));
         } else if (getAutonomousCommand().getName().startsWith("Red",0)) {
           return Optional.of((DriverStation.Alliance.Red));
