@@ -131,10 +131,14 @@ public class ModuleIOTalonFX implements ModuleIO {
           default -> throw new RuntimeException(
               "You are using an unsupported swerve configuration, which this template does not support without manual customization. The 2025 release of Phoenix supports some swerve configurations which were not available during 2025 beta testing, preventing any development and support from the AdvantageKit developers.");
         };
+    turnConfig.TorqueCurrent.PeakForwardTorqueCurrent = constants.SlipCurrent;
+    turnConfig.TorqueCurrent.PeakReverseTorqueCurrent = -constants.SlipCurrent;
+    turnConfig.CurrentLimits.StatorCurrentLimit = constants.SlipCurrent;
+    turnConfig.CurrentLimits.StatorCurrentLimitEnable = true;
     turnConfig.Feedback.RotorToSensorRatio = constants.SteerMotorGearRatio;
     turnConfig.MotionMagic.MotionMagicCruiseVelocity = 100.0 / constants.SteerMotorGearRatio;
     turnConfig.MotionMagic.MotionMagicAcceleration =
-        turnConfig.MotionMagic.MotionMagicCruiseVelocity / 0.100;
+    turnConfig.MotionMagic.MotionMagicCruiseVelocity / 0.100;
     turnConfig.MotionMagic.MotionMagicExpo_kV = 0.12 * constants.SteerMotorGearRatio;
     turnConfig.MotionMagic.MotionMagicExpo_kA = 0.1;
     turnConfig.ClosedLoopGeneral.ContinuousWrap = true;
