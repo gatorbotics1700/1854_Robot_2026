@@ -212,7 +212,7 @@ public class RobotContainer {
           new Trigger(
             () ->
                   getAlliance() != alliance)
-                  .onChange(
+                  .onTrue(
                     Commands.runOnce(() -> {
                       System.out.println("Lebron changed teams");
                       updateLEDsAndAcceptVisionPose();
