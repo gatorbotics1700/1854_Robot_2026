@@ -14,7 +14,7 @@ public class ShooterSubsystem extends SubsystemBase{
     private TalonFX shooterMotor; 
     private TalonFX dividerMotor;
     private TalonFX floorMotor;
-    private double shooterMotorVoltage;
+    private double shooterMotorVoltage; // TODO remove and replace logs with velocity logs 
     private double shooterMotorTargetVelocity = 0;
     private double dividerMotorVoltage;
     private double floorMotorVoltage;

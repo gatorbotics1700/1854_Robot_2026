@@ -59,7 +59,7 @@ public final class Constants {
   public static final int DEPLOY_MOTOR_CAN_ID = 41;
   public static final int SHOOTER_MOTOR_CAN_ID = 30;
   public static final int DIVIDER_MOTOR_CAN_ID = 31;
-  public static final int FLOOR_MOTOR_CAN_ID = 59; //TODO: change this number later
+  public static final int FLOOR_MOTOR_CAN_ID = 32;
   public static final int CTRLED_CAN_ID = 7;
   
   public static final double INTAKE_MOTOR_VOLTAGE = 10.0;

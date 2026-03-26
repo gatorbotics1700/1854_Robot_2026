@@ -19,7 +19,7 @@ public class IntakeSubsystem extends SubsystemBase{
     private double deployMotorVoltage;
     // private final TalonFXConfiguration deployTalonFXConfigs;
     // private static MotionMagicExpoVoltage m_request;
-    //TODO: implement motion magic
+    //TODO: implement motion magic (note: probably not worth the time)
     public IntakeSubsystem(){
         intakeMotor= new TalonFX(Constants.INTAKE_MOTOR_CAN_ID, Constants.MECH_CANBUS_NAME);
         currentLimitIntakeMotor();
