@@ -41,6 +41,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakePivotCommand;
@@ -272,6 +273,18 @@ public class RobotContainer {
                   }
                 },
                 drive));
+
+      controller
+          .x()
+          .whileTrue(
+            drive.sysIdQuasistatic(Direction.kForward)
+          );
+
+      controller
+          .rightTrigger()
+          .whileTrue(
+            drive.sysIdDynamic(Direction.kForward)
+          );
 
       controller_two            
           .rightTrigger().or(controller_two.rightBumper())
