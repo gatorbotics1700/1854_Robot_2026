@@ -276,20 +276,18 @@ public class RobotContainer {
                 },
                 drive));
 
-<<<<<<< HEAD
                 
       // controller
       //     .x()
       //     .whileTrue(
       //       drive.sysIdQuasistatic(Direction.kForward)
       //     );
-=======
+
       controller
            .x()
          .whileTrue(
              drive.sysIdQuasistatic(Direction.kForward)
            );
->>>>>>> 6ddc3bc (auto changes)
 
        controller
            .rightTrigger()
