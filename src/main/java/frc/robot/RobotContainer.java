@@ -274,17 +274,17 @@ public class RobotContainer {
                 },
                 drive));
 
-      controller
-          .x()
-          .whileTrue(
-            drive.sysIdQuasistatic(Direction.kForward)
-          );
+      // controller
+      //     .x()
+      //     .whileTrue(
+      //       drive.sysIdQuasistatic(Direction.kForward)
+      //     );
 
-      controller
-          .rightTrigger()
-          .whileTrue(
-            drive.sysIdDynamic(Direction.kForward)
-          );
+      // controller
+      //     .rightTrigger()
+      //     .whileTrue(
+      //       drive.sysIdDynamic(Direction.kForward)
+      //     );
 
       controller_two            
           .rightTrigger()

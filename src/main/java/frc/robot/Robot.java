@@ -137,12 +137,12 @@ public class Robot extends LoggedRobot {
     // Patricia added this for safety -- talk to her before messing with this.
     robotContainer.stopAllMotors();
 
-    if(Constants.currentMode == Constants.Mode.REAL){
-        UsbCamera camera = CameraServer.startAutomaticCapture();
-      camera.setResolution(320, 240);
-      camera.setFPS(10);
-    }
-    System.out.println("lebron got past initializtion");
+    // if(Constants.currentMode == Constants.Mode.REAL){
+    //     UsbCamera camera = CameraServer.startAutomaticCapture();
+    //   camera.setResolution(320, 240);
+    //   camera.setFPS(10);
+    // }
+    // System.out.println("lebron got past initializtion");
     
   }
 
