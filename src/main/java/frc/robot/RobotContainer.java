@@ -287,12 +287,23 @@ public class RobotContainer {
           );
 
       controller_two            
-          .rightTrigger().or(controller_two.rightBumper())
+          .rightTrigger()
           .onTrue(
             Commands.runOnce(
               () -> {
                 // Note: this does work, but it takes a while for the divider motor to (visibly) slow down
-                shooterToggleCommand().schedule();
+                shootCommand.schedule();
+              }
+            )
+          ); 
+      
+      controller_two            
+          .rightBumper()
+          .onTrue(
+            Commands.runOnce(
+              () -> {
+                // Note: this does work, but it takes a while for the divider motor to (visibly) slow down
+                stopShootCommand.schedule();
               }
             )
           ); 
@@ -449,13 +460,14 @@ public class RobotContainer {
     }
   }
 
-  public Command shooterToggleCommand() {
+  /*public Command shooterToggleCommand() {
     if (shooter.shooterOn()){
       return stopShootCommand;
     } else {
       return shootCommand;
     }
-  }
+  }*/
+
 
   public DriveSubsystem getDriveSubsystem() {
     return drive;

@@ -142,6 +142,7 @@ public class Robot extends LoggedRobot {
       camera.setResolution(320, 240);
       camera.setFPS(10);
     }
+    System.out.println("lebron got past initializtion");
     
   }
 
