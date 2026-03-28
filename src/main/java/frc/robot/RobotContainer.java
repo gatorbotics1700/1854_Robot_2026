@@ -43,6 +43,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.commands.DriveCommands;
+import frc.robot.commands.FloorVomitCommand;
 import frc.robot.commands.IntakeCommand;
 import frc.robot.commands.IntakePivotCommand;
 import frc.robot.commands.PathCommands;
@@ -103,6 +104,7 @@ public class RobotContainer {
     Command deployCommand = new IntakePivotCommand(intake,Constants.DEPLOY_MOTOR_VOLTAGE);
     Command rightShootBlueCommand = PathCommands.driveShootRight(Alliance.Blue,constraints);
     Command rightShootRedCommand = PathCommands.driveShootRight(Alliance.Red,constraints);
+    Command floorVomitCommand = new FloorVomitCommand(intake, shooter, Constants.VOMIT_INTAKE_VOLTAGE, Constants.VOMIT_FLOOR_VOLTAGE, Constants.currentMode);
 
      public void setupControllers(){
         switch (Constants.currentMode) {
@@ -274,6 +276,7 @@ public class RobotContainer {
                 },
                 drive));
 
+                
       // controller
       //     .x()
       //     .whileTrue(
@@ -414,6 +417,12 @@ public class RobotContainer {
         .onTrue(
           PathCommands.driveShootRight(getAlliance().get(), constraints)
         );
+
+      controller_two
+        .povRight().or(controller_two.povUp()).or(controller_two.povLeft()).or(controller_two.povDown())
+        .onTrue(
+          floorVomitCommand
+        );
   }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
@@ -433,6 +442,7 @@ public class RobotContainer {
       NamedCommands.registerCommand("deployIntake", deployCommand);
       NamedCommands.registerCommand("rightShootBlue", rightShootBlueCommand);
       NamedCommands.registerCommand("rightShootRed", rightShootRedCommand);
+      NamedCommands.registerCommand("vomit",floorVomitCommand);
   
       
       
