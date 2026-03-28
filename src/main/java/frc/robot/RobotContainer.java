@@ -106,6 +106,7 @@ public class RobotContainer {
     Command rightShootRedCommand = PathCommands.driveShootRight(Alliance.Red,constraints);
     Command floorVomitCommand = new FloorVomitCommand(intake, shooter, Constants.VOMIT_INTAKE_VOLTAGE, Constants.VOMIT_FLOOR_VOLTAGE, Constants.currentMode);
 
+
      public void setupControllers(){
         switch (Constants.currentMode) {
         case REAL:
@@ -339,6 +340,7 @@ public class RobotContainer {
           .b()
           .onTrue(
             fullStopShootCommand
+            .andThen(stopIntakeCommand)
           );
 
     // Reset gyro to 0° when B button is pressed
