@@ -276,18 +276,26 @@ public class RobotContainer {
                 },
                 drive));
 
+<<<<<<< HEAD
                 
       // controller
       //     .x()
       //     .whileTrue(
       //       drive.sysIdQuasistatic(Direction.kForward)
       //     );
+=======
+      controller
+           .x()
+         .whileTrue(
+             drive.sysIdQuasistatic(Direction.kForward)
+           );
+>>>>>>> 6ddc3bc (auto changes)
 
-      // controller
-      //     .rightTrigger()
-      //     .whileTrue(
-      //       drive.sysIdDynamic(Direction.kForward)
-      //     );
+       controller
+           .rightTrigger()
+           .whileTrue(
+             drive.sysIdDynamic(Direction.kForward)
+           );
 
       controller_two            
           .rightTrigger()
@@ -469,6 +477,7 @@ public class RobotContainer {
       return new IntakePivotCommand(intake, Constants.DEPLOY_MOTOR_VOLTAGE);
     }
   }
+  //TODO: for the sake of auto, we should try to make this two seperate commands and make it toggleable when the actual button is clicked
 
   /*public Command shooterToggleCommand() {
     if (shooter.shooterOn()){

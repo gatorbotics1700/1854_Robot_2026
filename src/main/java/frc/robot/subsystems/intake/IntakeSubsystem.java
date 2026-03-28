@@ -26,8 +26,9 @@ public class IntakeSubsystem extends SubsystemBase{
         //TODO: implement motion magic
         deployMotor = new TalonFX(Constants.DEPLOY_MOTOR_CAN_ID, Constants.MECH_CANBUS_NAME);
         // Set to brake mode to prevent intake from flopping out when moving
-        deployMotor.setNeutralMode(NeutralModeValue.Brake);
         currentLimitDeployMotor();
+        deployMotor.setNeutralMode(NeutralModeValue.Brake);
+        
         isDeployed = false;
         System.out.println("lebron initializing");
         //deployTalonFXConfigs = new TalonFXConfiguration();
