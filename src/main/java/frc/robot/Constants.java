@@ -70,6 +70,7 @@ public final class Constants {
   public static final double FLOOR_MOTOR_VOLTAGE = 4.0; //TODO: change this number later
   public static final double VOMIT_FLOOR_VOLTAGE = -4.0; //TODO: change this number later
   public static final double VOMIT_INTAKE_VOLTAGE = -6.723; //TODO: change this number later
+  public static final double DEPLOY_REST_VOLTAGE = 1.0;
 
   public static final String MECH_CANBUS_NAME = "rio";
   public static final CANBus DRIVE_CANIVORE = new CANBus("CANivore");
