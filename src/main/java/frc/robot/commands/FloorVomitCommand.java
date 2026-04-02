@@ -24,7 +24,9 @@ public class FloorVomitCommand extends Command{
     @Override
     public void execute() {
         intakeSubsystem.moveIntakeMotor(intakeVoltage);
+        intakeSubsystem.setDeployMotorVoltage(0);
         shooterSubsystem.moveFloorMotor(floorVoltage);
+        shooterSubsystem.moveDividerMotor(0);
         executed = true;  
     }
     

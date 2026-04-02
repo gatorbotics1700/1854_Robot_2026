@@ -67,9 +67,9 @@ public final class Constants {
   public static final double DEPLOY_MOTOR_VOLTAGE  = 6.0;
   public static final double RETRACT_MOTOR_VOLTAGE = -8.0;
   public static final double SHOOTER_MOTOR_VELOCITY = 50.0;
-  public static final double FLOOR_MOTOR_VOLTAGE = -4.0; //TODO: change this number later
-  public static final double VOMIT_FLOOR_VOLTAGE = -4.0; //TODO: change this number later
-  public static final double VOMIT_INTAKE_VOLTAGE = 6.723; //TODO: change this number later
+  public static final double FLOOR_MOTOR_VOLTAGE = -6.0;
+  public static final double VOMIT_FLOOR_VOLTAGE = 10.0;
+  public static final double VOMIT_INTAKE_VOLTAGE = -INTAKE_MOTOR_VOLTAGE;
   public static final double DEPLOY_REST_VOLTAGE = 2.0;
 
   public static final String MECH_CANBUS_NAME = "rio";

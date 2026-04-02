@@ -63,9 +63,10 @@ public class ShooterSubsystem extends SubsystemBase{
     private void currentLimitFloorMotor(){
         CurrentLimitsConfigs limits = new CurrentLimitsConfigs();
         limits.SupplyCurrentLimitEnable = true;
-        limits.SupplyCurrentLimit = 30; // assuming that only drivetrain and shooterMotor will also be running
-
-        dividerMotor.getConfigurator().apply(limits);
+        limits.SupplyCurrentLimit = 60; // assuming that only drivetrain and shooterMotor will also be running
+        limits.StatorCurrentLimitEnable = true;
+        limits.StatorCurrentLimit = 60; // assuming that only drivetrain and shooterMotor will also be running
+        floorMotor.getConfigurator().apply(limits);
     }
 
     public void setShooterVelocity(double desiredVelocity){

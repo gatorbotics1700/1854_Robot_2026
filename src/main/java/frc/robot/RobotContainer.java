@@ -102,6 +102,7 @@ public class RobotContainer {
     Command fullStopShootCommand = new ShootCommand(shooter, 0, 0, 0);
     Command stopIntakeCommand = new IntakeCommand(intake, 0.0,Constants.currentMode);
     Command deployCommand = new IntakePivotCommand(intake,Constants.DEPLOY_MOTOR_VOLTAGE);
+    Command retractCommand = new IntakePivotCommand(intake, Constants.RETRACT_MOTOR_VOLTAGE);
     Command rightShootBlueCommand = PathCommands.driveShootRight(Alliance.Blue,constraints);
     Command rightShootRedCommand = PathCommands.driveShootRight(Alliance.Red,constraints);
     Command floorVomitCommand = new FloorVomitCommand(intake, shooter, Constants.VOMIT_INTAKE_VOLTAGE, Constants.VOMIT_FLOOR_VOLTAGE, Constants.currentMode);
@@ -407,11 +408,10 @@ public class RobotContainer {
 
       controller_two
         .povRight().or(controller_two.povUp()).or(controller_two.povLeft()).or(controller_two.povDown())
-        .whileTrue(
-          floorVomitCommand
-        ).onFalse(Commands.runOnce(() -> { // switch back to intaking when done vomitting
+        .onTrue(floorVomitCommand)
+        .onFalse(Commands.runOnce(() -> {
           shooter.moveFloorMotor(0);
-          intake.moveIntakeMotor(Constants.INTAKE_MOTOR_VOLTAGE);
+          intake.moveIntakeMotor(0);
         }));
   }
   /**
@@ -432,8 +432,8 @@ public class RobotContainer {
       NamedCommands.registerCommand("deployIntake", deployCommand);
       NamedCommands.registerCommand("rightShootBlue", rightShootBlueCommand);
       NamedCommands.registerCommand("rightShootRed", rightShootRedCommand);
-      NamedCommands.registerCommand("vomit",floorVomitCommand);
-      NamedCommands.registerCommand("retractIntake", stopIntakeCommand); //TODO change this remove dark arts     
+      NamedCommands.registerCommand("vomit", floorVomitCommand);
+      NamedCommands.registerCommand("retractIntake", retractCommand);
     
       setupSubsystems();
       setupControllers();
