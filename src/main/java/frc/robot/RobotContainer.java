@@ -407,9 +407,12 @@ public class RobotContainer {
 
       controller_two
         .povRight().or(controller_two.povUp()).or(controller_two.povLeft()).or(controller_two.povDown())
-        .onTrue(
+        .whileTrue(
           floorVomitCommand
-        );
+        ).onFalse(Commands.runOnce(() -> { // switch back to intaking when done vomitting
+          shooter.moveFloorMotor(0);
+          intake.moveIntakeMotor(Constants.INTAKE_MOTOR_VOLTAGE);
+        }));
   }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
