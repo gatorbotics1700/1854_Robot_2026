@@ -340,7 +340,7 @@ public class RobotContainer {
           .b()
           .onTrue(
             fullStopShootCommand
-            .andThen(stopIntakeCommand)
+            //.andThen(stopIntakeCommand)
           );
 
     // Reset gyro to 0° when B button is pressed
@@ -442,7 +442,7 @@ public class RobotContainer {
       RobotController.setBrownoutVoltage(5.5); // do not mess with this without talking to Patricia
       
       NamedCommands.registerCommand("shootCenter",  shootCommand);
-      NamedCommands.registerCommand("warmupShoot", shootWarmupCommand);
+      NamedCommands.registerCommand("warmupSHoot", shootWarmupCommand);
       NamedCommands.registerCommand("runIntake", runIntakeCommand);
       NamedCommands.registerCommand("stopShoot", stopShootCommand);
       NamedCommands.registerCommand("fullStopShoot", fullStopShootCommand);
@@ -451,6 +451,7 @@ public class RobotContainer {
       NamedCommands.registerCommand("rightShootBlue", rightShootBlueCommand);
       NamedCommands.registerCommand("rightShootRed", rightShootRedCommand);
       NamedCommands.registerCommand("vomit",floorVomitCommand);
+      NamedCommands.registerCommand("retractIntake", stopIntakeCommand); //TODO change this remove dark arts
   
       
       

@@ -40,9 +40,10 @@ public class ShootCommand extends Command{
             shooterSubsystem.moveFloorMotor(floorVoltage);
             executed=true;
         }
+        // this use case is to stop all non-shooter things
         else if (dividerVoltage==0){
             shooterSubsystem.moveDividerMotor(dividerVoltage);
-            shooterSubsystem.moveFloorMotor(floorVoltage);
+            shooterSubsystem.moveFloorMotor(0); 
             executed=true;
         }
 
