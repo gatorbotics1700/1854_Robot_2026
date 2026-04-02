@@ -245,7 +245,7 @@ public class RobotContainer {
       }
       
       controller
-        .leftBumper()
+        .rightBumper()
         .onChange( // Set slow when pressed, undo when released
           Commands.runOnce(
                 () -> {
@@ -345,7 +345,7 @@ public class RobotContainer {
                 .ignoringDisable(true));
 
       
-      controller
+      /*controller
         .rightBumper()
         .onTrue(
             Commands.runOnce(
@@ -355,7 +355,7 @@ public class RobotContainer {
                 }
               }
         ));
-     /*  controller
+      controller
         .leftBumper()
         .onTrue(
             Commands.runOnce(

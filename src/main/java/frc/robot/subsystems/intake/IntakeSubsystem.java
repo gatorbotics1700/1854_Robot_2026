@@ -61,10 +61,12 @@ public class IntakeSubsystem extends SubsystemBase{
     }
 
     private void currentLimitDeployMotor(){
+        // Limits need to be low since, on deploy, motor will continuously push on the bumpers
         CurrentLimitsConfigs limits = new CurrentLimitsConfigs();
         limits.SupplyCurrentLimitEnable = true;
-        limits.SupplyCurrentLimit = Constants.DEPLOY_CURRENT_LIMIT; // assuming that only drivetrain will also be running
-
+        limits.SupplyCurrentLimit = Constants.DEPLOY_CURRENT_LIMIT;
+        limits.StatorCurrentLimitEnable = true;
+        limits.StatorCurrentLimit = Constants.DEPLOY_CURRENT_LIMIT;
         deployMotor.getConfigurator().apply(limits);
     }
 
