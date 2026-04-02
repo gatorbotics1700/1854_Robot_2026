@@ -62,20 +62,20 @@ public final class Constants {
   public static final int FLOOR_MOTOR_CAN_ID = 32;
   public static final int CTRLED_CAN_ID = 7;
   
-  public static final double INTAKE_MOTOR_VOLTAGE = 10.0;
+  public static final double INTAKE_MOTOR_VOLTAGE = -10.0;
   public static final double DIVIDER_MOTOR_VOLTAGE = 4;
   public static final double DEPLOY_MOTOR_VOLTAGE  = 6.0;
   public static final double RETRACT_MOTOR_VOLTAGE = -8.0;
   public static final double SHOOTER_MOTOR_VELOCITY = 50.0;
   public static final double FLOOR_MOTOR_VOLTAGE = -4.0; //TODO: change this number later
   public static final double VOMIT_FLOOR_VOLTAGE = -4.0; //TODO: change this number later
-  public static final double VOMIT_INTAKE_VOLTAGE = -6.723; //TODO: change this number later
-  public static final double DEPLOY_REST_VOLTAGE = 1.0;
+  public static final double VOMIT_INTAKE_VOLTAGE = 6.723; //TODO: change this number later
+  public static final double DEPLOY_REST_VOLTAGE = 2.0;
 
   public static final String MECH_CANBUS_NAME = "rio";
   public static final CANBus DRIVE_CANIVORE = new CANBus("CANivore");
   
-  public static final double DEPLOY_CURRENT_LIMIT = 60;
+  public static final double DEPLOY_CURRENT_LIMIT = 30;
   public static final double INTAKE_CURRENT_LIMIT = 60;
 
   public static final Pose2d RED_SHOOT_CENTER = new Pose2d(13.7, 4.0, new Rotation2d(Math.toRadians(180)));

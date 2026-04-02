@@ -185,13 +185,7 @@ public class RobotContainer {
                   (pose) -> {});
           vision = new VisionSubsystem(drive);
           break;}
-         }
-
-
-    /** The container for the robot. Contains subsystems, OI devices, and commands. */
-    
-      // Set up robot depending on mode
-     
+         }     
 
     /**
      * Use this method to define your button->command mappings. Buttons can be created by
@@ -199,7 +193,6 @@ public class RobotContainer {
      * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then passing it to a {@link
      * edu.wpi.first.wpilibj2.command.button.JoystickButton}.
      */
-
     public void configureButtonBindings() {
       CommandScheduler.getInstance().getActiveButtonLoop().clear();
 
@@ -234,9 +227,9 @@ public class RobotContainer {
             .whileTrue(
                   DriveCommands.joystickDrive(
                     drive,
-                    () -> modifyJoystickAxis(-controller.getLeftY(),false, false, true, drive.getPose(), DriverStation.Alliance.Red), // Changed to raw values
-                    () -> modifyJoystickAxis(-controller.getLeftX(),false, true, false, drive.getPose(), DriverStation.Alliance.Red), // Changed to raw values
-                    () -> modifyJoystickAxis(-.8 * controller.getRightX(), false, false, false, drive.getPose(), DriverStation.Alliance.Red),  // Changed to raw values
+                    () -> modifyJoystickAxis(-controller.getLeftY()),
+                    () -> modifyJoystickAxis(-controller.getLeftX()),
+                    () -> modifyJoystickAxis(-.8 * controller.getRightX()),
                     getAlliance()))
             .onFalse(DriveCommands.stopDriveCommand(drive));
       } else { // blue = default when no alliance
@@ -244,15 +237,15 @@ public class RobotContainer {
             .whileTrue(
                 DriveCommands.joystickDrive(
                     drive,
-                    () -> modifyJoystickAxis(-controller.getLeftY(),false, false, true, drive.getPose(), DriverStation.Alliance.Blue), // Changed to raw values
-                    () -> modifyJoystickAxis(-controller.getLeftX(),false, true, false, drive.getPose(), DriverStation.Alliance.Blue), // Changed to raw values
-                    () -> modifyJoystickAxis(-.8 * controller.getRightX(), false, false, false, drive.getPose(), DriverStation.Alliance.Blue), // Changed to raw values
+                    () -> modifyJoystickAxis(-controller.getLeftY()),
+                    () -> modifyJoystickAxis(-controller.getLeftX()),
+                    () -> modifyJoystickAxis(-.8 * controller.getRightX()),
                     getAlliance()))
             .onFalse(DriveCommands.stopDriveCommand(drive));
       }
       
       controller
-        .a()
+        .leftBumper()
         .onChange( // Set slow when pressed, undo when released
           Commands.runOnce(
                 () -> {
@@ -276,25 +269,6 @@ public class RobotContainer {
                   }
                 },
                 drive));
-
-                
-      // controller
-      //     .x()
-      //     .whileTrue(
-      //       drive.sysIdQuasistatic(Direction.kForward)
-      //     );
-
-      controller
-           .x()
-         .whileTrue(
-             drive.sysIdQuasistatic(Direction.kForward)
-           );
-
-       controller
-           .rightTrigger()
-           .whileTrue(
-             drive.sysIdDynamic(Direction.kForward)
-           );
 
       controller_two            
           .rightTrigger()
@@ -339,11 +313,16 @@ public class RobotContainer {
       controller_two
           .b()
           .onTrue(
-            fullStopShootCommand
-            //.andThen(stopIntakeCommand)
+            Commands.runOnce(
+              () -> {
+                stopAllMotors();
+              },
+              intake,
+              shooter
+            ) 
           );
 
-    // Reset gyro to 0° when B button is pressed
+    // Reset gyro to 0°
     controller
         .start()
         .onTrue(
@@ -376,7 +355,7 @@ public class RobotContainer {
                 }
               }
         ));
-      controller
+     /*  controller
         .leftBumper()
         .onTrue(
             Commands.runOnce(
@@ -386,7 +365,7 @@ public class RobotContainer {
                 }
               }
         ));
-
+        */
       controller
         .rightTrigger()
         .onTrue(
@@ -415,7 +394,7 @@ public class RobotContainer {
           );
       
       controller
-        .povUp()                                                                                                                                                                                                                                 
+        .povUp()
         .onTrue(
             PathCommands.driveShootCenter(getAlliance().get(), constraints)
           ); 
@@ -451,10 +430,7 @@ public class RobotContainer {
       NamedCommands.registerCommand("rightShootBlue", rightShootBlueCommand);
       NamedCommands.registerCommand("rightShootRed", rightShootRedCommand);
       NamedCommands.registerCommand("vomit",floorVomitCommand);
-      NamedCommands.registerCommand("retractIntake", stopIntakeCommand); //TODO change this remove dark arts
-  
-      
-      
+      NamedCommands.registerCommand("retractIntake", stopIntakeCommand); //TODO change this remove dark arts     
     
       setupSubsystems();
       setupControllers();
@@ -478,8 +454,8 @@ public class RobotContainer {
       return new IntakePivotCommand(intake, Constants.DEPLOY_MOTOR_VOLTAGE);
     }
   }
-  //TODO: for the sake of auto, we should try to make this two seperate commands and make it toggleable when the actual button is clicked
 
+  //TODO: for the sake of auto, we should try to make this two seperate commands and make it toggleable when the actual button is clicked
   /*public Command shooterToggleCommand() {
     if (shooter.shooterOn()){
       return stopShootCommand;
@@ -525,57 +501,20 @@ public class RobotContainer {
 
   }
 
-  private double modifyJoystickAxis(double value, boolean isAngle, boolean isHorizontalStrafe, boolean isVerticalStrafe, Pose2d currentRobotPose, Alliance alliance) {
+  private double modifyJoystickAxis(double value) {
     // Deadband
     value = deadband(value, 0.026);
-    Boolean willRunIntoWall = false;
-    Double wallCollisionBorder = 0.5; // meters
-
-    if (isAngle == false) {
-      if (isHorizontalStrafe) {
-          if (alliance == Alliance.Red) {
-            if (currentRobotPose.getY() < wallCollisionBorder && value > 0) {
-              willRunIntoWall = true;
-            } else if (currentRobotPose.getY() > 8 - wallCollisionBorder && value < 0) {
-              willRunIntoWall = true;
-            }
-          } else {
-            if (currentRobotPose.getY() < wallCollisionBorder && value < 0) {
-              willRunIntoWall = true;
-            } else if (currentRobotPose.getY() > 8 - wallCollisionBorder && value > 0) {
-              willRunIntoWall = true;
-            }
-          }
-      }
-      if (isVerticalStrafe) {
-        if (alliance == Alliance.Red) {
-            if (currentRobotPose.getX() < wallCollisionBorder && value > 0) {
-              willRunIntoWall = true;
-            } else if (currentRobotPose.getX() > 16 - wallCollisionBorder && value < 0) {
-              willRunIntoWall = true;
-            }
-          } else {
-            if (currentRobotPose.getX() < wallCollisionBorder && value < 0) {
-              willRunIntoWall = true;
-            } else if (currentRobotPose.getX() > 16 - wallCollisionBorder && value > 0) {
-              willRunIntoWall = true;
-            }
-          }
-      }
       // Square the axis
       value =
           Math.copySign(
               RobotConfigLoader.getDouble("container.joystick_scale_factor") * Math.pow(value, 2),
               value);
-    }
 
     if (drive.getSlowDrive()) {
       return 0.5 * value;
-    } else if (willRunIntoWall) {
-      return value;
+    } else {
+     return value;
     }
-
-    return value;
   }
 
   /**
@@ -727,6 +666,7 @@ public class RobotContainer {
     shooter.setShooterVelocity(0);
     intake.moveIntakeMotor(0);
     intake.setDeployMotorVoltage(0);
+    shooter.moveFloorMotor(0);
   }
 
  /*  private Rotation2d getJoystickAngle(double x, double y, Rotation2d currentDriveAngle){

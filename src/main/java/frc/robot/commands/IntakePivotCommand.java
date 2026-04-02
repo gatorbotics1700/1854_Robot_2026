@@ -49,7 +49,11 @@ public class IntakePivotCommand extends Command {
             return true;
         }
         else if (( System.currentTimeMillis() - startTime) > 750) {
-            intakeSubsystem.setDeployMotorVoltage(0);
+            if (voltage == Constants.DEPLOY_MOTOR_VOLTAGE){
+                intakeSubsystem.setDeployMotorVoltage(Constants.DEPLOY_REST_VOLTAGE);
+            } else {
+                intakeSubsystem.setDeployMotorVoltage(0);
+            }
             System.out.println("lebron timed out");
             return true;
         } 
