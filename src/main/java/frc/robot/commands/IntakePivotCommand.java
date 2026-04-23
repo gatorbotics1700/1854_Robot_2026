@@ -39,7 +39,7 @@ public class IntakePivotCommand extends Command {
 
     @Override 
     public boolean isFinished () {
-        if (intakeSubsystem.getDeployMotorCurrent(Constants.currentMode) >= Constants.DEPLOY_CURRENT_LIMIT - 10) { 
+        if (intakeSubsystem.getDeployMotorCurrent(Constants.currentMode) >= Constants.DEPLOY_CURRENT_LIMIT - 10) { // why are we subtracting 10 and not just updating the constant itself??
             if (voltage == Constants.DEPLOY_MOTOR_VOLTAGE){
                 intakeSubsystem.setDeployMotorVoltage(Constants.DEPLOY_REST_VOLTAGE);
             } else {

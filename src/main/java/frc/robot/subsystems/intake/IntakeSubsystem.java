@@ -1,9 +1,5 @@
 package frc.robot.subsystems.intake;
 import com.ctre.phoenix6.configs.CurrentLimitsConfigs;
-import com.ctre.phoenix6.configs.MotionMagicConfigs;
-import com.ctre.phoenix6.configs.Slot0Configs;
-import com.ctre.phoenix6.configs.TalonFXConfiguration;
-import com.ctre.phoenix6.controls.MotionMagicExpoVoltage;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
@@ -17,13 +13,10 @@ public class IntakeSubsystem extends SubsystemBase{
     private double intakeMotorVoltage;
     private boolean isDeployed;
     private double deployMotorVoltage;
-    // private final TalonFXConfiguration deployTalonFXConfigs;
-    // private static MotionMagicExpoVoltage m_request;
-    //TODO: implement motion magic (note: probably not worth the time)
+
     public IntakeSubsystem(){
-        intakeMotor= new TalonFX(Constants.INTAKE_MOTOR_CAN_ID, Constants.MECH_CANBUS_NAME);
+        intakeMotor = new TalonFX(Constants.INTAKE_MOTOR_CAN_ID, Constants.MECH_CANBUS_NAME);
         currentLimitIntakeMotor();
-        //TODO: implement motion magic
         deployMotor = new TalonFX(Constants.DEPLOY_MOTOR_CAN_ID, Constants.MECH_CANBUS_NAME);
         // Set to brake mode to prevent intake from flopping out when moving
         currentLimitDeployMotor();
@@ -31,33 +24,6 @@ public class IntakeSubsystem extends SubsystemBase{
         
         isDeployed = false;
         System.out.println("lebron initializing");
-        //deployTalonFXConfigs = new TalonFXConfiguration();
-        // TODO: TUNE ALL OF THESE
-        //Slot0Configs slot0Configs = deployTalonFXConfigs.Slot0;
-
-        /*slot0Configs.kG = 0.2128; // Add _ V output to overcome gravity
-        slot0Configs.kS = 0.25; // Add _ V output to overcome static friction
-        slot0Configs.kV =
-            0.16; // A velocity target of 1 rps results in _ V output (should be somewhere between 0.12
-        // and 0.2)
-        slot0Configs.kA = 0.01; // An acceleration of 1 rps/s requires 0.01 V output
-
-        slot0Configs.kP = 4.8; // A position error of 2.5 rotations results in 12V output
-        slot0Configs.kI = 0; // no output for integrated error
-        slot0Configs.kD = 0.1; // a velocity error of 1 rps results in 0.1 V output
-
-        // MOTION MAGIC EXPO
-        MotionMagicConfigs motionMagicConfigs = deployTalonFXConfigs.MotionMagic;
-
-        motionMagicConfigs.MotionMagicCruiseVelocity = 0; // 0 gives us unlimited cruise velocity
-        motionMagicConfigs.MotionMagicExpo_kV = 0.16; // kV is around 0.12 V/rps, might be 0.12-0.2
-        motionMagicConfigs.MotionMagicExpo_kA =
-            0.1; // Use a slower kA of 0.1 V/(rps/s) - the larger the kA, the smoother and slower
-
-        deployMotor.getConfigurator().apply(deployTalonFXConfigs);
-
-        m_request = new MotionMagicExpoVoltage(0);
-        */
     }
 
     private void currentLimitDeployMotor(){

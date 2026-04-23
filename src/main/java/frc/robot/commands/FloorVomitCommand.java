@@ -5,7 +5,7 @@ import frc.robot.subsystems.intake.IntakeSubsystem;
 import frc.robot.subsystems.shooter.ShooterSubsystem;
 import frc.robot.Constants.Mode;
 
-public class FloorVomitCommand extends Command{
+public class FloorVomitCommand extends Command {
     private final IntakeSubsystem intakeSubsystem;
     private double intakeVoltage;
     private double floorVoltage;

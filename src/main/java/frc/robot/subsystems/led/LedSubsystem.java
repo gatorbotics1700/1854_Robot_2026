@@ -4,8 +4,6 @@ package frc.robot.subsystems.led;
 import com.ctre.phoenix6.configs.CANdleConfiguration;
 import com.ctre.phoenix6.configs.LEDConfigs;
 import com.ctre.phoenix6.controls.SolidColor;
-import com.ctre.phoenix6.controls.StrobeAnimation;
-import com.ctre.phoenix6.controls.TwinkleAnimation;
 import com.ctre.phoenix6.hardware.CANdle;
 import com.ctre.phoenix6.signals.RGBWColor;
 import com.ctre.phoenix6.signals.StripTypeValue;
@@ -45,7 +43,7 @@ public class LedSubsystem extends SubsystemBase{
         SolidColor solidColor = new SolidColor(0,3).withColor(newColor);
         ctrLED.setControl(solidColor);
         isBlinking = true;
-        //System.out.println("Lebron blinking");
+        // System.out.println("Lebron blinking");
     }
 
     public void setColor(int r, int g, int b){

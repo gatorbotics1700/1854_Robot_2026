@@ -19,13 +19,10 @@ import java.util.Optional;
 import org.littletonrobotics.junction.Logger;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
-import com.ctre.phoenix6.hardware.CANdle;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.path.PathConstraints;
 
-import edu.wpi.first.hal.util.AllocationException;
-import edu.wpi.first.math.estimator.PoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -41,7 +38,6 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.FloorVomitCommand;
 import frc.robot.commands.IntakeCommand;
@@ -65,7 +61,6 @@ import frc.robot.subsystems.vision.VisionIOPhotonVisionSim;
 import frc.robot.subsystems.vision.VisionSubsystem;
 import frc.robot.util.CommandSimMacXboxController;
 import frc.robot.util.RobotConfigLoader;
-import frc.robot.Constants;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -414,11 +409,6 @@ public class RobotContainer {
           intake.moveIntakeMotor(0);
         }));
   }
-  /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
-   */
 
    public RobotContainer() {
       RobotController.setBrownoutVoltage(5.5); // do not mess with this without talking to Patricia
@@ -458,7 +448,6 @@ public class RobotContainer {
     }
   }
 
-  //TODO: for the sake of auto, we should try to make this two seperate commands and make it toggleable when the actual button is clicked
   /*public Command shooterToggleCommand() {
     if (shooter.shooterOn()){
       return stopShootCommand;

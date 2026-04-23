@@ -422,7 +422,6 @@ public class DriveSubsystem extends SubsystemBase implements VisionSubsystem.Vis
       new Translation2d(TunerConstants.BackRight.LocationX, TunerConstants.BackRight.LocationY)
     };
   }
-  //TODO: test for both alliances and confirm if it works correctly
   public void zeroGyroscope(Alliance alliance) { // will crash in sim
     Rotation2d zeroedAngle = null;
     if(alliance == DriverStation.Alliance.Red){

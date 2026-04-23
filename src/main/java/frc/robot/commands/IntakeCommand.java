@@ -11,7 +11,7 @@ public class IntakeCommand extends Command {
     private final IntakeSubsystem intakeSubsystem;
     private boolean executed;
 
-     public IntakeCommand(IntakeSubsystem intakeSubsystem, double voltage, Mode mode) {
+    public IntakeCommand(IntakeSubsystem intakeSubsystem, double voltage, Mode mode) {
         this.intakeSubsystem = intakeSubsystem;
         this.voltage = voltage;
         System.out.println("lebron intake command initialized");
@@ -22,12 +22,12 @@ public class IntakeCommand extends Command {
     @Override
     public void execute() {
         intakeSubsystem.moveIntakeMotor(voltage);
-        executed=true;  
+        executed = true;  
     }
     
     @Override
     public boolean isFinished() {
-        if(executed==true){
+        if(executed == true){
             return true;
         } 
         return false;

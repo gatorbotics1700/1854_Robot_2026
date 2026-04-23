@@ -6,14 +6,13 @@ import com.pathplanner.lib.path.PathConstraints;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
-
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import frc.robot.Constants;
 
 
 public class PathCommands {
-    //right bump
+    // path to right bump
     public static Command driveRightBump(boolean isInAllianceZone, Alliance alliance, PathConstraints constraints) {
         return Commands.runOnce(
             () -> {
@@ -37,7 +36,7 @@ public class PathCommands {
             }
         );
     }
-
+    // path to left bump
     public static Command driveLeftBump(boolean isInAllianceZone, Alliance alliance, PathConstraints constraints) {
         return Commands.runOnce(
             () -> {
@@ -61,6 +60,7 @@ public class PathCommands {
             }
         );
     }
+    // path to right trench
     public static Command driveRightTrench(boolean isInAllianceZone, Alliance alliance, PathConstraints constraints) {
         return Commands.runOnce(
             () -> {
@@ -84,7 +84,7 @@ public class PathCommands {
             }   
           );
     }
-
+    // path to left trench
     public static Command driveLeftTrench(boolean isInAllianceZone, Alliance alliance, PathConstraints constraints) {
           return Commands.runOnce(
             () -> {
@@ -108,6 +108,7 @@ public class PathCommands {
             }   
           );
     }
+    // path to left shooting position
     public static Command driveShootLeft(Alliance alliance, PathConstraints constraints) {
           return Commands.runOnce(
             () -> {
@@ -119,6 +120,7 @@ public class PathCommands {
               }}   
           );
     }
+    // path to center shooting position
     public static Command driveShootCenter(Alliance alliance, PathConstraints constraints) {
           return Commands.runOnce(
             () -> {
@@ -129,6 +131,7 @@ public class PathCommands {
               }}   
           );
     }
+    // path to right shooting position
     public static Command driveShootRight(Alliance alliance, PathConstraints constraints) {
           return Commands.runOnce(
             () -> {
